@@ -1,18 +1,64 @@
 package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.survey;
 
 
-import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.base.BasePresenter;
+import android.content.Context;
+import android.util.Log;
 
-import javax.inject.Inject;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.WizeApp;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuPresenter;
 
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * @author : hienngo
  * @since : Sep 02, 2016.
  */
-public class SurveyPresenter extends BasePresenter<SurveyView> {
+public class SurveyPresenter extends SlideMenuPresenter {
 
-    @Inject
-    public SurveyPresenter() {
+    private final SurveyView surveyView;
+    private Context context;
+
+    public SurveyPresenter(Context context, SurveyView surveyView) {
+        this.context = context;
+        this.surveyView = surveyView;
     }
+
+    public void saveAssetFiles() {
+        //copy assets files
+        Observable.fromCallable(WizeApp.getInstance().copyAssets())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Boolean>() {
+                               @Override
+                               public void onCompleted() {
+
+                               }
+
+                               @Override
+                               public void onError(Throwable e) {
+                                   Log.e("TAG", e.getMessage());
+                               }
+
+                               @Override
+                               public void onNext(Boolean aBoolean) {
+                                   if (aBoolean) {
+                                       surveyView.onSaveAssetFileComplete();
+                                   } else {
+                                       surveyView.onSaveAssetFileFailed();
+                                   }
+                               }
+                           }
+                );
+    }
+
+    public void loadSurveyFromLocal() {
+        loadLocalData.loadLocalSurvey(context)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(survey -> surveyView.onLoadLocalSurveySuccess(survey));
+    }
+
 }

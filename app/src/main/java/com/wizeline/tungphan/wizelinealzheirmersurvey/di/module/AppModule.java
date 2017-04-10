@@ -3,6 +3,8 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.di.module;
 import android.app.Application;
 import android.content.Context;
 
+import com.wizeline.tungphan.wizelinealzheirmersurvey.local.LoadLocalData;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -23,5 +25,11 @@ public class AppModule {
     @Singleton
     Context provideContext() {
         return this.application;
+    }
+
+    @Provides
+    @Singleton
+    LoadLocalData provideLoadLocalData() {
+        return new LoadLocalData();
     }
 }

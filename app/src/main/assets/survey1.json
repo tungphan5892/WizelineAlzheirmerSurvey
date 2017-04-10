@@ -1,0 +1,29 @@
+{
+  "survey_type": "alzheirmer_survey",
+  "question_answer_list": [
+    {
+      "question_type": "yes_no",
+      "output_result": 0.25,
+      "question": "Do you have head injury?",
+      "answer": true
+    },
+    {
+      "question_type": "yes_no",
+      "output_result": 0.25,
+      "question": "Are you older than 65?",
+      "answer": true
+    },
+    {
+      "question_type": "gender",
+      "output_result": 0.25,
+      "question": "What is your gender?",
+      "answer": "female"
+    },
+    {
+      "question_type": "yes_no",
+      "output_result": 0.25,
+      "question": "Is there Any member in your family have this disease?",
+      "answer": true
+    }
+  ]
+}

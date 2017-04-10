@@ -1,21 +1,34 @@
 package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.base;
 
+import android.content.Context;
+
+import com.wizeline.tungphan.wizelinealzheirmersurvey.WizeApp;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.local.LoadLocalData;
+
+import javax.inject.Inject;
+
 /**
  * @author Hien Ngo
  * @since 7/27/16
  */
-public abstract class BasePresenter<V extends BaseView> {
-    private V view;
+public class BasePresenter {
 
-    public void onTakeView(V view) {
-        this.view = view;
+
+    @Inject
+    protected LoadLocalData loadLocalData;
+    private Context context;
+
+    public BasePresenter() {
+
     }
 
-    public V getView() {
-        return view;
+    public BasePresenter(Context context) {
+        this.context = context;
+        initInjector();
     }
 
-    public void onDestroyView() {
-        this.view = null;
+    public void initInjector() {
+        WizeApp.getAppComponent(context).inject(this);
     }
+
 }
