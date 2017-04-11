@@ -3,33 +3,51 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
- * Created by tungphan on 4/10/17.
+ * Created by tungphan on 4/11/17.
  */
 
 public class QuestionAndAnswer {
 
-    @SerializedName("type")
+    @SerializedName("question_id")
     @Expose
-    private String type;
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
+    private Integer questionId;
+    @SerializedName("question_type")
+    @Expose
+    private String questionType;
     @SerializedName("output_result")
     @Expose
     private Float outputResult;
-    @SerializedName("question")
+    @SerializedName("question_content")
     @Expose
-    private String question;
-    @SerializedName("answer")
+    private String questionContent;
+    @SerializedName("options")
     @Expose
-    private Answer answer;
+    private List<Option> options = null;
+    @SerializedName("correct_answer")
+    @Expose
+    private Integer[] correctAnswer;
+    @SerializedName("chose_answer")
+    @Expose
+    private Integer[] choseAnswer;
+
+    public Integer getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
+    }
+
+    public String getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(String questionType) {
+        this.questionType = questionType;
+    }
 
     public Float getOutputResult() {
         return outputResult;
@@ -39,19 +57,35 @@ public class QuestionAndAnswer {
         this.outputResult = outputResult;
     }
 
-    public String getQuestion() {
-        return question;
+    public String getQuestionContent() {
+        return questionContent;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
+    public void setQuestionContent(String questionContent) {
+        this.questionContent = questionContent;
     }
 
-    public Answer getAnswer() {
-        return answer;
+    public List<Option> getOptions() {
+        return options;
     }
 
-    public void setAnswer(Answer answer) {
-        this.answer = answer;
+    public void setOptions(List<Option> options) {
+        this.options = options;
+    }
+
+    public Integer[] getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public void setCorrectAnswer(Integer[] correctAnswer) {
+        this.correctAnswer = correctAnswer;
+    }
+
+    public Integer[] getChoseAnswer() {
+        return choseAnswer;
+    }
+
+    public void setChoseAnswer(Integer[] choseAnswer) {
+        this.choseAnswer = choseAnswer;
     }
 }

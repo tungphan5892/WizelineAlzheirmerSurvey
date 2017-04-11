@@ -6,6 +6,6 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.constant;
 
 public interface ViewConstant {
 
-    String TYPE_YES_NO = "type_yes_no";
-    String TYPE_SINGLE_CHOICE = "type_single_choice";
+    String TYPE_SINGLE_CHOICE = "single_choice";
+    String TYPE_GENDER = "single_choice";
 }

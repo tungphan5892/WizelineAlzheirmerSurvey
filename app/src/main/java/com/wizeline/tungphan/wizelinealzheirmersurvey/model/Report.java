@@ -9,13 +9,13 @@ import java.util.List;
  * Created by tungphan on 4/11/17.
  */
 
-public class Survey {
+public class Report {
     @SerializedName("survey_type")
     @Expose
     private String surveyType;
-    @SerializedName("question_answer_list")
+    @SerializedName("patient_survey_list")
     @Expose
-    private List<QuestionAndAnswer> questionAndAnswers = null;
+    private List<PatientSurvey> patientSurveys = null;
 
     public String getSurveyType() {
         return surveyType;
@@ -25,11 +25,11 @@ public class Survey {
         this.surveyType = surveyType;
     }
 
-    public List<QuestionAndAnswer> getQuestionAndAnswers() {
-        return questionAndAnswers;
+    public List<PatientSurvey> getPatientSurveys() {
+        return patientSurveys;
     }
 
-    public void setQuestionAndAnswers(List<QuestionAndAnswer> questionAndAnswers) {
-        this.questionAndAnswers = questionAndAnswers;
+    public void setPatientSurveys(List<PatientSurvey> patientSurveys) {
+        this.patientSurveys = patientSurveys;
     }
 }

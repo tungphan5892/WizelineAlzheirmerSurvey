@@ -1,6 +1,7 @@
 package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.survey;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
@@ -12,7 +13,7 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.AlzheirmerSurvey
  */
 
 public class SurveyActivity extends SlideMenuActivity implements SurveyView {
-
+    private static final String TAG = SurveyActivity.class.getSimpleName();
     private AlzheirmerSurveyFragment alzheirmerSurveyFragment;
     private SurveyPresenter surveyPresenter;
 
@@ -35,16 +36,19 @@ public class SurveyActivity extends SlideMenuActivity implements SurveyView {
 
     @Override
     public void onSaveAssetFileComplete() {
+        Log.e(TAG,"onSaveAssetFileComplete");
         surveyPresenter.loadSurveyFromLocal();
     }
 
     @Override
     public void onSaveAssetFileFailed() {
+        Log.e(TAG,"onSaveAssetFileFailed");
         //show snackbar
     }
 
     @Override
     public void onLoadLocalSurveySuccess(Survey survey) {
-        alzheirmerSurveyFragment.setQuestionAnswerRViewData(survey.getQuestionAnswerList());
+        Log.e(TAG,"onLoadLocalSurveySuccess");
+        alzheirmerSurveyFragment.setQuestionAnswerRViewData(survey.getQuestionAndAnswers());
     }
 }

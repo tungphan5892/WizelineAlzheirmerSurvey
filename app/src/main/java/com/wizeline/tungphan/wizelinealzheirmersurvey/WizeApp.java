@@ -59,36 +59,44 @@ public class WizeApp extends Application {
                 Log.e(TAG, e.getMessage());
                 return false;
             }
+            boolean copied = false;
             if (files != null) for (String filename : files) {
-                InputStream in = null;
-                OutputStream out = null;
-                try {
-                    in = assetManager.open(filename);
-                    File outFile = new File(getExternalFilesDir(null), filename);
-                    out = new FileOutputStream(outFile);
-                    copyFile(in, out);
-                } catch (IOException e) {
-                    Log.e(TAG, e.getMessage());
-                    return false;
-                } finally {
-                    if (in != null) {
-                        try {
-                            in.close();
-                        } catch (IOException e) {
-                            // NOOP
-                        }
-                    }
-                    if (out != null) {
-                        try {
-                            out.close();
-                        } catch (IOException e) {
-                            // NOOP
-                        }
-                    }
+                if (filename.endsWith(".json")) {
+                    copyFileToExternal(assetManager, filename);
+                    copied = true;
                 }
             }
-            return true;
+            return copied;
         };
+    }
+
+    //TODO: copy only once, for now it copy everytime we run the app
+    private void copyFileToExternal(AssetManager assetManager, String filename) {
+        InputStream in = null;
+        OutputStream out = null;
+        try {
+            in = assetManager.open(filename);
+            File outFile = new File(getExternalFilesDir(null), filename);
+            out = new FileOutputStream(outFile);
+            copyFile(in, out);
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    // NOOP
+                }
+            }
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    // NOOP
+                }
+            }
+        }
     }
 
     private void copyFile(InputStream in, OutputStream out) throws IOException {
