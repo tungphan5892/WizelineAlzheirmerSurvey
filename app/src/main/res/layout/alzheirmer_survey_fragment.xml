@@ -7,7 +7,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/text_survey_guide"/>
+        android:text="@string/text_survey_guide" />
+
+    <EditText
+        android:id="@+id/patient_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/question_answer_rview"
         android:layout_width="match_parent"
@@ -15,5 +21,13 @@
         android:orientation="vertical">
 
     </android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/submit_button"
+        android:layout_gravity="end"
+        android:layout_marginRight="@dimen/normal_buton_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text ="@string/text_submit"/>
 </LinearLayout>
 

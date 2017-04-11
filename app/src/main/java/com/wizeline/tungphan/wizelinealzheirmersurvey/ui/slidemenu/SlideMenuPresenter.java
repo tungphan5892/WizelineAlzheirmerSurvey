@@ -1,5 +1,6 @@
 package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu;
 
+import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.base.BasePresenter;
@@ -21,6 +23,10 @@ public class SlideMenuPresenter extends BasePresenter {
 
     public SlideMenuPresenter() {
 
+    }
+
+    public SlideMenuPresenter(Context context) {
+        super(context);
     }
 
     //init Navigation Drawer and Toolbar
@@ -40,8 +46,10 @@ public class SlideMenuPresenter extends BasePresenter {
     }
 
     public void initFab(FloatingActionButton floatingActionButton) {
-        floatingActionButton.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        floatingActionButton.setOnClickListener(view -> Snackbar.make(view
+                , "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show());
+        floatingActionButton.setVisibility(View.GONE);
     }
 
     public void closeDrawer(DrawerLayout drawerLayout) {

@@ -16,6 +16,7 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.adapter.QuestionAndAnsw
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by tungphan on 4/8/17.
@@ -33,9 +34,15 @@ public class AlzheirmerSurveyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.alzheirmer_survey_fragment, container, false);
+        ButterKnife.bind(this, view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         questionAnswerRView.setLayoutManager(linearLayoutManager);
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     public void setQuestionAnswerRViewData(List<QuestionAndAnswer> questionAndAnswerList) {

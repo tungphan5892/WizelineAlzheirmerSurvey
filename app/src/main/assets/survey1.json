@@ -2,28 +2,80 @@
   "survey_type": "alzheirmer_survey",
   "question_answer_list": [
     {
-      "question_type": "yes_no",
+      "question_id": 0,
+      "question_type": "single_choice",
       "output_result": 0.25,
-      "question": "Do you have head injury?",
-      "answer": true
+      "question_content": "Do you have head injury?",
+      "options": [
+        {
+          "id": 0,
+          "option": "yes"
+        },
+        {
+          "id": 1,
+          "option": "no"
+        }
+      ],
+      "correct_answer": 0
     },
     {
-      "question_type": "yes_no",
+      "question_id": 1,
+      "question_type": "single_choice",
       "output_result": 0.25,
-      "question": "Are you older than 65?",
-      "answer": true
+      "question_content": "Are you older than 65?",
+      "options": [
+        {
+          "id": 0,
+          "option": "yes"
+        },
+        {
+          "id": 1,
+          "option": "no"
+        }
+      ],
+      "correct_answer": 0
     },
     {
-      "question_type": "gender",
+      "question_id": 2,
+      "question_type": "single_choice",
       "output_result": 0.25,
-      "question": "What is your gender?",
-      "answer": "female"
+      "question_content": "What is your gender?",
+      "options": [
+        {
+          "id": 0,
+          "option": "Male"
+        },
+        {
+          "id": 1,
+          "option": "Female"
+        },
+        {
+          "id": 2,
+          "option": "Gay"
+        },
+        {
+          "id": 2,
+          "option": "Less"
+        }
+      ],
+      "correct_answer": 1
     },
     {
-      "question_type": "yes_no",
+      "question_id": 3,
+      "question_type": "single_choice",
       "output_result": 0.25,
-      "question": "Is there Any member in your family have this disease?",
-      "answer": true
+      "question_content": "Is there Any member in your family have this disease?",
+      "options": [
+        {
+          "id": 0,
+          "option": "yes"
+        },
+        {
+          "id": 1,
+          "option": "no"
+        }
+      ],
+      "correct_answer": 0
     }
   ]
 }

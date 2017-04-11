@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.WizeApp;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuPresenter;
 
 import rx.Observable;
@@ -22,6 +23,7 @@ public class SurveyPresenter extends SlideMenuPresenter {
     private Context context;
 
     public SurveyPresenter(Context context, SurveyView surveyView) {
+        super(context);
         this.context = context;
         this.surveyView = surveyView;
     }
@@ -58,7 +60,22 @@ public class SurveyPresenter extends SlideMenuPresenter {
         loadLocalData.loadLocalSurvey(context)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(survey -> surveyView.onLoadLocalSurveySuccess(survey));
+                .subscribe(new Observer<Survey>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("TAG", e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(Survey survey) {
+                        surveyView.onLoadLocalSurveySuccess(survey);
+                    }
+                });
     }
 
 }

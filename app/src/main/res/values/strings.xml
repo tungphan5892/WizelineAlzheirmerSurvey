@@ -8,4 +8,5 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="text_survey_guide">Please enter your full name then answer ALL question!</string>
+    <string name="text_submit">Submit</string>
 </resources>
