@@ -16,7 +16,7 @@
           "option": "no"
         }
       ],
-      "correct_answer": 0
+      "correct_answer": [0]
     },
     {
       "question_id": 1,
@@ -33,7 +33,7 @@
           "option": "no"
         }
       ],
-      "correct_answer": 0
+      "correct_answer": [0]
     },
     {
       "question_id": 2,
@@ -58,11 +58,10 @@
           "option": "Less"
         }
       ],
-      "correct_answer": 1
+      "correct_answer": [1]
     },
     {
-      "question_id": 3,
-      "question_type": "single_choice",
+      "question_type": "yes_no",
       "output_result": 0.25,
       "question_content": "Is there Any member in your family have this disease?",
       "options": [
@@ -75,7 +74,7 @@
           "option": "no"
         }
       ],
-      "correct_answer": 0
+      "correct_answer": [0]
     }
   ]
 }

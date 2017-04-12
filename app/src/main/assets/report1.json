@@ -3,198 +3,198 @@
   "patient_survey_list": [
     {
       "patient_name": "Tung",
-      "question_answer_list": [
+      "answer_list": [
         {
           "question_id": 0,
-          "chose_answer": 1
+          "chose_answer": [1]
         },
         {
           "question_id": 1,
-          "chose_answer": 1
+          "chose_answer": [1]
         },
         {
           "question_id": 2,
-          "chose_answer": 0
+          "chose_answer": [0]
         },
         {
           "question_id": 3,
-          "chose_answer": 1
+          "chose_answer": [1]
         }
       ],
       "disease_cause_percentage": 0.00
     },
     {
       "patient_name": "Xuan",
-      "question_answer_list": [
+      "answer_list": [
         {
           "question_id": 0,
-          "chose_answer": 0
+          "chose_answer": [0]
         },
         {
           "question_id": 1,
-          "chose_answer": 0
+          "chose_answer": [0]
         },
         {
           "question_id": 2,
-          "chose_answer": 1
+          "chose_answer": [1]
         },
         {
           "question_id": 3,
-          "chose_answer": 0
+          "chose_answer": [0]
         }
       ],
       "disease_cause_percentage": 1.00
     },
     {
       "patient_name": "Hien",
-      "question_answer_list": [
+      "answer_list": [
         {
           "question_id": 0,
-          "chose_answer": 1
+          "chose_answer": [1]
         },
         {
           "question_id": 1,
-          "chose_answer": 1
+          "chose_answer": [1]
         },
         {
           "question_id": 2,
-          "chose_answer": 3
+          "chose_answer": [3]
         },
         {
           "question_id": 3,
-          "chose_answer": 1
+          "chose_answer": [1]
         }
       ],
       "disease_cause_percentage": 0.00
     },
     {
       "patient_name": "Luis",
-      "question_answer_list": [
+      "answer_list": [
         {
           "question_id": 0,
-          "chose_answer": 0
+          "chose_answer": [0]
         },
         {
           "question_id": 1,
-          "chose_answer": 0
+          "chose_answer": [0]
         },
         {
           "question_id": 2,
-          "chose_answer": 4
+          "chose_answer": [4]
         },
         {
           "question_id": 3,
-          "chose_answer": 0
+          "chose_answer": [0]
         }
       ],
       "disease_cause_percentage": 0.75
     },
     {
       "patient_name": "Matt",
-      "question_answer_list": [
+      "answer_list": [
         {
           "question_id": 0,
-          "chose_answer": 1
+          "chose_answer": [1]
         },
         {
           "question_id": 1,
-          "chose_answer": 0
+          "chose_answer": [0]
         },
         {
           "question_id": 2,
-          "chose_answer": 0
+          "chose_answer": [0]
         },
         {
           "question_id": 3,
-          "chose_answer": 1
+          "chose_answer": [1]
         }
       ],
       "disease_cause_percentage": 0.25
     },
     {
       "patient_name": "Cong",
-      "question_answer_list": [
+      "answer_list": [
         {
           "question_id": 0,
-          "chose_answer": 1
+          "chose_answer": [1]
         },
         {
           "question_id": 1,
-          "chose_answer": 0
+          "chose_answer": [0]
         },
         {
           "question_id": 2,
-          "chose_answer": 0
+          "chose_answer": [0]
         },
         {
           "question_id": 3,
-          "chose_answer": 0
+          "chose_answer": [0]
         }
       ],
       "disease_cause_percentage": 0.5
     },
     {
       "patient_name": "Thien",
-      "question_answer_list": [
+      "answer_list": [
         {
           "question_id": 0,
-          "chose_answer": 1
+          "chose_answer": [1]
         },
         {
           "question_id": 1,
-          "chose_answer": 0
+          "chose_answer": [0]
         },
         {
           "question_id": 2,
-          "chose_answer": 0
+          "chose_answer": [0]
         },
         {
           "question_id": 3,
-          "chose_answer": 0
+          "chose_answer": [0]
         }
       ],
       "disease_cause_percentage": 0.5
     },
     {
       "patient_name": "Tam",
-      "question_answer_list": [
+      "answer_list": [
         {
           "question_id": 0,
-          "chose_answer": 1
+          "chose_answer": [1]
         },
         {
           "question_id": 1,
-          "chose_answer": 0
+          "chose_answer": [0]
         },
         {
           "question_id": 2,
-          "chose_answer": 0
+          "chose_answer": [0]
         },
         {
           "question_id": 3,
-          "chose_answer": 0
+          "chose_answer": [0]
         }
       ],
       "disease_cause_percentage": 0.75
     },
     {
       "patient_name": "Tara",
-      "question_answer_list": [
+      "answer_list": [
         {
           "question_id": 0,
-          "chose_answer": 1
+          "chose_answer": [1]
         },
         {
           "question_id": 1,
-          "chose_answer": 1
+          "chose_answer": [1]
         },
         {
           "question_id": 2,
-          "chose_answer": 1
+          "chose_answer": [1]
         },
         {
           "question_id": 3,
-          "chose_answer": 1
+          "chose_answer": [1]
         }
       ],
       "disease_cause_percentage": 0.25

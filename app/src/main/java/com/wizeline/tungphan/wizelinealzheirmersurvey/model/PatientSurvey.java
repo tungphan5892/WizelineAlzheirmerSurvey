@@ -10,12 +10,20 @@ import java.util.List;
  */
 
 public class PatientSurvey {
+
+    public PatientSurvey(String patientName, List<Answer> answers
+            , Float diseaseCausePercentage) {
+        this.patientName = patientName;
+        this.answers = answers;
+        this.diseaseCausePercentage = diseaseCausePercentage;
+    }
+
     @SerializedName("patient_name")
     @Expose
     private String patientName;
-    @SerializedName("question_answer_list")
+    @SerializedName("answer_list")
     @Expose
-    private List<QuestionAndAnswer> questionAndAnswers = null;
+    private List<Answer> answers = null;
     @SerializedName("disease_cause_percentage")
     @Expose
     private Float diseaseCausePercentage;
@@ -28,12 +36,12 @@ public class PatientSurvey {
         this.patientName = patientName;
     }
 
-    public List<QuestionAndAnswer> getQuestionAndAnswers() {
-        return questionAndAnswers;
+    public List<Answer> getAnswers() {
+        return answers;
     }
 
-    public void setQuestionAndAnswers(List<QuestionAndAnswer> questionAndAnswers) {
-        this.questionAndAnswers = questionAndAnswers;
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 
     public Float getDiseaseCausePercentage() {

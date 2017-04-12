@@ -5,6 +5,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.WizeApp;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.eventtype.SubmitSurveyEvent;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Report;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuPresenter;
 
@@ -19,6 +21,7 @@ import rx.schedulers.Schedulers;
  */
 public class SurveyPresenter extends SlideMenuPresenter {
 
+    private static final String TAG = SurveyPresenter.class.getSimpleName();
     private final SurveyView surveyView;
     private Context context;
 
@@ -26,7 +29,37 @@ public class SurveyPresenter extends SlideMenuPresenter {
         super(context);
         this.context = context;
         this.surveyView = surveyView;
+        initEventBusObserve();
     }
+
+    private void initEventBusObserve() {
+        rxEventBus.observable(SubmitSurveyEvent.class)
+                .subscribe(event -> loadLocalData.savePatientSurveyToLocal(event.getPatientSurvey()))
+        ;
+    }
+
+    //using later in record screen
+//    private void loadReportFromLocal(){
+//        loadLocalData.loadLocalReport()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<Report>() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.e("TAG", e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onNext(Report report) {
+//
+//                    }
+//                });
+//    }
 
     public void saveAssetFiles() {
         //copy assets files
@@ -41,7 +74,7 @@ public class SurveyPresenter extends SlideMenuPresenter {
 
                                @Override
                                public void onError(Throwable e) {
-                                   Log.e("TAG", e.getMessage());
+                                   Log.e(TAG, e.getMessage());
                                }
 
                                @Override
@@ -57,7 +90,7 @@ public class SurveyPresenter extends SlideMenuPresenter {
     }
 
     public void loadSurveyFromLocal() {
-        loadLocalData.loadLocalSurvey(context)
+        loadLocalData.loadLocalSurvey()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Survey>() {
@@ -68,7 +101,7 @@ public class SurveyPresenter extends SlideMenuPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("TAG", e.getMessage());
+                        Log.e(TAG, e.getMessage());
                     }
 
                     @Override

@@ -13,7 +13,7 @@ public class QuestionAndAnswer {
 
     @SerializedName("question_id")
     @Expose
-    private Integer questionId;
+    private String questionId;
     @SerializedName("question_type")
     @Expose
     private String questionType;
@@ -33,11 +33,11 @@ public class QuestionAndAnswer {
     @Expose
     private Integer[] choseAnswer;
 
-    public Integer getQuestionId() {
+    public String getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(Integer questionId) {
+    public void setQuestionId(String questionId) {
         this.questionId = questionId;
     }
 

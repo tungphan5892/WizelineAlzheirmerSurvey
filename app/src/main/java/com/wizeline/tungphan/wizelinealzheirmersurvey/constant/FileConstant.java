@@ -5,4 +5,6 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.constant;
  */
 
 public interface FileConstant {
+    String REPORT_FILE_NAME = "/report1.json";
+    String SURVEY_FILE_NAME = "/survey1.json";
 }
