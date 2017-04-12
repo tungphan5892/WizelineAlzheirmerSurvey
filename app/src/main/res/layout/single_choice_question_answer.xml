@@ -10,20 +10,9 @@
         android:layout_height="wrap_content" />
 
     <RadioGroup
+        android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <RadioButton
-            android:id="@+id/first_radio_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/yes" />
-
-        <RadioButton
-            android:id="@+id/second_radio_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/no"/>
+        android:orientation="vertical">
     </RadioGroup>
 </LinearLayout>

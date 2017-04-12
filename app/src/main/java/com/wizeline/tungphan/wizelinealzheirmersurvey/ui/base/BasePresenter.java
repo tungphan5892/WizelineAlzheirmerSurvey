@@ -3,6 +3,7 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.base;
 import android.content.Context;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.WizeApp;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.RxEventBus;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.local.LoadLocalData;
 
 import javax.inject.Inject;
@@ -16,6 +17,8 @@ public class BasePresenter {
 
     @Inject
     protected LoadLocalData loadLocalData;
+    @Inject
+    protected RxEventBus rxEventBus;
     private Context context;
 
     public BasePresenter() {
