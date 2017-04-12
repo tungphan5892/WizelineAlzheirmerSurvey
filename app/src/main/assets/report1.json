@@ -6,19 +6,27 @@
       "answer_list": [
         {
           "question_id": 0,
-          "chose_answer": [1]
+          "chose_answer": [
+            1
+          ]
         },
         {
           "question_id": 1,
-          "chose_answer": [1]
+          "chose_answer": [
+            1
+          ]
         },
         {
           "question_id": 2,
-          "chose_answer": [0]
+          "chose_answer": [
+            0
+          ]
         },
         {
           "question_id": 3,
-          "chose_answer": [1]
+          "chose_answer": [
+            1
+          ]
         }
       ],
       "disease_cause_percentage": 0.00
@@ -28,19 +36,27 @@
       "answer_list": [
         {
           "question_id": 0,
-          "chose_answer": [0]
+          "chose_answer": [
+            0
+          ]
         },
         {
           "question_id": 1,
-          "chose_answer": [0]
+          "chose_answer": [
+            0
+          ]
         },
         {
           "question_id": 2,
-          "chose_answer": [1]
+          "chose_answer": [
+            1
+          ]
         },
         {
           "question_id": 3,
-          "chose_answer": [0]
+          "chose_answer": [
+            0
+          ]
         }
       ],
       "disease_cause_percentage": 1.00
@@ -50,19 +66,27 @@
       "answer_list": [
         {
           "question_id": 0,
-          "chose_answer": [1]
+          "chose_answer": [
+            1
+          ]
         },
         {
           "question_id": 1,
-          "chose_answer": [1]
+          "chose_answer": [
+            1
+          ]
         },
         {
           "question_id": 2,
-          "chose_answer": [3]
+          "chose_answer": [
+            3
+          ]
         },
         {
           "question_id": 3,
-          "chose_answer": [1]
+          "chose_answer": [
+            1
+          ]
         }
       ],
       "disease_cause_percentage": 0.00
@@ -72,19 +96,27 @@
       "answer_list": [
         {
           "question_id": 0,
-          "chose_answer": [0]
+          "chose_answer": [
+            0
+          ]
         },
         {
           "question_id": 1,
-          "chose_answer": [0]
+          "chose_answer": [
+            0
+          ]
         },
         {
           "question_id": 2,
-          "chose_answer": [4]
+          "chose_answer": [
+            4
+          ]
         },
         {
           "question_id": 3,
-          "chose_answer": [0]
+          "chose_answer": [
+            0
+          ]
         }
       ],
       "disease_cause_percentage": 0.75
@@ -94,19 +126,27 @@
       "answer_list": [
         {
           "question_id": 0,
-          "chose_answer": [1]
+          "chose_answer": [
+            1
+          ]
         },
         {
           "question_id": 1,
-          "chose_answer": [0]
+          "chose_answer": [
+            0
+          ]
         },
         {
           "question_id": 2,
-          "chose_answer": [0]
+          "chose_answer": [
+            0
+          ]
         },
         {
           "question_id": 3,
-          "chose_answer": [1]
+          "chose_answer": [
+            1
+          ]
         }
       ],
       "disease_cause_percentage": 0.25
@@ -116,19 +156,27 @@
       "answer_list": [
         {
           "question_id": 0,
-          "chose_answer": [1]
+          "chose_answer": [
+            1
+          ]
         },
         {
           "question_id": 1,
-          "chose_answer": [0]
+          "chose_answer": [
+            0
+          ]
         },
         {
           "question_id": 2,
-          "chose_answer": [0]
+          "chose_answer": [
+            0
+          ]
         },
         {
           "question_id": 3,
-          "chose_answer": [0]
+          "chose_answer": [
+            0
+          ]
         }
       ],
       "disease_cause_percentage": 0.5
@@ -138,19 +186,27 @@
       "answer_list": [
         {
           "question_id": 0,
-          "chose_answer": [1]
+          "chose_answer": [
+            1
+          ]
         },
         {
           "question_id": 1,
-          "chose_answer": [0]
+          "chose_answer": [
+            0
+          ]
         },
         {
           "question_id": 2,
-          "chose_answer": [0]
+          "chose_answer": [
+            0
+          ]
         },
         {
           "question_id": 3,
-          "chose_answer": [0]
+          "chose_answer": [
+            0
+          ]
         }
       ],
       "disease_cause_percentage": 0.5
@@ -160,19 +216,27 @@
       "answer_list": [
         {
           "question_id": 0,
-          "chose_answer": [1]
+          "chose_answer": [
+            1
+          ]
         },
         {
           "question_id": 1,
-          "chose_answer": [0]
+          "chose_answer": [
+            0
+          ]
         },
         {
           "question_id": 2,
-          "chose_answer": [0]
+          "chose_answer": [
+            0
+          ]
         },
         {
           "question_id": 3,
-          "chose_answer": [0]
+          "chose_answer": [
+            0
+          ]
         }
       ],
       "disease_cause_percentage": 0.75
@@ -182,19 +246,27 @@
       "answer_list": [
         {
           "question_id": 0,
-          "chose_answer": [1]
+          "chose_answer": [
+            1
+          ]
         },
         {
           "question_id": 1,
-          "chose_answer": [1]
+          "chose_answer": [
+            1
+          ]
         },
         {
           "question_id": 2,
-          "chose_answer": [1]
+          "chose_answer": [
+            1
+          ]
         },
         {
           "question_id": 3,
-          "chose_answer": [1]
+          "chose_answer": [
+            1
+          ]
         }
       ],
       "disease_cause_percentage": 0.25

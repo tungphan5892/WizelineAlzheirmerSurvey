@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/record_item_layout">
+
+    <TextView
+        android:id="@+id/patient_name_pre_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_patient_name_pre"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/patient_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/patient_name_pre_text"
+        android:layout_toEndOf="@id/patient_name_pre_text"
+        android:textStyle="bold"
+        tools:text="temp" />
+
+    <TextView
+        android:id="@+id/disease_cause_percentage_pref"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/patient_name_pre_text"
+        android:text="@string/text_disease_cause_percent" />
+
+    <TextView
+        android:id="@+id/disease_cause_percentage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/patient_name"
+        android:layout_toRightOf="@id/disease_cause_percentage_pref"
+        android:layout_toEndOf="@id/disease_cause_percentage_pref"
+        tools:text="temp" />
+</RelativeLayout>
