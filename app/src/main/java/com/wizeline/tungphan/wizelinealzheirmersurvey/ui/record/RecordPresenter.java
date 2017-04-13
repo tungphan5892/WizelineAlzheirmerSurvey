@@ -5,9 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.WizeApp;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.eventtype.SubmitSurveyEvent;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Report;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuPresenter;
 
 import rx.Observable;

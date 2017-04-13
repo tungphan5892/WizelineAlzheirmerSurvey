@@ -1,15 +1,10 @@
 package com.wizeline.tungphan.wizelinealzheirmersurvey.di.module;
 
 import android.content.Context;
-import android.util.Log;
 
-import java.io.File;
-import java.util.concurrent.TimeUnit;
 
-import javax.inject.Singleton;
 
 import dagger.Module;
-import dagger.Provides;
 
 /**
  * Created by Tung Phan on 03/17/2017

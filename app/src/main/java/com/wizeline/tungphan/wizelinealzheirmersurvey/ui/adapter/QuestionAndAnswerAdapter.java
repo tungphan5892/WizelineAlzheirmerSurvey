@@ -27,16 +27,21 @@ import butterknife.ButterKnife;
 public class QuestionAndAnswerAdapter
         extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private Context context;
     private List<QuestionAndAnswer> questionAndAnswers;
+    private boolean editable;
     //using answer list to save the data when user change the answer
     //so that when user click submit button we can create object to save result.
     private List<Answer> answers;
-    private Context context;
 
-    public QuestionAndAnswerAdapter(Context context, List<QuestionAndAnswer> questionAndAnswers) {
+    public QuestionAndAnswerAdapter(Context context, List<QuestionAndAnswer> questionAndAnswers,
+                                    boolean editable) {
         this.context = context;
         this.questionAndAnswers = questionAndAnswers;
-        initAnswers(questionAndAnswers);
+        this.editable = editable;
+        if (editable) {
+            initAnswers(questionAndAnswers);
+        }
     }
 
     //init the answer list with data from question and answer list
@@ -54,6 +59,10 @@ public class QuestionAndAnswerAdapter
                 }
             }
         }
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 
     @Override
@@ -83,22 +92,43 @@ public class QuestionAndAnswerAdapter
             case ViewConstant.TYPE_SINGLE_CHOICE:
                 SingleChoiceQuestionAnswerViewHolder viewHolder
                         = (SingleChoiceQuestionAnswerViewHolder) holder;
-                viewHolder.question.setText(questionAndAnswer.getQuestionContent());
                 List<Option> options = questionAndAnswer.getOptions();
+                viewHolder.question.setText(questionAndAnswer.getQuestionContent());
+                //dynamic add radio button base on option's data
                 for (int i = 0; i < options.size(); i++) {
-                    RadioButton radioButton = new RadioButton(context);
-                    radioButton.setId(i);
-                    radioButton.setText(options.get(i).getOption());
-                    viewHolder.radioGroup.addView(radioButton);
+                    viewHolder.radioGroup.addView(initRadioButton(options, i));
                 }
+                //update answers data everytime user pick an answer
                 viewHolder.radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
                     final int[] answerId = new int[1];
                     answerId[0] = checkedId;
                     answers.get(position).setChoseAnswer(answerId);
 
                 });
+                //checked answer in case this adapter un-editable
+                if (!editable) {
+                    Answer answer = answers.get(position);
+                    if (questionAndAnswer.getQuestionId().equalsIgnoreCase(answer.getQuestionId())
+                            && answer.getChoseAnswer().length > 0) {
+                        RadioButton radioButton = (RadioButton) viewHolder.radioGroup
+                                .getChildAt(answer.getChoseAnswer()[0]);
+                        radioButton.setChecked(true);
+                    }
+                }
                 break;
         }
+    }
+
+    private RadioButton initRadioButton(List<Option> options, int position) {
+        RadioButton radioButton = new RadioButton(context);
+        radioButton.setId(position);
+        radioButton.setText(options.get(position).getOption());
+        if (editable) {
+            radioButton.setClickable(true);
+        } else {
+            radioButton.setClickable(false);
+        }
+        return radioButton;
     }
 
     @Override
