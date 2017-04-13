@@ -8,9 +8,10 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuView
  */
 
 public interface SurveyView extends SlideMenuView {
-    void onSaveAssetFileComplete();
-
-    void onSaveAssetFileFailed();
 
     void onLoadLocalSurveySuccess(Survey survey);
+
+    void onSavePatientSurveySuccess();
+
+    void onSavePatientSurveyFail();
 }

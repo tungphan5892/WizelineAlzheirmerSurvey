@@ -33,7 +33,7 @@ public class SlideMenuActivity extends BaseActivity
     NavigationView navigationView;
 
     @BindView(R.id.fab)
-    FloatingActionButton floatingActionButton;
+    protected FloatingActionButton floatingActionButton;
 
     @BindView(R.id.content_layout)
     protected FrameLayout contentLayout;

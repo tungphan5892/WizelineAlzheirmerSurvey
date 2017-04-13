@@ -9,4 +9,8 @@
     <string name="no">No</string>
     <string name="text_survey_guide">Please enter your full name then answer ALL question!</string>
     <string name="text_submit">Submit</string>
+    <string name="text_patient_name_pre">Patient\'s name:&#160;</string>
+    <string name="text_disease_cause_percent">Disease Cause Percent:&#160;</string>
+    <string name="notify_text_add_patient_survey_fail">Add patient\'s survey failed</string>
+    <string name="notify_text_add_patient_survey_success">Add patient\'s survey success</string>
 </resources>

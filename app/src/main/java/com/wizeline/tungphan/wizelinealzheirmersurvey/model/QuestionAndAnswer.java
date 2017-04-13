@@ -28,10 +28,7 @@ public class QuestionAndAnswer {
     private List<Option> options = null;
     @SerializedName("correct_answer")
     @Expose
-    private Integer[] correctAnswer;
-    @SerializedName("chose_answer")
-    @Expose
-    private Integer[] choseAnswer;
+    private int[] correctAnswer;
 
     public String getQuestionId() {
         return questionId;
@@ -73,19 +70,11 @@ public class QuestionAndAnswer {
         this.options = options;
     }
 
-    public Integer[] getCorrectAnswer() {
+    public int[] getCorrectAnswer() {
         return correctAnswer;
     }
 
-    public void setCorrectAnswer(Integer[] correctAnswer) {
+    public void setCorrectAnswer(int[] correctAnswer) {
         this.correctAnswer = correctAnswer;
-    }
-
-    public Integer[] getChoseAnswer() {
-        return choseAnswer;
-    }
-
-    public void setChoseAnswer(Integer[] choseAnswer) {
-        this.choseAnswer = choseAnswer;
     }
 }

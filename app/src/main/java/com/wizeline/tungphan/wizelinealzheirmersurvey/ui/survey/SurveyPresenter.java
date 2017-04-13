@@ -23,70 +23,39 @@ public class SurveyPresenter extends SlideMenuPresenter {
 
     private static final String TAG = SurveyPresenter.class.getSimpleName();
     private final SurveyView surveyView;
-    private Context context;
 
     public SurveyPresenter(Context context, SurveyView surveyView) {
         super(context);
-        this.context = context;
         this.surveyView = surveyView;
         initEventBusObserve();
     }
 
     private void initEventBusObserve() {
         rxEventBus.observable(SubmitSurveyEvent.class)
-                .subscribe(event -> loadLocalData.savePatientSurveyToLocal(event.getPatientSurvey()))
-        ;
-    }
+                .subscribe(event ->
+                        loadLocalData.savePatientSurveyToLocal(event.getPatientSurvey())
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Observer<Boolean>() {
+                                    @Override
+                                    public void onCompleted() {
 
-    //using later in record screen
-//    private void loadReportFromLocal(){
-//        loadLocalData.loadLocalReport()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<Report>() {
-//                    @Override
-//                    public void onCompleted() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.e("TAG", e.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onNext(Report report) {
-//
-//                    }
-//                });
-//    }
+                                    }
 
-    public void saveAssetFiles() {
-        //copy assets files
-        Observable.fromCallable(WizeApp.getInstance().copyAssets())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Boolean>() {
-                               @Override
-                               public void onCompleted() {
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        Log.e(TAG, e.getMessage());
+                                    }
 
-                               }
+                                    @Override
+                                    public void onNext(Boolean aBoolean) {
+                                        if(aBoolean){
+                                            surveyView.onSavePatientSurveySuccess();
+                                        }else{
 
-                               @Override
-                               public void onError(Throwable e) {
-                                   Log.e(TAG, e.getMessage());
-                               }
-
-                               @Override
-                               public void onNext(Boolean aBoolean) {
-                                   if (aBoolean) {
-                                       surveyView.onSaveAssetFileComplete();
-                                   } else {
-                                       surveyView.onSaveAssetFileFailed();
-                                   }
-                               }
-                           }
-                );
+                                        }
+                                    }
+                                }));
     }
 
     public void loadSurveyFromLocal() {

@@ -9,10 +9,13 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.model.PatientSurvey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Report;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Type;
 
 import rx.Observable;
@@ -65,29 +68,13 @@ public class LoadLocalData {
         });
     }
 
-    public void savePatientSurveyToLocal(PatientSurvey patientSurvey) {
-        loadLocalReport().flatMap(new Func1<Report, Observable<Boolean>>() {
+    public Observable<Boolean> savePatientSurveyToLocal(PatientSurvey patientSurvey) {
+        return loadLocalReport().flatMap(new Func1<Report, Observable<Boolean>>() {
             @Override
             public Observable<Boolean> call(Report report) {
                 return addPatientSurveyToFile(report, patientSurvey);
             }
-        }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Boolean>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(TAG, e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(Boolean aBoolean) {
-                    }
-                });
+        });
     }
 
     private Observable<Boolean> addPatientSurveyToFile(Report report, PatientSurvey patientSurvey) {
@@ -99,11 +86,19 @@ public class LoadLocalData {
                 fileWriter = new FileWriter(
                         WizeApp.getInstance().getExternalFilesDir(null) + REPORT_FILE_NAME);
                 Gson gson = new Gson();
-                gson.toJson(report, fileWriter);
+                String data = gson.toJson(report);
+                fileWriter.write(data);
                 subscriber.onNext(true);
             } catch (Exception e) {
                 subscriber.onNext(false);
                 e.printStackTrace();
+            } finally {
+                try {
+                    fileWriter.flush();
+                    fileWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             subscriber.onCompleted();
         });

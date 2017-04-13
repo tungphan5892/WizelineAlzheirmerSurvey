@@ -1,7 +1,9 @@
 package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.survey;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
@@ -20,14 +22,16 @@ public class SurveyActivity extends SlideMenuActivity implements SurveyView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        floatingActionButton.setVisibility(View.GONE);
         surveyPresenter = new SurveyPresenter(this, this);
-        surveyPresenter.saveAssetFiles();
+        surveyPresenter.loadSurveyFromLocal();
         addAlzheirmerSurveyFragment();
     }
 
     private void addAlzheirmerSurveyFragment() {
         if (alzheirmerSurveyFragment == null) {
-            alzheirmerSurveyFragment = new AlzheirmerSurveyFragment(this);
+            alzheirmerSurveyFragment = new AlzheirmerSurveyFragment();
+            alzheirmerSurveyFragment.initInjector(this);
         }
         getSupportFragmentManager().beginTransaction().add(R.id.content_layout
                 , alzheirmerSurveyFragment, AlzheirmerSurveyFragment.TAG)
@@ -35,20 +39,20 @@ public class SurveyActivity extends SlideMenuActivity implements SurveyView {
     }
 
     @Override
-    public void onSaveAssetFileComplete() {
-        Log.e(TAG,"onSaveAssetFileComplete");
-        surveyPresenter.loadSurveyFromLocal();
-    }
-
-    @Override
-    public void onSaveAssetFileFailed() {
-        Log.e(TAG,"onSaveAssetFileFailed");
-        //show snackbar
-    }
-
-    @Override
     public void onLoadLocalSurveySuccess(Survey survey) {
-        Log.e(TAG,"onLoadLocalSurveySuccess");
+        Log.e(TAG, "onLoadLocalSurveySuccess");
         alzheirmerSurveyFragment.setQuestionAnswerRViewData(survey.getQuestionAndAnswers());
+    }
+
+    @Override
+    public void onSavePatientSurveySuccess() {
+        this.setResult(Activity.RESULT_OK);
+        finish();
+    }
+
+    @Override
+    public void onSavePatientSurveyFail() {
+        this.setResult(Activity.RESULT_CANCELED);
+        finish();
     }
 }

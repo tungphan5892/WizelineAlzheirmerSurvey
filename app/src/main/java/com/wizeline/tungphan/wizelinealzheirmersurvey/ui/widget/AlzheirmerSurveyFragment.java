@@ -35,9 +35,9 @@ import butterknife.ButterKnife;
 
 public class AlzheirmerSurveyFragment extends Fragment {
 
+    public static final String TAG = AlzheirmerSurveyFragment.class.getSimpleName();
     @Inject
     RxEventBus rxEventBus;
-    public static final String TAG = AlzheirmerSurveyFragment.class.getSimpleName();
     private View view;
     @BindView(R.id.question_answer_rview)
     RecyclerView questionAnswerRView;
@@ -46,10 +46,6 @@ public class AlzheirmerSurveyFragment extends Fragment {
     @BindView(R.id.patient_name)
     EditText patientNameEditText;
     private QuestionAndAnswerAdapter questionAndAnswerAdapter;
-
-    public AlzheirmerSurveyFragment(Context context) {
-        initInjector(context);
-    }
 
     public void initInjector(Context context) {
         WizeApp.getAppComponent(context).inject(this);
