@@ -12,17 +12,17 @@ import com.google.gson.annotations.SerializedName;
 
 public class Answer implements Parcelable {
 
-    public Answer(String questionId, int[] choseAnswer) {
-        this.questionId = questionId;
-        this.choseAnswer = choseAnswer;
-    }
-
     @SerializedName("question_id")
     @Expose
     private String questionId;
     @SerializedName("chose_answer")
     @Expose
     private int[] choseAnswer;
+
+    public Answer(String questionId, int[] choseAnswer) {
+        this.questionId = questionId;
+        this.choseAnswer = choseAnswer;
+    }
 
     public String getQuestionId() {
         return questionId;

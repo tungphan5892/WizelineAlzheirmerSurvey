@@ -19,7 +19,7 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.RxEventBus;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.eventtype.SubmitSurveyEvent;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Answer;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.PatientSurvey;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.model.QuestionAndAnswer;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.adapter.QuestionAndAnswerAdapter;
 
 import java.util.List;
@@ -51,6 +51,8 @@ public class AlzheirmerSurveyFragment extends Fragment {
     //this field is using for switch this fragment to editable or un-editable
     private boolean editable;
     private PatientSurvey patientSurvey;
+    private String surveyId;
+    private String patientSurveyId;
     private String patientName;
 
     public void setPatientName(String patientName) {
@@ -59,6 +61,10 @@ public class AlzheirmerSurveyFragment extends Fragment {
 
     public void setPatientSurvey(PatientSurvey patientSurvey) {
         this.patientSurvey = patientSurvey;
+    }
+
+    public void setPatientSurveyId(String patientSurveyId) {
+        this.patientSurveyId = patientSurveyId;
     }
 
     public void setEditable(boolean editable) {
@@ -72,10 +78,12 @@ public class AlzheirmerSurveyFragment extends Fragment {
 
     private View.OnClickListener submitBtnClickListener = v -> {
         List<Answer> answers = questionAndAnswerAdapter.getAnswers();
+        float deseaseCausePercent = questionAndAnswerAdapter.getDiseaseCausePercentage();
         //TODO: caculate the disease percentage if neccessary
-        PatientSurvey patientSurvey = new PatientSurvey(patientNameEditText.getText().toString(),
-                answers, 0.0f);
-        rxEventBus.post(new SubmitSurveyEvent(patientSurvey));
+        PatientSurvey patientSurvey = new PatientSurvey(patientSurveyId
+                , patientNameEditText.getText().toString()
+                , answers, deseaseCausePercent);
+        rxEventBus.post(new SubmitSurveyEvent(patientSurvey, surveyId));
     };
 
     @Nullable
@@ -99,9 +107,10 @@ public class AlzheirmerSurveyFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public void setQuestionAnswerRViewData(List<QuestionAndAnswer> questionAndAnswers) {
+    public void setQuestionAnswerRViewData(Survey survey) {
+        surveyId = survey.getSurveyId();
         questionAndAnswerAdapter = new QuestionAndAnswerAdapter(getContext()
-                , questionAndAnswers, editable);
+                , survey.getQuestionAndAnswers(), editable);
         if (!editable) {
             questionAndAnswerAdapter.setAnswers(patientSurvey.getAnswers());
         }

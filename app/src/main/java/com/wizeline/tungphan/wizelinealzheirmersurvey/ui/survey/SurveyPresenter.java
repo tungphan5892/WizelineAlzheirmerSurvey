@@ -30,7 +30,8 @@ public class SurveyPresenter extends SlideMenuPresenter {
     private void initEventBusObserve() {
         rxEventBus.observable(SubmitSurveyEvent.class)
                 .subscribe(event ->
-                        loadLocalData.savePatientSurveyToLocal(event.getPatientSurvey())
+                        loadLocalData.savePatientSurveyToDatabase(event.getPatientSurvey()
+                                , event.getSurveyId())
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new Observer<Boolean>() {
@@ -46,9 +47,9 @@ public class SurveyPresenter extends SlideMenuPresenter {
 
                                     @Override
                                     public void onNext(Boolean aBoolean) {
-                                        if(aBoolean){
+                                        if (aBoolean) {
                                             surveyView.onSavePatientSurveySuccess();
-                                        }else{
+                                        } else {
 
                                         }
                                     }

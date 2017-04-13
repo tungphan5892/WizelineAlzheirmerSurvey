@@ -77,8 +77,12 @@ public class WizeApp extends Application {
         try {
             in = assetManager.open(filename);
             File outFile = new File(getExternalFilesDir(null), filename);
-            out = new FileOutputStream(outFile);
-            copyFile(in, out);
+            if(!outFile.exists()) {
+                out = new FileOutputStream(outFile);
+                copyFile(in, out);
+            }else{
+                Log.e(TAG,"files copied");
+            }
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
         } finally {

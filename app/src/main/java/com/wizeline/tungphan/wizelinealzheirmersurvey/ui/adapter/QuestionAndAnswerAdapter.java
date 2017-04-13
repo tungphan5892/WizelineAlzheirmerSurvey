@@ -16,6 +16,7 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Option;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.QuestionAndAnswer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -33,6 +34,7 @@ public class QuestionAndAnswerAdapter
     //using answer list to save the data when user change the answer
     //so that when user click submit button we can create object to save result.
     private List<Answer> answers;
+    private float diseaseCausePercentage = 0.0f;
 
     public QuestionAndAnswerAdapter(Context context, List<QuestionAndAnswer> questionAndAnswers,
                                     boolean editable) {
@@ -150,5 +152,15 @@ public class QuestionAndAnswerAdapter
 
     public List<Answer> getAnswers() {
         return answers;
+    }
+
+    public float getDiseaseCausePercentage() {
+        for (int i = 0; i < answers.size(); i++) {
+            if (Arrays.equals(answers.get(i).getChoseAnswer()
+                    , questionAndAnswers.get(i).getCorrectAnswer())) {
+                diseaseCausePercentage += 0.25f;
+            }
+        }
+        return diseaseCausePercentage;
     }
 }

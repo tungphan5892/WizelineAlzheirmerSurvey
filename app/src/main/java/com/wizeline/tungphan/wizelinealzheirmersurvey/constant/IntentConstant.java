@@ -9,5 +9,6 @@ public interface IntentConstant {
     int START_SURVEY_ACTIVITY = 0;
     String SURVEY_VIEW_ONLY = "survey_view_only";
     String PATIENT_SURVEY_OBJECT = "patient_survey_object";
+    String PATIENT_SURVEY_ID = "patient_survey_id";
     String PATIENT_NAME = "patient_name";
 }

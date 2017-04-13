@@ -8,12 +8,10 @@ import android.view.View;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.model.PatientSurvey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuActivity;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.AlzheirmerSurveyFragment;
 
-import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant.PATIENT_NAME;
 
 /**
  * Created by tungphan on 4/8/17.
@@ -49,6 +47,8 @@ public class SurveyActivity extends SlideMenuActivity implements SurveyView {
                         .getStringExtra(IntentConstant.PATIENT_NAME));
             } else {
                 alzheirmerSurveyFragment.setEditable(true);
+                alzheirmerSurveyFragment.setPatientSurveyId(String.valueOf(
+                        intent.getIntExtra(IntentConstant.PATIENT_SURVEY_ID, -1)));
             }
         }
     }
@@ -66,7 +66,7 @@ public class SurveyActivity extends SlideMenuActivity implements SurveyView {
     @Override
     public void onLoadLocalSurveySuccess(Survey survey) {
         Log.e(TAG, "onLoadLocalSurveySuccess");
-        alzheirmerSurveyFragment.setQuestionAnswerRViewData(survey.getQuestionAndAnswers());
+        alzheirmerSurveyFragment.setQuestionAnswerRViewData(survey);
     }
 
     @Override

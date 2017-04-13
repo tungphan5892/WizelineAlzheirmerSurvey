@@ -60,4 +60,8 @@ public class AlzheirmerRecordFragment extends Fragment {
         alzheirRecordRViewAdapter = new AlzheirRecordRViewAdapter(getContext(), report.getPatientSurveys());
         recordRecyclerView.setAdapter(alzheirRecordRViewAdapter);
     }
+
+    public int getAlzheirRecordAdapterSize(){
+        return alzheirRecordRViewAdapter.getItemCount();
+    }
 }

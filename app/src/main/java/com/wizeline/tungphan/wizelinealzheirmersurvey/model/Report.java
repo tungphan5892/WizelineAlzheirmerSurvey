@@ -10,12 +10,34 @@ import java.util.List;
  */
 
 public class Report {
+
+    public Report() {
+
+    }
+
+    public Report(String surveyId, String surveyType, List<PatientSurvey> patientSurveys) {
+        this.surveyId = surveyId;
+        this.surveyType = surveyType;
+        this.patientSurveys = patientSurveys;
+    }
+
+    @SerializedName("survey_id")
+    @Expose
+    private String surveyId;
     @SerializedName("survey_type")
     @Expose
     private String surveyType;
     @SerializedName("patient_survey_list")
     @Expose
     private List<PatientSurvey> patientSurveys = null;
+
+    public String getSurveyId() {
+        return surveyId;
+    }
+
+    public void setSurveyId(String surveyId) {
+        this.surveyId = surveyId;
+    }
 
     public String getSurveyType() {
         return surveyType;

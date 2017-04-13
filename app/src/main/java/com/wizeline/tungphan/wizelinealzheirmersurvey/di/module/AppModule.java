@@ -3,6 +3,7 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.di.module;
 import android.app.Application;
 import android.content.Context;
 
+import com.wizeline.tungphan.wizelinealzheirmersurvey.local.DatabaseHelper;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.local.LoadLocalData;
 
 import javax.inject.Singleton;
@@ -30,6 +31,7 @@ public class AppModule {
     @Provides
     @Singleton
     LoadLocalData provideLoadLocalData() {
-        return new LoadLocalData();
+        DatabaseHelper databaseHelper = new DatabaseHelper(application);
+        return new LoadLocalData(databaseHelper);
     }
 }

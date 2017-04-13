@@ -9,7 +9,9 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuView
 
 public interface RecordView extends SlideMenuView {
 
-    void onLoadLocalRecordSuccess(Report report);
+    void onCreateSqliteFromRecordSuccess();
+
+    void onLoadReportFromDatabaseSuccess(Report report);
 
     void onSaveAssetFileComplete();
 
