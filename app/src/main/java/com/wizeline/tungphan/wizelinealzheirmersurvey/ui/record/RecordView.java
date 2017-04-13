@@ -1,7 +1,6 @@
 package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.record;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Report;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuView;
 
 /**

@@ -1,6 +1,5 @@
 package com.wizeline.tungphan.wizelinealzheirmersurvey.local;
 
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -9,7 +8,6 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.model.PatientSurvey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Report;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
 
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -19,10 +17,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 
 import rx.Observable;
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.FileConstant.REPORT_FILE_NAME;
 import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.FileConstant.SURVEY_FILE_NAME;

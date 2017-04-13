@@ -1,5 +1,8 @@
 package com.wizeline.tungphan.wizelinealzheirmersurvey.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by tungphan on 4/12/17.
  */
 
-public class Answer {
+public class Answer implements Parcelable {
 
     public Answer(String questionId, int[] choseAnswer) {
         this.questionId = questionId;
@@ -36,4 +39,32 @@ public class Answer {
     public void setChoseAnswer(int[] choseAnswer) {
         this.choseAnswer = choseAnswer;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.questionId);
+        dest.writeIntArray(this.choseAnswer);
+    }
+
+    protected Answer(Parcel in) {
+        this.questionId = in.readString();
+        this.choseAnswer = in.createIntArray();
+    }
+
+    public static final Parcelable.Creator<Answer> CREATOR = new Parcelable.Creator<Answer>() {
+        @Override
+        public Answer createFromParcel(Parcel source) {
+            return new Answer(source);
+        }
+
+        @Override
+        public Answer[] newArray(int size) {
+            return new Answer[size];
+        }
+    };
 }
