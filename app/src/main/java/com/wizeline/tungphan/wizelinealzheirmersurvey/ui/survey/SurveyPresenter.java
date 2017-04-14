@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.eventtype.SubmitSurveyEvent;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.model.PatientSurvey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuPresenter;
 
@@ -24,36 +25,45 @@ public class SurveyPresenter extends SlideMenuPresenter {
     public SurveyPresenter(Context context, SurveyView surveyView) {
         super(context);
         this.surveyView = surveyView;
-        initEventBusObserve();
+        initEventBusObserves();
     }
 
-    private void initEventBusObserve() {
+    private void initEventBusObserves() {
+        initSubmitSurveyEventObserve();
+    }
+
+    private void initSubmitSurveyEventObserve() {
         rxEventBus.observable(SubmitSurveyEvent.class)
                 .subscribe(event ->
-                        loadLocalData.savePatientSurveyToDatabase(event.getPatientSurvey()
-                                , event.getSurveyId())
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Observer<Boolean>() {
-                                    @Override
-                                    public void onCompleted() {
+                        savePatientSurveyToDatabase(event.getPatientSurvey(), event.getSurveyId()));
+    }
 
-                                    }
+    public void savePatientSurveyToDatabase(PatientSurvey patientSurvey, String surveyId) {
+        loadLocalData.savePatientSurveyToDatabase(patientSurvey
+                , surveyId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Boolean>() {
+                    @Override
+                    public void onCompleted() {
 
-                                    @Override
-                                    public void onError(Throwable e) {
-                                        Log.e(TAG, e.getMessage());
-                                    }
+                    }
 
-                                    @Override
-                                    public void onNext(Boolean aBoolean) {
-                                        if (aBoolean) {
-                                            surveyView.onSavePatientSurveySuccess();
-                                        } else {
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, e.getMessage());
+                    }
 
-                                        }
-                                    }
-                                }));
+                    @Override
+                    public void onNext(Boolean aBoolean) {
+                        if (aBoolean) {
+                            surveyView.onSavePatientSurveySuccess();
+                        } else {
+
+                        }
+                    }
+
+                });
     }
 
     public void loadSurveyFromLocal() {

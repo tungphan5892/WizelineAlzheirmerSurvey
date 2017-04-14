@@ -2,11 +2,6 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.common;
 
 import android.os.Build;
 
-import com.wizeline.tungphan.wizelinealzheirmersurvey.constant.FileConstant;
-
-import java.io.File;
-import java.util.Arrays;
-
 /**
  * Created by tungphan on 3/23/17.
  */
