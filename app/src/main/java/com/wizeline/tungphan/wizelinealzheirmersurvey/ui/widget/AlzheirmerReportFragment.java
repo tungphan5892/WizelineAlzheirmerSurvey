@@ -14,7 +14,7 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.WizeApp;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.RxEventBus;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Report;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.adapter.AlzheirRecordRViewAdapter;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.adapter.AlzheirReportRViewAdapter;
 
 
 import javax.inject.Inject;
@@ -26,15 +26,15 @@ import butterknife.ButterKnife;
  * Created by tungphan on 4/12/17.
  */
 
-public class AlzheirmerRecordFragment extends Fragment {
-    public static final String TAG = AlzheirmerRecordFragment.class.getSimpleName();
+public class AlzheirmerReportFragment extends Fragment {
+    public static final String TAG = AlzheirmerReportFragment.class.getSimpleName();
 
     @Inject
     RxEventBus rxEventBus;
     private View view;
-    @BindView(R.id.record_recycview)
-    RecyclerView recordRecyclerView;
-    private AlzheirRecordRViewAdapter alzheirRecordRViewAdapter;
+    @BindView(R.id.report_recycview)
+    RecyclerView reportRecycview;
+    private AlzheirReportRViewAdapter alzheirReportRViewAdapter;
 
     public void initInjector(Context context) {
         WizeApp.getAppComponent(context).inject(this);
@@ -43,11 +43,11 @@ public class AlzheirmerRecordFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.alzheirmer_record_fragment, container, false);
+        view = inflater.inflate(R.layout.alzheirmer_report_fragment, container, false);
         ButterKnife.bind(this, view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recordRecyclerView.setLayoutManager(linearLayoutManager);
-        recordRecyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
+        reportRecycview.setLayoutManager(linearLayoutManager);
+        reportRecycview.addItemDecoration(new DividerItemDecoration(getContext()));
         return view;
     }
 
@@ -57,11 +57,11 @@ public class AlzheirmerRecordFragment extends Fragment {
     }
 
     public void setRecordRecyclerViewData(Report report) {
-        alzheirRecordRViewAdapter = new AlzheirRecordRViewAdapter(getContext(), report.getPatientSurveys());
-        recordRecyclerView.setAdapter(alzheirRecordRViewAdapter);
+        alzheirReportRViewAdapter = new AlzheirReportRViewAdapter(getContext(), report.getPatientSurveys());
+        reportRecycview.setAdapter(alzheirReportRViewAdapter);
     }
 
     public int getAlzheirRecordAdapterSize(){
-        return alzheirRecordRViewAdapter.getItemCount();
+        return alzheirReportRViewAdapter.getItemCount();
     }
 }

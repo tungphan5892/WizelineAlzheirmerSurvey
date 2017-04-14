@@ -32,6 +32,9 @@ public class SurveyActivity extends SlideMenuActivity implements SurveyView {
         surveyPresenter.loadSurveyFromLocal();
         addAlzheirmerSurveyFragment();
         processExtraBundle();
+        disableShowNavDrawer();
+        enableShowHomeAsUp();
+        setBackButtonClickListener();
     }
 
     private void processExtraBundle() {

@@ -22,23 +22,23 @@ import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentCons
  * @author : hienngo
  * @since : Sep 02, 2016.
  */
-public class RecordPresenter extends SlideMenuPresenter {
+public class ReportPresenter extends SlideMenuPresenter {
 
-    private static final String TAG = RecordPresenter.class.getSimpleName();
-    private final RecordView recordView;
+    private static final String TAG = ReportPresenter.class.getSimpleName();
+    private final ReportView reportView;
     private Context context;
 
-    public RecordPresenter(Context context, RecordView recordView) {
+    public ReportPresenter(Context context, ReportView reportView) {
         super(context);
         this.context = context;
-        this.recordView = recordView;
+        this.reportView = reportView;
     }
 
     public void startNewSurveyActivity(int patientSurveyId) {
         Intent intent = new Intent(context, SurveyActivity.class);
         //temporary generate patient id = patient list size + 1
         intent.putExtra(PATIENT_SURVEY_ID, patientSurveyId + 1);
-        ((RecordActivity) context).startActivityForResult(intent, START_SURVEY_ACTIVITY);
+        ((ReportActivity) context).startActivityForResult(intent, START_SURVEY_ACTIVITY);
     }
 
     public void createSqliteFromLocalReport() {
@@ -59,7 +59,7 @@ public class RecordPresenter extends SlideMenuPresenter {
                     @Override
                     public void onNext(Boolean aBoolean) {
                         if (aBoolean) {
-                            recordView.onCreateSqliteFromRecordSuccess();
+                            reportView.onCreateSqliteFromRecordSuccess();
                         }
                     }
                 });
@@ -84,9 +84,9 @@ public class RecordPresenter extends SlideMenuPresenter {
                                @Override
                                public void onNext(Boolean aBoolean) {
                                    if (aBoolean) {
-                                       recordView.onSaveAssetFileComplete();
+                                       reportView.onSaveAssetFileComplete();
                                    } else {
-                                       recordView.onSaveAssetFileFailed();
+                                       reportView.onSaveAssetFileFailed();
                                    }
                                }
                            }
@@ -111,7 +111,7 @@ public class RecordPresenter extends SlideMenuPresenter {
                     @Override
                     public void onNext(Report report) {
                         if (report != null) {
-                            recordView.onLoadReportFromDatabaseSuccess(report);
+                            reportView.onLoadReportFromDatabaseSuccess(report);
                         }
                     }
                 });

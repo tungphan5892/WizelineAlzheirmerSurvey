@@ -25,26 +25,26 @@ import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentCons
  * Created by tungphan on 4/12/17.
  */
 
-public class AlzheirRecordRViewAdapter
-        extends RecyclerView.Adapter<AlzheirRecordRViewAdapter.AlzheirRecordRViewViewHolder> {
+public class AlzheirReportRViewAdapter
+        extends RecyclerView.Adapter<AlzheirReportRViewAdapter.AlzheirRecordRViewViewHolder> {
 
     private List<PatientSurvey> patientSurveys;
     private Context context;
 
-    public AlzheirRecordRViewAdapter(Context context, List<PatientSurvey> patientSurveys) {
+    public AlzheirReportRViewAdapter(Context context, List<PatientSurvey> patientSurveys) {
         this.context = context;
         this.patientSurveys = patientSurveys;
     }
 
     @Override
-    public AlzheirRecordRViewAdapter.AlzheirRecordRViewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AlzheirReportRViewAdapter.AlzheirRecordRViewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.record_item, parent, false);
+                .inflate(R.layout.report_item, parent, false);
         return new AlzheirRecordRViewViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(AlzheirRecordRViewAdapter.AlzheirRecordRViewViewHolder holder, int position) {
+    public void onBindViewHolder(AlzheirReportRViewAdapter.AlzheirRecordRViewViewHolder holder, int position) {
         PatientSurvey patientSurvey = patientSurveys.get(position);
         holder.patientName.setText(patientSurvey.getPatientName());
         holder.diseaseCausePercent.setText(patientSurvey.getDiseaseCausePercentage().toString());

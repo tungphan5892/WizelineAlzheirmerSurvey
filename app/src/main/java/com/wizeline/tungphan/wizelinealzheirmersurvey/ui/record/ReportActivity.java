@@ -10,7 +10,7 @@ import android.view.View;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Report;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuActivity;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.AlzheirmerRecordFragment;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.AlzheirmerReportFragment;
 
 import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant.START_SURVEY_ACTIVITY;
 
@@ -18,50 +18,51 @@ import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentCons
  * Created by tungphan on 4/8/17.
  */
 
-public class RecordActivity extends SlideMenuActivity implements RecordView {
+public class ReportActivity extends SlideMenuActivity implements ReportView {
 
-    private static final String TAG = RecordActivity.class.getSimpleName();
-    private AlzheirmerRecordFragment alzheirmerRecordFragment;
-    private RecordPresenter recordPresenter;
+    private static final String TAG = ReportActivity.class.getSimpleName();
+    private AlzheirmerReportFragment alzheirmerReportFragment;
+    private ReportPresenter reportPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         floatingActionButton.setVisibility(View.VISIBLE);
         floatingActionButton.setOnClickListener(v -> {
-            recordPresenter.startNewSurveyActivity(alzheirmerRecordFragment
+            reportPresenter.startNewSurveyActivity(alzheirmerReportFragment
                     .getAlzheirRecordAdapterSize());
         });
-        recordPresenter = new RecordPresenter(this, this);
-        recordPresenter.saveAssetFiles();
+        reportPresenter = new ReportPresenter(this, this);
+        reportPresenter.saveAssetFiles();
         addAlzheirmerRecordFragment();
+        enableShowNavDrawer();
     }
 
     private void addAlzheirmerRecordFragment() {
-        if (alzheirmerRecordFragment == null) {
-            alzheirmerRecordFragment = new AlzheirmerRecordFragment();
-            alzheirmerRecordFragment.initInjector(this);
+        if (alzheirmerReportFragment == null) {
+            alzheirmerReportFragment = new AlzheirmerReportFragment();
+            alzheirmerReportFragment.initInjector(this);
         }
         getSupportFragmentManager().beginTransaction().add(R.id.content_layout
-                , alzheirmerRecordFragment, AlzheirmerRecordFragment.TAG)
+                , alzheirmerReportFragment, AlzheirmerReportFragment.TAG)
                 .commit();
     }
 
     @Override
     public void onCreateSqliteFromRecordSuccess() {
-        recordPresenter.getFirstReportData();
+        reportPresenter.getFirstReportData();
     }
 
     @Override
     public void onLoadReportFromDatabaseSuccess(Report report) {
         Log.e(TAG, "onLoadLocalSurveySuccess");
-        alzheirmerRecordFragment.setRecordRecyclerViewData(report);
+        alzheirmerReportFragment.setRecordRecyclerViewData(report);
     }
 
     @Override
     public void onSaveAssetFileComplete() {
         Log.e(TAG, "onSaveAssetFileComplete");
-        recordPresenter.createSqliteFromLocalReport();
+        reportPresenter.createSqliteFromLocalReport();
     }
 
     @Override
@@ -74,7 +75,7 @@ public class RecordActivity extends SlideMenuActivity implements RecordView {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == START_SURVEY_ACTIVITY) {
             if (resultCode == Activity.RESULT_OK) {
-                recordPresenter.getFirstReportData();
+                reportPresenter.getFirstReportData();
                 Snackbar.make(contentLayout, R.string.notify_text_add_patient_survey_success
                         , Snackbar.LENGTH_LONG).show();
             } else {

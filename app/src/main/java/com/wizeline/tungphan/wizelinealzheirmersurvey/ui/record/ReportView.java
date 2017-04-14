@@ -7,7 +7,7 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuView
  * Created by tungphan on 4/9/17.
  */
 
-public interface RecordView extends SlideMenuView {
+public interface ReportView extends SlideMenuView {
 
     void onCreateSqliteFromRecordSuccess();
 
