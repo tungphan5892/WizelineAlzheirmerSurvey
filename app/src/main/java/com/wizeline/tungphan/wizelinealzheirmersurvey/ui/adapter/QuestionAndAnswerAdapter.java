@@ -16,6 +16,7 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Option;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.QuestionAndAnswer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -33,6 +34,13 @@ public class QuestionAndAnswerAdapter
     //using answer list to save the data when user change the answer
     //so that when user click submit button we can create object to save result.
     private List<Answer> answers;
+    private float diseaseCausePercentage = 0.0f;
+    //flag to check user interacted with radiogroup or not.
+    private boolean isEdited = false;
+
+    public boolean isEdited(){
+        return isEdited;
+    }
 
     public QuestionAndAnswerAdapter(Context context, List<QuestionAndAnswer> questionAndAnswers,
                                     boolean editable) {
@@ -103,7 +111,7 @@ public class QuestionAndAnswerAdapter
                     final int[] answerId = new int[1];
                     answerId[0] = checkedId;
                     answers.get(position).setChoseAnswer(answerId);
-
+                    isEdited = true;
                 });
                 //checked answer in case this adapter un-editable
                 if (!editable) {
@@ -124,7 +132,12 @@ public class QuestionAndAnswerAdapter
         radioButton.setId(position);
         radioButton.setText(options.get(position).getOption());
         if (editable) {
+            //in case editable, set clickable = true
             radioButton.setClickable(true);
+            //set checked if this is the first radiobutton
+            if (position == 0) {
+                radioButton.setChecked(true);
+            }
         } else {
             radioButton.setClickable(false);
         }
@@ -150,5 +163,15 @@ public class QuestionAndAnswerAdapter
 
     public List<Answer> getAnswers() {
         return answers;
+    }
+
+    public float getDiseaseCausePercentage() {
+        for (int i = 0; i < answers.size(); i++) {
+            if (Arrays.equals(answers.get(i).getChoseAnswer()
+                    , questionAndAnswers.get(i).getCorrectAnswer())) {
+                diseaseCausePercentage += questionAndAnswers.get(i).getOutputResult();
+            }
+        }
+        return diseaseCausePercentage;
     }
 }

@@ -3,6 +3,7 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,15 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.WizeApp;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.RxEventBus;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.eventtype.IllegalInputEvent;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.eventtype.SubmitSurveyEvent;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Answer;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.PatientSurvey;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.model.QuestionAndAnswer;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.adapter.QuestionAndAnswerAdapter;
 
 import java.util.List;
@@ -47,10 +50,14 @@ public class AlzheirmerSurveyFragment extends Fragment {
     TextView guideTextView;
     @BindView(R.id.patient_name)
     EditText patientNameEditText;
+    @BindView(R.id.parent_layout)
+    RelativeLayout parentLayout;
     private QuestionAndAnswerAdapter questionAndAnswerAdapter;
     //this field is using for switch this fragment to editable or un-editable
     private boolean editable;
     private PatientSurvey patientSurvey;
+    private String surveyId;
+    private String patientSurveyId;
     private String patientName;
 
     public void setPatientName(String patientName) {
@@ -61,6 +68,10 @@ public class AlzheirmerSurveyFragment extends Fragment {
         this.patientSurvey = patientSurvey;
     }
 
+    public void setPatientSurveyId(String patientSurveyId) {
+        this.patientSurveyId = patientSurveyId;
+    }
+
     public void setEditable(boolean editable) {
         this.editable = editable;
     }
@@ -69,14 +80,36 @@ public class AlzheirmerSurveyFragment extends Fragment {
         WizeApp.getAppComponent(context).inject(this);
     }
 
-
     private View.OnClickListener submitBtnClickListener = v -> {
-        List<Answer> answers = questionAndAnswerAdapter.getAnswers();
-        //TODO: caculate the disease percentage if neccessary
-        PatientSurvey patientSurvey = new PatientSurvey(patientNameEditText.getText().toString(),
-                answers, 0.0f);
-        rxEventBus.post(new SubmitSurveyEvent(patientSurvey));
+        if (getIllegalInputType() == IllegalInputEvent.InputType.LEGAL) {
+            sendSubmitSurveyEvent();
+        } else {
+            if (getIllegalInputType() == IllegalInputEvent.InputType.NAME_EDITTEXT) {
+                Snackbar.make(parentLayout, R.string.text_require_name_entered
+                        , Snackbar.LENGTH_LONG).show();
+            } else if (getIllegalInputType() == IllegalInputEvent.InputType.NOT_INTERACTED) {
+                Snackbar.make(parentLayout, R.string.warning_no_field_changed, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.text_submit_button, view ->
+                                sendSubmitSurveyEvent()).show();
+            }
+        }
     };
+
+    private PatientSurvey getPatientSurveyFromInput() {
+        List<Answer> answers = questionAndAnswerAdapter.getAnswers();
+        float deseaseCausePercent = questionAndAnswerAdapter.getDiseaseCausePercentage();
+        return new PatientSurvey(patientSurveyId
+                , patientNameEditText.getText().toString()
+                , answers, deseaseCausePercent);
+    }
+
+    private void sendSubmitSurveyEvent() {
+        rxEventBus.post(createSubmitSurveyEvent());
+    }
+
+    private SubmitSurveyEvent createSubmitSurveyEvent() {
+        return new SubmitSurveyEvent(getPatientSurveyFromInput(), surveyId);
+    }
 
     @Nullable
     @Override
@@ -99,9 +132,10 @@ public class AlzheirmerSurveyFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public void setQuestionAnswerRViewData(List<QuestionAndAnswer> questionAndAnswers) {
+    public void setQuestionAnswerRViewData(Survey survey) {
+        surveyId = survey.getSurveyId();
         questionAndAnswerAdapter = new QuestionAndAnswerAdapter(getContext()
-                , questionAndAnswers, editable);
+                , survey.getQuestionAndAnswers(), editable);
         if (!editable) {
             questionAndAnswerAdapter.setAnswers(patientSurvey.getAnswers());
         }
@@ -118,12 +152,22 @@ public class AlzheirmerSurveyFragment extends Fragment {
         patientNameEditText.setText(patientName);
     }
 
-    void setupEditEnable() {
+    private void setupEditEnable() {
         submitButon.setVisibility(View.VISIBLE);
         patientNameEditText.setClickable(true);
         patientNameEditText.setCursorVisible(true);
         patientNameEditText.setFocusable(true);
         patientNameEditText.setFocusableInTouchMode(true);
         guideTextView.setVisibility(View.VISIBLE);
+    }
+
+    private IllegalInputEvent.InputType getIllegalInputType() {
+        if (patientNameEditText.getText().toString().equalsIgnoreCase("")) {
+            return IllegalInputEvent.InputType.NAME_EDITTEXT;
+        }
+        if (!questionAndAnswerAdapter.isEdited()) {
+            return IllegalInputEvent.InputType.NOT_INTERACTED;
+        }
+        return IllegalInputEvent.InputType.LEGAL;
     }
 }

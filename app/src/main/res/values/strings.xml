@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">WizelineAlzheirmerSurvey</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -13,4 +11,7 @@
     <string name="text_disease_cause_percent">Disease Cause Percent:&#160;</string>
     <string name="notify_text_add_patient_survey_fail">Add patient\'s survey failed</string>
     <string name="notify_text_add_patient_survey_success">Add patient\'s survey success</string>
+    <string name="text_require_name_entered">Please give us your name!</string>
+    <string name="warning_no_field_changed">Are you sure to leave your answer by default?</string>
+    <string name="text_submit_button">Submit</string>
 </resources>

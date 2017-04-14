@@ -1,9 +1,12 @@
 package com.wizeline.tungphan.wizelinealzheirmersurvey.local;
 
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.WizeApp;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Answer;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.PatientSurvey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Report;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
@@ -12,9 +15,8 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.List;
 
 import rx.Observable;
 import rx.functions.Func1;
@@ -28,6 +30,11 @@ import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.FileConsta
 
 public class LoadLocalData {
     private static final String TAG = LoadLocalData.class.getSimpleName();
+    private DatabaseHelper databaseHelper;
+
+    public LoadLocalData(DatabaseHelper databaseHelper) {
+        this.databaseHelper = databaseHelper;
+    }
 
     public Observable<Survey> loadLocalSurvey() {
         return Observable.fromCallable(() -> {
@@ -44,6 +51,11 @@ public class LoadLocalData {
             }.getType();
             return gson.fromJson(br, type);
         });
+    }
+
+    //get the report from database by loading the first survey.
+    public Observable<Report> loadReportFromDatabase() {
+        return Observable.fromCallable(() -> databaseHelper.getFirstSurvey());
     }
 
     public Observable<Report> loadLocalReport() {
@@ -63,40 +75,43 @@ public class LoadLocalData {
         });
     }
 
-    public Observable<Boolean> savePatientSurveyToLocal(PatientSurvey patientSurvey) {
+    public Observable<Boolean> createSqliteFromLocalReport() {
         return loadLocalReport().flatMap(new Func1<Report, Observable<Boolean>>() {
             @Override
             public Observable<Boolean> call(Report report) {
-                return addPatientSurveyToFile(report, patientSurvey);
+                return createReportSqlite(report);
             }
         });
     }
 
-    private Observable<Boolean> addPatientSurveyToFile(Report report, PatientSurvey patientSurvey) {
+    private Observable<Boolean> createReportSqlite(Report report) {
         return Observable.create(subscriber -> {
-            int addIndex = report.getPatientSurveys().size();
-            report.getPatientSurveys().add(addIndex, patientSurvey);
-            FileWriter fileWriter = null;
-            try {
-                fileWriter = new FileWriter(
-                        WizeApp.getInstance().getExternalFilesDir(null) + REPORT_FILE_NAME);
-                Gson gson = new Gson();
-                String data = gson.toJson(report);
-                fileWriter.write(data);
-                subscriber.onNext(true);
-            } catch (Exception e) {
-                subscriber.onNext(false);
-                e.printStackTrace();
-            } finally {
-                try {
-                    fileWriter.flush();
-                    fileWriter.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+            databaseHelper.insertReport(report);
+            List<PatientSurvey> patientSurveys = report.getPatientSurveys();
+            for (int i = 0; i < patientSurveys.size(); i++) {
+                final PatientSurvey patientSurvey = patientSurveys.get(i);
+                Log.e("TFunk1 ", patientSurveys.get(i).getPatientSurveyId());
+                databaseHelper.insertPatientSurvey(patientSurvey
+                        , report.getSurveyId());
+                final List<Answer> answers = patientSurvey.getAnswers();
+                for (int j = 0; j < answers.size(); j++) {
+                    databaseHelper.insertAnswer(answers.get(j), patientSurvey.getPatientSurveyId());
                 }
             }
+            subscriber.onNext(true);
             subscriber.onCompleted();
         });
+    }
 
+    public Observable<Boolean> savePatientSurveyToDatabase(PatientSurvey patientSurvey, String surveyId) {
+        return Observable.fromCallable(() -> {
+                    databaseHelper.insertPatientSurvey(patientSurvey, surveyId);
+                    List<Answer> answers = patientSurvey.getAnswers();
+                    for (int i = 0; i < answers.size(); i++) {
+                        databaseHelper.insertAnswer(answers.get(i), patientSurvey.getPatientSurveyId());
+                    }
+                    return true;
+                }
+        );
     }
 }

@@ -6,7 +6,6 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,6 +14,9 @@ import java.util.List;
 
 public class PatientSurvey implements Parcelable {
 
+    @SerializedName("patient_survey_id")
+    @Expose
+    private String patientSurveyId;
     @SerializedName("patient_name")
     @Expose
     private String patientName;
@@ -25,11 +27,20 @@ public class PatientSurvey implements Parcelable {
     @Expose
     private Float diseaseCausePercentage;
 
-    public PatientSurvey(String patientName, List<Answer> answers
+    public PatientSurvey(String patientSurveyId, String patientName, List<Answer> answers
             , Float diseaseCausePercentage) {
+        this.patientSurveyId = patientSurveyId;
         this.patientName = patientName;
         this.answers = answers;
         this.diseaseCausePercentage = diseaseCausePercentage;
+    }
+
+    public String getPatientSurveyId() {
+        return patientSurveyId;
+    }
+
+    public void setPatientSurveyId(String patientSurveyId) {
+        this.patientSurveyId = patientSurveyId;
     }
 
     public String getPatientName() {
@@ -63,12 +74,14 @@ public class PatientSurvey implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.patientSurveyId);
         dest.writeString(this.patientName);
         dest.writeTypedList(this.answers);
         dest.writeValue(this.diseaseCausePercentage);
     }
 
     protected PatientSurvey(Parcel in) {
+        this.patientSurveyId = in.readString();
         this.patientName = in.readString();
         this.answers = in.createTypedArrayList(Answer.CREATOR);
         this.diseaseCausePercentage = (Float) in.readValue(Float.class.getClassLoader());

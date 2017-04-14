@@ -9,12 +9,18 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.model.PatientSurvey;
 public class SubmitSurveyEvent {
 
     private PatientSurvey patientSurvey;
+    private String surveyId;
 
-    public SubmitSurveyEvent(PatientSurvey patientSurvey){
+    public SubmitSurveyEvent(PatientSurvey patientSurvey, String surveyId) {
         this.patientSurvey = patientSurvey;
+        this.surveyId = surveyId;
     }
 
-    public PatientSurvey getPatientSurvey(){
+    public PatientSurvey getPatientSurvey() {
         return patientSurvey;
+    }
+
+    public String getSurveyId() {
+        return surveyId;
     }
 }

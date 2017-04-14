@@ -1,29 +1,31 @@
 {
+  "survey_id": "0",
   "survey_type": "alzheirmer_survey",
   "patient_survey_list": [
     {
+      "patient_survey_id": "0",
       "patient_name": "Tung",
       "answer_list": [
         {
-          "question_id": 0,
+          "question_id": "0",
           "chose_answer": [
             1
           ]
         },
         {
-          "question_id": 1,
+          "question_id": "1",
           "chose_answer": [
             1
           ]
         },
         {
-          "question_id": 2,
+          "question_id": "2",
           "chose_answer": [
             0
           ]
         },
         {
-          "question_id": 3,
+          "question_id": "3",
           "chose_answer": [
             1
           ]
@@ -32,28 +34,29 @@
       "disease_cause_percentage": 0.00
     },
     {
+      "patient_survey_id": "1",
       "patient_name": "Xuan",
       "answer_list": [
         {
-          "question_id": 0,
+          "question_id": "0",
           "chose_answer": [
             0
           ]
         },
         {
-          "question_id": 1,
+          "question_id": "1",
           "chose_answer": [
             0
           ]
         },
         {
-          "question_id": 2,
+          "question_id": "2",
           "chose_answer": [
             1
           ]
         },
         {
-          "question_id": 3,
+          "question_id": "3",
           "chose_answer": [
             0
           ]
@@ -62,28 +65,29 @@
       "disease_cause_percentage": 1.00
     },
     {
+      "patient_survey_id": "2",
       "patient_name": "Hien",
       "answer_list": [
         {
-          "question_id": 0,
+          "question_id": "0",
           "chose_answer": [
             1
           ]
         },
         {
-          "question_id": 1,
+          "question_id": "1",
           "chose_answer": [
             1
           ]
         },
         {
-          "question_id": 2,
+          "question_id": "2",
           "chose_answer": [
             3
           ]
         },
         {
-          "question_id": 3,
+          "question_id": "3",
           "chose_answer": [
             1
           ]
@@ -92,28 +96,29 @@
       "disease_cause_percentage": 0.00
     },
     {
+      "patient_survey_id": "3",
       "patient_name": "Luis",
       "answer_list": [
         {
-          "question_id": 0,
+          "question_id": "0",
           "chose_answer": [
             0
           ]
         },
         {
-          "question_id": 1,
+          "question_id": "1",
           "chose_answer": [
             0
           ]
         },
         {
-          "question_id": 2,
+          "question_id": "2",
           "chose_answer": [
             4
           ]
         },
         {
-          "question_id": 3,
+          "question_id": "3",
           "chose_answer": [
             0
           ]
@@ -122,28 +127,29 @@
       "disease_cause_percentage": 0.75
     },
     {
+      "patient_survey_id": "4",
       "patient_name": "Matt",
       "answer_list": [
         {
-          "question_id": 0,
+          "question_id": "0",
           "chose_answer": [
             1
           ]
         },
         {
-          "question_id": 1,
+          "question_id": "1",
           "chose_answer": [
             0
           ]
         },
         {
-          "question_id": 2,
+          "question_id": "2",
           "chose_answer": [
             0
           ]
         },
         {
-          "question_id": 3,
+          "question_id": "3",
           "chose_answer": [
             1
           ]
@@ -152,28 +158,29 @@
       "disease_cause_percentage": 0.25
     },
     {
+      "patient_survey_id": "5",
       "patient_name": "Cong",
       "answer_list": [
         {
-          "question_id": 0,
+          "question_id": "0",
           "chose_answer": [
             1
           ]
         },
         {
-          "question_id": 1,
+          "question_id": "1",
           "chose_answer": [
             0
           ]
         },
         {
-          "question_id": 2,
+          "question_id": "2",
           "chose_answer": [
             0
           ]
         },
         {
-          "question_id": 3,
+          "question_id": "3",
           "chose_answer": [
             0
           ]
@@ -182,28 +189,29 @@
       "disease_cause_percentage": 0.5
     },
     {
+      "patient_survey_id": "6",
       "patient_name": "Thien",
       "answer_list": [
         {
-          "question_id": 0,
+          "question_id": "0",
           "chose_answer": [
             1
           ]
         },
         {
-          "question_id": 1,
+          "question_id": "1",
           "chose_answer": [
             0
           ]
         },
         {
-          "question_id": 2,
+          "question_id": "2",
           "chose_answer": [
             0
           ]
         },
         {
-          "question_id": 3,
+          "question_id": "3",
           "chose_answer": [
             0
           ]
@@ -212,28 +220,29 @@
       "disease_cause_percentage": 0.5
     },
     {
+      "patient_survey_id": "7",
       "patient_name": "Tam",
       "answer_list": [
         {
-          "question_id": 0,
+          "question_id": "0",
           "chose_answer": [
             1
           ]
         },
         {
-          "question_id": 1,
+          "question_id": "1",
           "chose_answer": [
             0
           ]
         },
         {
-          "question_id": 2,
+          "question_id": "2",
           "chose_answer": [
             0
           ]
         },
         {
-          "question_id": 3,
+          "question_id": "3",
           "chose_answer": [
             0
           ]
@@ -242,28 +251,29 @@
       "disease_cause_percentage": 0.75
     },
     {
+      "patient_survey_id": "8",
       "patient_name": "Tara",
       "answer_list": [
         {
-          "question_id": 0,
+          "question_id": "0",
           "chose_answer": [
             1
           ]
         },
         {
-          "question_id": 1,
+          "question_id": "1",
           "chose_answer": [
             1
           ]
         },
         {
-          "question_id": 2,
+          "question_id": "2",
           "chose_answer": [
             1
           ]
         },
         {
-          "question_id": 3,
+          "question_id": "3",
           "chose_answer": [
             1
           ]
