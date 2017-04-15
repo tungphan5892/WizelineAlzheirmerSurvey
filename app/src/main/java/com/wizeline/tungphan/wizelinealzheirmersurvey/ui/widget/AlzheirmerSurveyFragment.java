@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,18 +83,36 @@ public class AlzheirmerSurveyFragment extends Fragment {
 
     private View.OnClickListener submitBtnClickListener = v -> {
         if (getIllegalInputType() == IllegalInputEvent.InputType.LEGAL) {
+            Log.e(TAG,"submitBtnClickListener");
             sendSubmitSurveyEvent();
         } else {
             if (getIllegalInputType() == IllegalInputEvent.InputType.NAME_EDITTEXT) {
                 Snackbar.make(parentLayout, R.string.text_require_name_entered
                         , Snackbar.LENGTH_LONG).show();
             } else if (getIllegalInputType() == IllegalInputEvent.InputType.NOT_INTERACTED) {
-                Snackbar.make(parentLayout, R.string.warning_no_field_changed, Snackbar.LENGTH_LONG)
-                        .setAction(R.string.text_submit_button, view ->
-                                sendSubmitSurveyEvent()).show();
+                showNotInteractedSnackbar();
             }
         }
     };
+
+    private void showNotInteractedSnackbar() {
+        Snackbar.make(parentLayout, R.string.warning_no_field_changed, Snackbar.LENGTH_LONG)
+                .setAction(R.string.text_submit_button, view -> {
+                    Log.e(TAG,"showNotInteractedSnackbar");
+                    sendSubmitSurveyEvent();
+                })
+                .addCallback(new Snackbar.Callback() {
+                    @Override
+                    public void onDismissed(Snackbar snackbar, int event) {
+                        submitButon.setClickable(true);
+                    }
+
+                    @Override
+                    public void onShown(Snackbar snackbar) {
+                        submitButon.setClickable(false);
+                    }
+                }).show();
+    }
 
     private PatientSurvey getPatientSurveyFromInput() {
         List<Answer> answers = questionAndAnswerAdapter.getAnswers();
@@ -104,6 +123,7 @@ public class AlzheirmerSurveyFragment extends Fragment {
     }
 
     private void sendSubmitSurveyEvent() {
+        Log.e(TAG,"sendSubmitSurveyEvent");
         rxEventBus.post(createSubmitSurveyEvent());
     }
 

@@ -12,6 +12,7 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuPres
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * @author : hienngo
@@ -21,6 +22,7 @@ public class SurveyPresenter extends SlideMenuPresenter {
 
     private static final String TAG = SurveyPresenter.class.getSimpleName();
     private final SurveyView surveyView;
+    private CompositeSubscription subscriptions;
 
     public SurveyPresenter(Context context, SurveyView surveyView) {
         super(context);
@@ -28,14 +30,21 @@ public class SurveyPresenter extends SlideMenuPresenter {
         initEventBusObserves();
     }
 
+    public void setSubscriptions(CompositeSubscription subscriptions) {
+        this.subscriptions = subscriptions;
+    }
+
     private void initEventBusObserves() {
         initSubmitSurveyEventObserve();
     }
 
     private void initSubmitSurveyEventObserve() {
-        rxEventBus.observable(SubmitSurveyEvent.class)
-                .subscribe(event ->
-                        savePatientSurveyToDatabase(event.getPatientSurvey(), event.getSurveyId()));
+        subscriptions.add(rxEventBus.observable(SubmitSurveyEvent.class)
+                .subscribe(event -> {
+                    Log.e(TAG, "initSubmitSurveyEventObserve");
+                    savePatientSurveyToDatabase(event.getPatientSurvey(), event.getSurveyId());
+                })
+        );
     }
 
     public void savePatientSurveyToDatabase(PatientSurvey patientSurvey, String surveyId) {

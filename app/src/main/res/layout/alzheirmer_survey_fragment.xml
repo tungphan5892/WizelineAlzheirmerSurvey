@@ -13,12 +13,7 @@
             android:id="@+id/middle_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/normal_footer_height"
-            android:layout_marginEnd="@dimen/normal_layout_margin"
-            android:layout_marginLeft="@dimen/normal_layout_margin"
-            android:layout_marginRight="@dimen/normal_layout_margin"
-            android:layout_marginStart="@dimen/normal_layout_margin"
-            android:layout_marginTop="@dimen/normal_layout_margin"
+            android:layout_margin="@dimen/normal_layout_margin"
             android:orientation="vertical">
 
             <TextView

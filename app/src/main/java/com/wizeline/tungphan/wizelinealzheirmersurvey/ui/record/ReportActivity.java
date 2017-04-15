@@ -49,13 +49,8 @@ public class ReportActivity extends SlideMenuActivity implements ReportView {
     }
 
     @Override
-    public void onCreateSqliteFromRecordSuccess() {
-        reportPresenter.getFirstReportData();
-    }
-
-    @Override
     public void onLoadReportFromDatabaseSuccess(Report report) {
-        Log.e(TAG, "onLoadLocalSurveySuccess");
+        Log.e(TAG, "onLoadReportFromDatabaseSuccess");
         alzheirmerReportFragment.setRecordRecyclerViewData(report);
     }
 

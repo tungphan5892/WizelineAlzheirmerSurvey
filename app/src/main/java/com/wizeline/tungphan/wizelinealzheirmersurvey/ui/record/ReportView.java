@@ -9,8 +9,6 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuView
 
 public interface ReportView extends SlideMenuView {
 
-    void onCreateSqliteFromRecordSuccess();
-
     void onLoadReportFromDatabaseSuccess(Report report);
 
     void onSaveAssetFileComplete();

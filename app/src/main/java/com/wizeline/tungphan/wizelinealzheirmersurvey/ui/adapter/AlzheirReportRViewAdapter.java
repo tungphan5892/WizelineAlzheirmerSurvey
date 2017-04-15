@@ -1,5 +1,6 @@
 package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -43,11 +44,13 @@ public class AlzheirReportRViewAdapter
         return new AlzheirRecordRViewViewHolder(itemView);
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public void onBindViewHolder(AlzheirReportRViewAdapter.AlzheirRecordRViewViewHolder holder, int position) {
         PatientSurvey patientSurvey = patientSurveys.get(position);
         holder.patientName.setText(patientSurvey.getPatientName());
-        holder.diseaseCausePercent.setText(patientSurvey.getDiseaseCausePercentage().toString());
+        float percent = 100 * patientSurvey.getDiseaseCausePercentage();
+        holder.diseaseCausePercent.setText(String.format("%.0f%%", percent));
         holder.recordItemLayout.setOnClickListener(v -> {
             Intent intent = new Intent(context, SurveyActivity.class);
             intent.putExtra(SURVEY_VIEW_ONLY, true);

@@ -56,6 +56,12 @@ public class SurveyActivity extends SlideMenuActivity implements SurveyView {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        surveyPresenter.setSubscriptions(subscriptions);
+    }
+
     private void addAlzheirmerSurveyFragment() {
         if (alzheirmerSurveyFragment == null) {
             alzheirmerSurveyFragment = new AlzheirmerSurveyFragment();

@@ -15,8 +15,11 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant.PATIENT_NAME;
 import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant.PATIENT_SURVEY_ID;
+import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant.PATIENT_SURVEY_OBJECT;
 import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant.START_SURVEY_ACTIVITY;
+import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant.SURVEY_VIEW_ONLY;
 
 /**
  * @author : hienngo
@@ -38,6 +41,7 @@ public class ReportPresenter extends SlideMenuPresenter {
         Intent intent = new Intent(context, SurveyActivity.class);
         //temporary generate patient id = patient list size + 1
         intent.putExtra(PATIENT_SURVEY_ID, patientSurveyId + 1);
+        intent.putExtra(SURVEY_VIEW_ONLY, false);
         ((ReportActivity) context).startActivityForResult(intent, START_SURVEY_ACTIVITY);
     }
 
@@ -53,13 +57,13 @@ public class ReportPresenter extends SlideMenuPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("TAG", e.getMessage());
+                        Log.e(TAG, e.getMessage());
                     }
 
                     @Override
                     public void onNext(Boolean aBoolean) {
                         if (aBoolean) {
-                            reportView.onCreateSqliteFromRecordSuccess();
+                            getFirstReportData();
                         }
                     }
                 });
@@ -105,7 +109,7 @@ public class ReportPresenter extends SlideMenuPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("TAG", e.getMessage());
+                        Log.e(TAG, e.getMessage());
                     }
 
                     @Override

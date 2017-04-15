@@ -8,6 +8,8 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.local.LoadLocalData;
 
 import javax.inject.Inject;
 
+import rx.subscriptions.CompositeSubscription;
+
 /**
  * @author Hien Ngo
  * @since 7/27/16
@@ -19,6 +21,7 @@ public class BasePresenter {
     protected LoadLocalData loadLocalData;
     @Inject
     protected RxEventBus rxEventBus;
+
     private Context context;
 
     public BasePresenter() {

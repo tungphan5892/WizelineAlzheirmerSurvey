@@ -2,6 +2,7 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ import butterknife.ButterKnife;
 
 public class QuestionAndAnswerAdapter
         extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+    private static final String TAG = QuestionAndAnswerAdapter.class.getSimpleName();
     private Context context;
     private List<QuestionAndAnswer> questionAndAnswers;
     private boolean editable;
@@ -38,7 +39,7 @@ public class QuestionAndAnswerAdapter
     //flag to check user interacted with radiogroup or not.
     private boolean isEdited = false;
 
-    public boolean isEdited(){
+    public boolean isEdited() {
         return isEdited;
     }
 
@@ -65,6 +66,7 @@ public class QuestionAndAnswerAdapter
                     answers.add(i, new Answer(questionAndAnswer.getQuestionId()
                             , answerId));
                 }
+
             }
         }
     }
@@ -106,21 +108,26 @@ public class QuestionAndAnswerAdapter
                 for (int i = 0; i < options.size(); i++) {
                     viewHolder.radioGroup.addView(initRadioButton(options, i));
                 }
-                //update answers data everytime user pick an answer
-                viewHolder.radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-                    final int[] answerId = new int[1];
-                    answerId[0] = checkedId;
-                    answers.get(position).setChoseAnswer(answerId);
-                    isEdited = true;
-                });
-                //checked answer in case this adapter un-editable
-                if (!editable) {
+                if (editable) {
+                    //update answers data everytime user pick an answer
+                    viewHolder.radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+                        final int[] answerId = new int[1];
+                        answerId[0] = checkedId;
+                        answers.get(position).setChoseAnswer(answerId);
+                        isEdited = true;
+                    });
+                } else {
+                    //checked answer in case this adapter un-editable
                     Answer answer = answers.get(position);
+                    Log.e(TAG, "questionAndAnswer.getQuestionId(): " + questionAndAnswer.getQuestionId()
+                            + "answer.getQuestionId(): " + answer.getQuestionId());
                     if (questionAndAnswer.getQuestionId().equalsIgnoreCase(answer.getQuestionId())
                             && answer.getChoseAnswer().length > 0) {
                         RadioButton radioButton = (RadioButton) viewHolder.radioGroup
                                 .getChildAt(answer.getChoseAnswer()[0]);
-                        radioButton.setChecked(true);
+                        if(radioButton!=null) {
+                            radioButton.setChecked(true);
+                        }
                     }
                 }
                 break;
@@ -166,6 +173,7 @@ public class QuestionAndAnswerAdapter
     }
 
     public float getDiseaseCausePercentage() {
+        diseaseCausePercentage = 0.0f;
         for (int i = 0; i < answers.size(); i++) {
             if (Arrays.equals(answers.get(i).getChoseAnswer()
                     , questionAndAnswers.get(i).getCorrectAnswer())) {
