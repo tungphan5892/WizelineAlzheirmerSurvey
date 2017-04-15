@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * @author Hien Ngo
@@ -16,12 +17,19 @@ public class BaseActivity extends AppCompatActivity {
     private Unbinder unbinder;
 
     private BasePresenter presenter;
+    protected CompositeSubscription subscriptions;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new BasePresenter(this);
         presenter.initInjector();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        subscriptions = new CompositeSubscription();
     }
 
     @Override
@@ -34,5 +42,14 @@ public class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         unbinder.unbind();
         super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (subscriptions != null) {
+            subscriptions.unsubscribe();
+            subscriptions = null;
+        }
     }
 }

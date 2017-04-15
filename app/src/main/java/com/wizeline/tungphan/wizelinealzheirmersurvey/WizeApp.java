@@ -70,7 +70,6 @@ public class WizeApp extends Application {
         };
     }
 
-    //TODO: copy only once, for now it copy everytime we run the app
     private void copyFileToExternal(AssetManager assetManager, String filename) {
         InputStream in = null;
         OutputStream out = null;

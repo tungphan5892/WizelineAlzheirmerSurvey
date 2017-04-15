@@ -14,4 +14,7 @@
     <string name="text_require_name_entered">Please give us your name!</string>
     <string name="warning_no_field_changed">Are you sure to leave your answer by default?</string>
     <string name="text_submit_button">Submit</string>
+    <string name="navigate_up">Navigate up</string>
+    <string name="title_survey_activity">Survey</string>
+    <string name="title_report_activity">Report</string>
 </resources>

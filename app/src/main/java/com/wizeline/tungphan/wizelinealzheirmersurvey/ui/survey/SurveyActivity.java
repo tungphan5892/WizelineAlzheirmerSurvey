@@ -32,6 +32,9 @@ public class SurveyActivity extends SlideMenuActivity implements SurveyView {
         surveyPresenter.loadSurveyFromLocal();
         addAlzheirmerSurveyFragment();
         processExtraBundle();
+        disableShowNavDrawer();
+        enableShowHomeAsUp();
+        setBackButtonClickListener();
     }
 
     private void processExtraBundle() {
@@ -51,6 +54,12 @@ public class SurveyActivity extends SlideMenuActivity implements SurveyView {
                         intent.getIntExtra(IntentConstant.PATIENT_SURVEY_ID, -1)));
             }
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        surveyPresenter.setSubscriptions(subscriptions);
     }
 
     private void addAlzheirmerSurveyFragment() {

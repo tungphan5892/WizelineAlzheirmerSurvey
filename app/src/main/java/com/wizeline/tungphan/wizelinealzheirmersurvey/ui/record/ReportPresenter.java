@@ -15,30 +15,34 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant.PATIENT_NAME;
 import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant.PATIENT_SURVEY_ID;
+import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant.PATIENT_SURVEY_OBJECT;
 import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant.START_SURVEY_ACTIVITY;
+import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant.SURVEY_VIEW_ONLY;
 
 /**
  * @author : hienngo
  * @since : Sep 02, 2016.
  */
-public class RecordPresenter extends SlideMenuPresenter {
+public class ReportPresenter extends SlideMenuPresenter {
 
-    private static final String TAG = RecordPresenter.class.getSimpleName();
-    private final RecordView recordView;
+    private static final String TAG = ReportPresenter.class.getSimpleName();
+    private final ReportView reportView;
     private Context context;
 
-    public RecordPresenter(Context context, RecordView recordView) {
+    public ReportPresenter(Context context, ReportView reportView) {
         super(context);
         this.context = context;
-        this.recordView = recordView;
+        this.reportView = reportView;
     }
 
     public void startNewSurveyActivity(int patientSurveyId) {
         Intent intent = new Intent(context, SurveyActivity.class);
         //temporary generate patient id = patient list size + 1
         intent.putExtra(PATIENT_SURVEY_ID, patientSurveyId + 1);
-        ((RecordActivity) context).startActivityForResult(intent, START_SURVEY_ACTIVITY);
+        intent.putExtra(SURVEY_VIEW_ONLY, false);
+        ((ReportActivity) context).startActivityForResult(intent, START_SURVEY_ACTIVITY);
     }
 
     public void createSqliteFromLocalReport() {
@@ -53,13 +57,13 @@ public class RecordPresenter extends SlideMenuPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("TAG", e.getMessage());
+                        Log.e(TAG, e.getMessage());
                     }
 
                     @Override
                     public void onNext(Boolean aBoolean) {
                         if (aBoolean) {
-                            recordView.onCreateSqliteFromRecordSuccess();
+                            getFirstReportData();
                         }
                     }
                 });
@@ -84,9 +88,9 @@ public class RecordPresenter extends SlideMenuPresenter {
                                @Override
                                public void onNext(Boolean aBoolean) {
                                    if (aBoolean) {
-                                       recordView.onSaveAssetFileComplete();
+                                       reportView.onSaveAssetFileComplete();
                                    } else {
-                                       recordView.onSaveAssetFileFailed();
+                                       reportView.onSaveAssetFileFailed();
                                    }
                                }
                            }
@@ -105,13 +109,13 @@ public class RecordPresenter extends SlideMenuPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("TAG", e.getMessage());
+                        Log.e(TAG, e.getMessage());
                     }
 
                     @Override
                     public void onNext(Report report) {
                         if (report != null) {
-                            recordView.onLoadReportFromDatabaseSuccess(report);
+                            reportView.onLoadReportFromDatabaseSuccess(report);
                         }
                     }
                 });

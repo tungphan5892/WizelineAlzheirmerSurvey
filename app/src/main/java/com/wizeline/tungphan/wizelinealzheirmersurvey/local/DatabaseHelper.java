@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.common.Utils;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Answer;
@@ -20,7 +21,8 @@ import java.util.List;
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "AlzheirmerSurvey.db";
+    private static final String TAG = DatabaseHelper.class.getSimpleName();
+    public static final String DATABASE_NAME = "AlzheirmerSurvey.db";
     private static final int DATABASE_VERSION = 1;
     private static final String REPORT_TABLE_NAME = "report";
     private static final String REPORT_ID = "report_id";
@@ -78,11 +80,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    private SQLiteDatabase readableSqliteDatabase;
+    private SQLiteDatabase writableSqliteDatabase;
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_REPORT_TABLE);
         db.execSQL(CREATE_PATIENT_SURVEY_TABLE);
         db.execSQL(CREATE_ANSWER_TABLE);
+    }
+
+    private void initWritableSqlitedatabase() {
+        if (writableSqliteDatabase == null) {
+            writableSqliteDatabase = this.getWritableDatabase();
+        }
+    }
+
+    private void initReadableSqliteDatabase() {
+        if (readableSqliteDatabase == null) {
+            readableSqliteDatabase = this.getWritableDatabase();
+        }
     }
 
     @Override
@@ -94,40 +111,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void insertAnswer(Answer answer, String patientSurveyId) {
-        SQLiteDatabase db = this.getWritableDatabase();
+//        Log.e(TAG, "insert answer " + patientSurveyId);
+        initWritableSqlitedatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(PATIENT_SURVEY_ID, patientSurveyId);
         contentValues.put(QUESTION_ID, answer.getQuestionId());
         contentValues.put(CHOSE_ANSWER, Arrays.toString(answer.getChoseAnswer()));
-        db.insert(ANSWER_TABLE_NAME, null, contentValues);
-        db.close();
+        writableSqliteDatabase.insert(ANSWER_TABLE_NAME, null, contentValues);
     }
 
     public boolean insertPatientSurvey(PatientSurvey patientSurvey, String surveyId) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        initWritableSqlitedatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(PATIENT_SURVEY_ID, patientSurvey.getPatientSurveyId());
         contentValues.put(SURVEY_ID, surveyId);
         contentValues.put(PATIENT_NAME, patientSurvey.getPatientName());
         contentValues.put(DISEASE_CAUSE_PERCENTAGE, patientSurvey.getDiseaseCausePercentage());
-        db.insert(PATIENT_SURVEY_TABLE_NAME, null, contentValues);
-        db.close();
+        writableSqliteDatabase.insert(PATIENT_SURVEY_TABLE_NAME, null, contentValues);
         return true;
     }
 
     public void insertReport(Report report) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        initWritableSqlitedatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(SURVEY_ID, report.getSurveyId());
         contentValues.put(SURVEY_TYPE, report.getSurveyType());
-        db.insert(REPORT_TABLE_NAME, null, contentValues);
-        db.close();
+        writableSqliteDatabase.insert(REPORT_TABLE_NAME, null, contentValues);
     }
 
     public Report getFirstSurvey() {
+        initReadableSqliteDatabase();
         Report report = new Report();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery(SELECT_FIRST_SURVEY_QUERY + String.valueOf(0), null);
+        Cursor res = readableSqliteDatabase.rawQuery(SELECT_FIRST_SURVEY_QUERY + String.valueOf(0), null);
         if (res.moveToFirst()) {
             String surveyId = res.getString(res.getColumnIndex(SURVEY_ID));
             report.setSurveyId(surveyId);
@@ -141,9 +156,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private List<PatientSurvey> getPatientSurveys(String surveyId) {
+        initReadableSqliteDatabase();
         List<PatientSurvey> patientSurveys = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery(SELECT_PATIENT_SURVEYS + surveyId, null);
+        Cursor res = readableSqliteDatabase.rawQuery(SELECT_PATIENT_SURVEYS + surveyId, null);
         if (res.moveToFirst()) {
             do {
                 String patientSurveyId = res.getString(res.getColumnIndex(PATIENT_SURVEY_ID));
@@ -161,9 +176,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private List<Answer> getAnswers(String patientSurveyId) {
+        initReadableSqliteDatabase();
         List<Answer> answers = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery(SELECT_ANSWERS + patientSurveyId, null);
+        Cursor res = readableSqliteDatabase.rawQuery(SELECT_ANSWERS + patientSurveyId, null);
         if (res.moveToFirst()) {
             do {
                 String choseAnswer = res.getString(res.getColumnIndex(CHOSE_ANSWER));

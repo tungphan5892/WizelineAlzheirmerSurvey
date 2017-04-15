@@ -13,6 +13,7 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
 
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Type;
@@ -23,6 +24,7 @@ import rx.functions.Func1;
 
 import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.FileConstant.REPORT_FILE_NAME;
 import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.FileConstant.SURVEY_FILE_NAME;
+import static com.wizeline.tungphan.wizelinealzheirmersurvey.local.DatabaseHelper.DATABASE_NAME;
 
 /**
  * Created by tungphan on 4/10/17.
@@ -86,16 +88,20 @@ public class LoadLocalData {
 
     private Observable<Boolean> createReportSqlite(Report report) {
         return Observable.create(subscriber -> {
-            databaseHelper.insertReport(report);
-            List<PatientSurvey> patientSurveys = report.getPatientSurveys();
-            for (int i = 0; i < patientSurveys.size(); i++) {
-                final PatientSurvey patientSurvey = patientSurveys.get(i);
-                Log.e("TFunk1 ", patientSurveys.get(i).getPatientSurveyId());
-                databaseHelper.insertPatientSurvey(patientSurvey
-                        , report.getSurveyId());
-                final List<Answer> answers = patientSurvey.getAnswers();
-                for (int j = 0; j < answers.size(); j++) {
-                    databaseHelper.insertAnswer(answers.get(j), patientSurvey.getPatientSurveyId());
+            //if database exist. skip it
+            File databaseFile = new File(WizeApp.getInstance().getDatabasePath(DATABASE_NAME), "");
+            if (!databaseFile.exists()) {
+                Log.e(TAG, "create database");
+                databaseHelper.insertReport(report);
+                List<PatientSurvey> patientSurveys = report.getPatientSurveys();
+                for (int i = 0; i < patientSurveys.size(); i++) {
+                    final PatientSurvey patientSurvey = patientSurveys.get(i);
+                    databaseHelper.insertPatientSurvey(patientSurvey
+                            , report.getSurveyId());
+                    final List<Answer> answers = patientSurvey.getAnswers();
+                    for (int j = 0; j < answers.size(); j++) {
+                        databaseHelper.insertAnswer(answers.get(j), patientSurvey.getPatientSurveyId());
+                    }
                 }
             }
             subscriber.onNext(true);
