@@ -3,13 +3,16 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.survey;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.util.Log;
 import android.view.View;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.base.BasePresenter;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuActivity;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuPresenter;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.AlzheirmerSurveyFragment;
 
 
@@ -22,14 +25,15 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.AlzheirmerSurvey
 public class SurveyActivity extends SlideMenuActivity implements SurveyView {
     private static final String TAG = SurveyActivity.class.getSimpleName();
     private AlzheirmerSurveyFragment alzheirmerSurveyFragment;
-    private SurveyPresenter surveyPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.slide_menu_activity);
         super.onCreate(savedInstanceState);
+        setPresenter(new SlideMenuPresenter());
+        getPresenter().onTakeView(this);
         floatingActionButton.setVisibility(View.GONE);
-        surveyPresenter = new SurveyPresenter(this, this);
-        surveyPresenter.loadSurveyFromLocal();
+        ((SurveyPresenter) getPresenter()).loadSurveyFromLocal();
         addAlzheirmerSurveyFragment();
         processExtraBundle();
         disableShowNavDrawer();
@@ -59,7 +63,7 @@ public class SurveyActivity extends SlideMenuActivity implements SurveyView {
     @Override
     protected void onStart() {
         super.onStart();
-        surveyPresenter.setSubscriptions(subscriptions);
+        ((SurveyPresenter) getPresenter()).setSubscriptions(subscriptions);
     }
 
     private void addAlzheirmerSurveyFragment() {

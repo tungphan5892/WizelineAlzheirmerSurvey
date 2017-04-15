@@ -1,7 +1,6 @@
 package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.survey;
 
 
-import android.content.Context;
 import android.util.Log;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.eventtype.SubmitSurveyEvent;
@@ -18,15 +17,12 @@ import rx.subscriptions.CompositeSubscription;
  * @author : hienngo
  * @since : Sep 02, 2016.
  */
-public class SurveyPresenter extends SlideMenuPresenter {
+public class SurveyPresenter extends SlideMenuPresenter {//<SurveyView>
 
     private static final String TAG = SurveyPresenter.class.getSimpleName();
-    private final SurveyView surveyView;
     private CompositeSubscription subscriptions;
 
-    public SurveyPresenter(Context context, SurveyView surveyView) {
-        super(context);
-        this.surveyView = surveyView;
+    public SurveyPresenter() {
         initEventBusObserves();
     }
 
@@ -66,7 +62,7 @@ public class SurveyPresenter extends SlideMenuPresenter {
                     @Override
                     public void onNext(Boolean aBoolean) {
                         if (aBoolean) {
-                            surveyView.onSavePatientSurveySuccess();
+                            ((SurveyView) getView()).onSavePatientSurveySuccess();
                         } else {
 
                         }
@@ -92,7 +88,7 @@ public class SurveyPresenter extends SlideMenuPresenter {
 
                     @Override
                     public void onNext(Survey survey) {
-                        surveyView.onLoadLocalSurveySuccess(survey);
+                        ((SurveyView) getView()).onLoadLocalSurveySuccess(survey);
                     }
                 });
     }

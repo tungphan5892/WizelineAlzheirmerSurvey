@@ -19,9 +19,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.di.component.AppComponent;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.base.BaseActivity;
 
 import java.util.ArrayList;
+
 
 import butterknife.BindView;
 
@@ -29,7 +31,7 @@ import butterknife.BindView;
  * Created by tungphan on 4/9/17.
  */
 
-public class SlideMenuActivity extends BaseActivity
+public class SlideMenuActivity extends BaseActivity<SlideMenuPresenter>
         implements SlideMenuView, NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.toolbar)
@@ -49,18 +51,18 @@ public class SlideMenuActivity extends BaseActivity
 
     protected ActionBarDrawerToggle actionBarDrawerToggle;
 
-    private SlideMenuPresenter slideMenuPresenter;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        slideMenuPresenter = new SlideMenuPresenter();
-        setContentView(R.layout.slide_menu_activity);
         initNDrawerAndTbar(this, drawerLayout, toolbar);
         initFab(floatingActionButton);
         initNavigationView(navigationView, this);
     }
 
+    @Override
+    protected void initInjector(AppComponent appComponent) {
+        appComponent.inject(this);
+    }
 
     //init Navigation Drawer and Toolbar
     public void initNDrawerAndTbar(AppCompatActivity activity, DrawerLayout drawer

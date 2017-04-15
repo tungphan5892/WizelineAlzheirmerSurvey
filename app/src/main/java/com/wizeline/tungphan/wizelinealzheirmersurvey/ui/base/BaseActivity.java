@@ -5,6 +5,11 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.wizeline.tungphan.wizelinealzheirmersurvey.WizeApp;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.di.component.AppComponent;
+
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import rx.subscriptions.CompositeSubscription;
@@ -13,17 +18,19 @@ import rx.subscriptions.CompositeSubscription;
  * @author Hien Ngo
  * @since 7/27/16
  */
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity
+        implements BaseView {
     private Unbinder unbinder;
 
-    private BasePresenter presenter;
     protected CompositeSubscription subscriptions;
+    @Inject
+    P presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        initInjector(WizeApp.getAppComponent(this));
         super.onCreate(savedInstanceState);
-        presenter = new BasePresenter(this);
-        presenter.initInjector();
+        getPresenter().onTakeView(this);
     }
 
     @Override
@@ -41,6 +48,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         unbinder.unbind();
+        getPresenter().onDestroyView();
         super.onDestroy();
     }
 
@@ -52,4 +60,15 @@ public class BaseActivity extends AppCompatActivity {
             subscriptions = null;
         }
     }
+
+    protected void setPresenter(P presenter){
+        this.presenter = presenter;
+    }
+
+    @Override
+    final public P getPresenter() {
+        return presenter;
+    }
+
+    protected abstract void initInjector(AppComponent appComponent);
 }

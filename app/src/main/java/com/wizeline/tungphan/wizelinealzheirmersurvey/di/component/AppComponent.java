@@ -2,7 +2,7 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.di.component;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.di.module.AppModule;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.di.module.EventBusModule;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.base.BasePresenter;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuActivity;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.AlzheirmerReportFragment;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.AlzheirmerSurveyFragment;
 
@@ -17,8 +17,8 @@ import dagger.Component;
 @Component(modules = {AppModule.class, EventBusModule.class})
 public interface AppComponent {
 
-    void inject(BasePresenter basePresenter);
     void inject(AlzheirmerSurveyFragment alzheirmerSurveyFragment);
     void inject(AlzheirmerReportFragment alzheirmerReportFragment);
+    void inject(SlideMenuActivity slideMenuActivity);
 
 }

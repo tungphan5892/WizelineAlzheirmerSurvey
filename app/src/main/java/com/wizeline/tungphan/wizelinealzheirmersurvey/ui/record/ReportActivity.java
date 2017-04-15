@@ -3,16 +3,21 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.record;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.di.component.AppComponent;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Report;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuActivity;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.survey.SurveyActivity;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.AlzheirmerReportFragment;
 
+import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant.PATIENT_SURVEY_ID;
 import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant.START_SURVEY_ACTIVITY;
+import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant.SURVEY_VIEW_ONLY;
 
 /**
  * Created by tungphan on 4/8/17.
@@ -22,20 +27,32 @@ public class ReportActivity extends SlideMenuActivity implements ReportView {
 
     private static final String TAG = ReportActivity.class.getSimpleName();
     private AlzheirmerReportFragment alzheirmerReportFragment;
-    private ReportPresenter reportPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.slide_menu_activity);
         super.onCreate(savedInstanceState);
+        setPresenter(new ReportPresenter());
+        getPresenter().onTakeView(this);
         floatingActionButton.setVisibility(View.VISIBLE);
-        floatingActionButton.setOnClickListener(v -> {
-            reportPresenter.startNewSurveyActivity(alzheirmerReportFragment
-                    .getAlzheirRecordAdapterSize());
-        });
-        reportPresenter = new ReportPresenter(this, this);
-        reportPresenter.saveAssetFiles();
+        floatingActionButton.setOnClickListener(v -> startNewSurveyActivity(alzheirmerReportFragment
+                .getAlzheirRecordAdapterSize()));
+        ((ReportPresenter) getPresenter()).saveAssetFiles();
         addAlzheirmerRecordFragment();
         enableShowNavDrawer();
+    }
+
+    private void startNewSurveyActivity(int patientSurveyId) {
+        Intent intent = new Intent(this, SurveyActivity.class);
+        //temporary generate patient id = patient list size +1
+        intent.putExtra(PATIENT_SURVEY_ID, patientSurveyId + 1);
+        intent.putExtra(SURVEY_VIEW_ONLY, false);
+        startActivityForResult(intent, START_SURVEY_ACTIVITY);
+    }
+
+    @Override
+    public void setContentView(@LayoutRes int layoutResID) {
+        super.setContentView(layoutResID);
     }
 
     private void addAlzheirmerRecordFragment() {
@@ -57,7 +74,7 @@ public class ReportActivity extends SlideMenuActivity implements ReportView {
     @Override
     public void onSaveAssetFileComplete() {
         Log.e(TAG, "onSaveAssetFileComplete");
-        reportPresenter.createSqliteFromLocalReport();
+        ((ReportPresenter) getPresenter()).createSqliteFromLocalReport();
     }
 
     @Override
@@ -70,7 +87,7 @@ public class ReportActivity extends SlideMenuActivity implements ReportView {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == START_SURVEY_ACTIVITY) {
             if (resultCode == Activity.RESULT_OK) {
-                reportPresenter.getFirstReportData();
+                ((ReportPresenter) getPresenter()).getFirstReportData();
                 Snackbar.make(contentLayout, R.string.notify_text_add_patient_survey_success
                         , Snackbar.LENGTH_LONG).show();
             } else {

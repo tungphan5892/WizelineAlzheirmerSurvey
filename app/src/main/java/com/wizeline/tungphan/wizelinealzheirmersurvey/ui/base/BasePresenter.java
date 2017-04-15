@@ -1,40 +1,33 @@
 package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.base;
 
-import android.content.Context;
-
-import com.wizeline.tungphan.wizelinealzheirmersurvey.WizeApp;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.RxEventBus;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.local.LoadLocalData;
 
 import javax.inject.Inject;
 
-import rx.subscriptions.CompositeSubscription;
-
 /**
  * @author Hien Ngo
  * @since 7/27/16
  */
-public class BasePresenter {
-
+public class BasePresenter<V extends BaseView> {
 
     @Inject
     protected LoadLocalData loadLocalData;
     @Inject
     protected RxEventBus rxEventBus;
 
-    private Context context;
+    private V view;
 
-    public BasePresenter() {
-
+    public void onTakeView(V view) {
+        this.view = view;
     }
 
-    public BasePresenter(Context context) {
-        this.context = context;
-        initInjector();
+    public V getView() {
+        return view;
     }
 
-    public void initInjector() {
-        WizeApp.getAppComponent(context).inject(this);
+    public void onDestroyView() {
+        this.view = null;
     }
 
 }
