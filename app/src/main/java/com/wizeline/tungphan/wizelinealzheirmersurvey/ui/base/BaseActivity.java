@@ -5,9 +5,6 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.wizeline.tungphan.wizelinealzheirmersurvey.WizeApp;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.di.component.AppComponent;
-
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;

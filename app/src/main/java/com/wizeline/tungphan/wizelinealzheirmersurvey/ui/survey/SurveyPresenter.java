@@ -3,9 +3,7 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.survey;
 
 import android.util.Log;
 
-import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.RxEventBus;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.eventtype.SubmitSurveyEvent;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.local.LoadLocalData;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.PatientSurvey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuPresenter;

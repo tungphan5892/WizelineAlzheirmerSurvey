@@ -20,7 +20,6 @@ import android.widget.ImageButton;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.WizeApp;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.di.component.AppComponent;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.base.BaseActivity;
 
 import java.util.ArrayList;

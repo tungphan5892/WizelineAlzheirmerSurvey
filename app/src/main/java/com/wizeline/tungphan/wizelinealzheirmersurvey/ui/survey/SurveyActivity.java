@@ -3,16 +3,13 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.survey;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.util.Log;
 import android.view.View;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.base.BasePresenter;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuActivity;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuPresenter;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.AlzheirmerSurveyFragment;
 
 
