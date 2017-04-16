@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.WizeApp;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.di.component.AppComponent;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.base.BaseActivity;
 
@@ -54,14 +55,10 @@ public class SlideMenuActivity extends BaseActivity<SlideMenuPresenter>
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getPresenter().initInjector(WizeApp.getAppComponent(this));
         initNDrawerAndTbar(this, drawerLayout, toolbar);
         initFab(floatingActionButton);
         initNavigationView(navigationView, this);
-    }
-
-    @Override
-    protected void initInjector(AppComponent appComponent) {
-        appComponent.inject(this);
     }
 
     //init Navigation Drawer and Toolbar

@@ -4,6 +4,8 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.record;
 import android.util.Log;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.WizeApp;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.RxEventBus;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.local.LoadLocalData;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Report;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuPresenter;
 
@@ -21,7 +23,6 @@ public class ReportPresenter extends SlideMenuPresenter {
     private static final String TAG = ReportPresenter.class.getSimpleName();
 
     public ReportPresenter() {
-
     }
 
     public void createSqliteFromLocalReport() {

@@ -83,7 +83,7 @@ public class AlzheirmerSurveyFragment extends Fragment {
 
     private View.OnClickListener submitBtnClickListener = v -> {
         if (getIllegalInputType() == IllegalInputEvent.InputType.LEGAL) {
-            Log.e(TAG,"submitBtnClickListener");
+            Log.e(TAG, "submitBtnClickListener");
             sendSubmitSurveyEvent();
         } else {
             if (getIllegalInputType() == IllegalInputEvent.InputType.NAME_EDITTEXT) {
@@ -98,7 +98,7 @@ public class AlzheirmerSurveyFragment extends Fragment {
     private void showNotInteractedSnackbar() {
         Snackbar.make(parentLayout, R.string.warning_no_field_changed, Snackbar.LENGTH_LONG)
                 .setAction(R.string.text_submit_button, view -> {
-                    Log.e(TAG,"showNotInteractedSnackbar");
+                    Log.e(TAG, "showNotInteractedSnackbar");
                     sendSubmitSurveyEvent();
                 })
                 .addCallback(new Snackbar.Callback() {
@@ -123,7 +123,7 @@ public class AlzheirmerSurveyFragment extends Fragment {
     }
 
     private void sendSubmitSurveyEvent() {
-        Log.e(TAG,"sendSubmitSurveyEvent");
+        Log.e(TAG, "sendSubmitSurveyEvent");
         rxEventBus.post(createSubmitSurveyEvent());
     }
 

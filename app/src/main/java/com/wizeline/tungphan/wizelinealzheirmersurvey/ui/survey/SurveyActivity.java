@@ -29,8 +29,8 @@ public class SurveyActivity extends SlideMenuActivity implements SurveyView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.slide_menu_activity);
+        setPresenter(new SurveyPresenter());
         super.onCreate(savedInstanceState);
-        setPresenter(new SlideMenuPresenter());
         getPresenter().onTakeView(this);
         floatingActionButton.setVisibility(View.GONE);
         ((SurveyPresenter) getPresenter()).loadSurveyFromLocal();
@@ -64,6 +64,7 @@ public class SurveyActivity extends SlideMenuActivity implements SurveyView {
     protected void onStart() {
         super.onStart();
         ((SurveyPresenter) getPresenter()).setSubscriptions(subscriptions);
+        ((SurveyPresenter) getPresenter()).initEventBusObserves();
     }
 
     private void addAlzheirmerSurveyFragment() {

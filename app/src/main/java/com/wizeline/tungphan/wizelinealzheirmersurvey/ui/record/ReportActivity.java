@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.di.component.AppComponent;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Report;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuActivity;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.survey.SurveyActivity;
@@ -31,8 +30,8 @@ public class ReportActivity extends SlideMenuActivity implements ReportView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.slide_menu_activity);
-        super.onCreate(savedInstanceState);
         setPresenter(new ReportPresenter());
+        super.onCreate(savedInstanceState);
         getPresenter().onTakeView(this);
         floatingActionButton.setVisibility(View.VISIBLE);
         floatingActionButton.setOnClickListener(v -> startNewSurveyActivity(alzheirmerReportFragment

@@ -28,7 +28,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        initInjector(WizeApp.getAppComponent(this));
         super.onCreate(savedInstanceState);
         getPresenter().onTakeView(this);
     }
@@ -49,16 +48,16 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected void onDestroy() {
         unbinder.unbind();
         getPresenter().onDestroyView();
+        if (subscriptions != null) {
+            subscriptions.unsubscribe();
+            subscriptions = null;
+        }
         super.onDestroy();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (subscriptions != null) {
-            subscriptions.unsubscribe();
-            subscriptions = null;
-        }
     }
 
     protected void setPresenter(P presenter){
@@ -70,5 +69,4 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         return presenter;
     }
 
-    protected abstract void initInjector(AppComponent appComponent);
 }

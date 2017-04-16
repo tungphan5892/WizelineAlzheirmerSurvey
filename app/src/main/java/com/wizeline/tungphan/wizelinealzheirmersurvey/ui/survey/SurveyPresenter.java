@@ -3,7 +3,9 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.survey;
 
 import android.util.Log;
 
+import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.RxEventBus;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.eventtype.SubmitSurveyEvent;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.local.LoadLocalData;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.PatientSurvey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuPresenter;
@@ -17,20 +19,19 @@ import rx.subscriptions.CompositeSubscription;
  * @author : hienngo
  * @since : Sep 02, 2016.
  */
-public class SurveyPresenter extends SlideMenuPresenter {//<SurveyView>
+public class SurveyPresenter extends SlideMenuPresenter {
 
     private static final String TAG = SurveyPresenter.class.getSimpleName();
     private CompositeSubscription subscriptions;
 
     public SurveyPresenter() {
-        initEventBusObserves();
     }
 
     public void setSubscriptions(CompositeSubscription subscriptions) {
         this.subscriptions = subscriptions;
     }
 
-    private void initEventBusObserves() {
+    public void initEventBusObserves() {
         initSubmitSurveyEventObserve();
     }
 
