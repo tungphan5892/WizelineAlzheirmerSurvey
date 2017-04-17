@@ -19,7 +19,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         implements BaseView {
     private Unbinder unbinder;
 
-    protected CompositeSubscription subscriptions;
     @Inject
     P presenter;
 
@@ -32,7 +31,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     protected void onStart() {
         super.onStart();
-        subscriptions = new CompositeSubscription();
+        getPresenter().setSubscriptions(new CompositeSubscription());
     }
 
     @Override
@@ -45,19 +44,16 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected void onDestroy() {
         unbinder.unbind();
         getPresenter().onDestroyView();
-        if (subscriptions != null) {
-            subscriptions.unsubscribe();
-            subscriptions = null;
-        }
         super.onDestroy();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        getPresenter().unsubscribe();
     }
 
-    protected void setPresenter(P presenter){
+    protected void setPresenter(P presenter) {
         this.presenter = presenter;
     }
 

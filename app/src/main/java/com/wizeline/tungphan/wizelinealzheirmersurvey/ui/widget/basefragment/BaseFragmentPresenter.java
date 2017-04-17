@@ -1,4 +1,4 @@
-package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.base;
+package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.basefragment;
 
 import rx.subscriptions.CompositeSubscription;
 
@@ -6,21 +6,22 @@ import rx.subscriptions.CompositeSubscription;
  * @author Hien Ngo
  * @since 7/27/16
  */
-public class BasePresenter<V extends BaseView> {
+public class BaseFragmentPresenter<V extends BaseFragmentView> {
 
-    private V view;
     protected CompositeSubscription subscriptions;
 
-    public void setSubscriptions(CompositeSubscription subscriptions){
+    public void setSubscriptions(CompositeSubscription subscriptions) {
         this.subscriptions = subscriptions;
     }
 
-    public void unsubscribe(){
+    public void unsubscribe() {
         if (subscriptions != null) {
             subscriptions.unsubscribe();
             subscriptions = null;
         }
     }
+
+    private V view;
 
     public void onTakeView(V view) {
         this.view = view;

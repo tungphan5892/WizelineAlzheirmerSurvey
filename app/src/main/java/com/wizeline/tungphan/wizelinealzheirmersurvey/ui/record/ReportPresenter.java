@@ -24,7 +24,7 @@ public class ReportPresenter extends SlideMenuPresenter {
     }
 
     public void createSqliteFromLocalReport() {
-        loadLocalData.createSqliteFromLocalReport()
+        subscriptions.add(loadLocalData.createSqliteFromLocalReport()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Boolean>() {
@@ -41,15 +41,15 @@ public class ReportPresenter extends SlideMenuPresenter {
                     @Override
                     public void onNext(Boolean aBoolean) {
                         if (aBoolean) {
-                            getFirstReportData();
+                            ((ReportView) getView()).onCreateSqliteDatabaseSuccess();
                         }
                     }
-                });
+                }));
     }
 
     public void saveAssetFiles() {
         //copy assets files
-        Observable.fromCallable(WizeApp.getInstance().copyAssets())
+        subscriptions.add(Observable.fromCallable(WizeApp.getInstance().copyAssets())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Boolean>() {
@@ -72,31 +72,7 @@ public class ReportPresenter extends SlideMenuPresenter {
                                    }
                                }
                            }
-                );
-    }
-
-    public void getFirstReportData() {
-        loadLocalData.loadReportFromDatabase()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Report>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(TAG, e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(Report report) {
-                        if (report != null) {
-                            ((ReportView) getView()).onLoadReportFromDatabaseSuccess(report);
-                        }
-                    }
-                });
+                ));
     }
 
 }

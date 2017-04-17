@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,17 +24,6 @@ public class PatientSurvey implements Parcelable {
     @SerializedName("answer_list")
     @Expose
     private List<Answer> answers = null;
-    @SerializedName("disease_cause_percentage")
-    @Expose
-    private Float diseaseCausePercentage;
-
-    public PatientSurvey(String patientSurveyId, String patientName, List<Answer> answers
-            , Float diseaseCausePercentage) {
-        this.patientSurveyId = patientSurveyId;
-        this.patientName = patientName;
-        this.answers = answers;
-        this.diseaseCausePercentage = diseaseCausePercentage;
-    }
 
     public String getPatientSurveyId() {
         return patientSurveyId;
@@ -59,14 +49,6 @@ public class PatientSurvey implements Parcelable {
         this.answers = answers;
     }
 
-    public Float getDiseaseCausePercentage() {
-        return diseaseCausePercentage;
-    }
-
-    public void setDiseaseCausePercentage(Float diseaseCausePercentage) {
-        this.diseaseCausePercentage = diseaseCausePercentage;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -76,15 +58,20 @@ public class PatientSurvey implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.patientSurveyId);
         dest.writeString(this.patientName);
-        dest.writeTypedList(this.answers);
-        dest.writeValue(this.diseaseCausePercentage);
+        dest.writeList(this.answers);
+    }
+
+    public PatientSurvey(String patientSurveyId, String patientName, List<Answer> answers) {
+        this.patientSurveyId = patientSurveyId;
+        this.patientName = patientName;
+        this.answers = answers;
     }
 
     protected PatientSurvey(Parcel in) {
         this.patientSurveyId = in.readString();
         this.patientName = in.readString();
-        this.answers = in.createTypedArrayList(Answer.CREATOR);
-        this.diseaseCausePercentage = (Float) in.readValue(Float.class.getClassLoader());
+        this.answers = new ArrayList<Answer>();
+        in.readList(this.answers, Answer.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<PatientSurvey> CREATOR = new Parcelable.Creator<PatientSurvey>() {

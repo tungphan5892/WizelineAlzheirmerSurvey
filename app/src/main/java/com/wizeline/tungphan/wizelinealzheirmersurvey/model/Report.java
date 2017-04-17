@@ -11,16 +11,6 @@ import java.util.List;
 
 public class Report {
 
-    public Report() {
-
-    }
-
-    public Report(String surveyId, String surveyType, List<PatientSurvey> patientSurveys) {
-        this.surveyId = surveyId;
-        this.surveyType = surveyType;
-        this.patientSurveys = patientSurveys;
-    }
-
     @SerializedName("survey_id")
     @Expose
     private String surveyId;
@@ -54,4 +44,5 @@ public class Report {
     public void setPatientSurveys(List<PatientSurvey> patientSurveys) {
         this.patientSurveys = patientSurveys;
     }
+
 }

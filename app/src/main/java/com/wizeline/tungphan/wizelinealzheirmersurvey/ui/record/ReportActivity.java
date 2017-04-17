@@ -1,18 +1,13 @@
 package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.record;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Report;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuActivity;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.survey.SurveyActivity;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.AlzheirmerReportFragment;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.reportfragment.ReportFragment;
 
 import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant.PATIENT_SURVEY_ID;
 import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant.START_SURVEY_ACTIVITY;
@@ -25,7 +20,7 @@ import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentCons
 public class ReportActivity extends SlideMenuActivity implements ReportView {
 
     private static final String TAG = ReportActivity.class.getSimpleName();
-    private AlzheirmerReportFragment alzheirmerReportFragment;
+    private ReportFragment reportFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +29,7 @@ public class ReportActivity extends SlideMenuActivity implements ReportView {
         super.onCreate(savedInstanceState);
         getPresenter().onTakeView(this);
         floatingActionButton.setVisibility(View.VISIBLE);
-        floatingActionButton.setOnClickListener(v -> startNewSurveyActivity(alzheirmerReportFragment
+        floatingActionButton.setOnClickListener(v -> startNewSurveyActivity(reportFragment
                 .getAlzheirRecordAdapterSize()));
         ((ReportPresenter) getPresenter()).saveAssetFiles();
         addAlzheirmerRecordFragment();
@@ -49,50 +44,36 @@ public class ReportActivity extends SlideMenuActivity implements ReportView {
         startActivityForResult(intent, START_SURVEY_ACTIVITY);
     }
 
-    @Override
-    public void setContentView(@LayoutRes int layoutResID) {
-        super.setContentView(layoutResID);
-    }
-
     private void addAlzheirmerRecordFragment() {
-        if (alzheirmerReportFragment == null) {
-            alzheirmerReportFragment = new AlzheirmerReportFragment();
-            alzheirmerReportFragment.initInjector(this);
+        if (getSupportFragmentManager().findFragmentByTag(ReportFragment.TAG) == null) {
+            if (reportFragment == null) {
+                reportFragment = new ReportFragment();
+            }
+            getSupportFragmentManager().beginTransaction().add(R.id.content_layout
+                    , reportFragment, ReportFragment.TAG)
+                    .commit();
         }
-        getSupportFragmentManager().beginTransaction().add(R.id.content_layout
-                , alzheirmerReportFragment, AlzheirmerReportFragment.TAG)
-                .commit();
     }
 
     @Override
-    public void onLoadReportFromDatabaseSuccess(Report report) {
-        Log.e(TAG, "onLoadReportFromDatabaseSuccess");
-        alzheirmerReportFragment.setRecordRecyclerViewData(report);
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onCreateSqliteDatabaseSuccess() {
+        if (reportFragment != null) {
+            reportFragment.getData();
+        }
     }
 
     @Override
     public void onSaveAssetFileComplete() {
-        Log.e(TAG, "onSaveAssetFileComplete");
         ((ReportPresenter) getPresenter()).createSqliteFromLocalReport();
     }
 
     @Override
     public void onSaveAssetFileFailed() {
-        Log.e(TAG, "onSaveAssetFileFailed");
         //show snackbar
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == START_SURVEY_ACTIVITY) {
-            if (resultCode == Activity.RESULT_OK) {
-                ((ReportPresenter) getPresenter()).getFirstReportData();
-                Snackbar.make(contentLayout, R.string.notify_text_add_patient_survey_success
-                        , Snackbar.LENGTH_LONG).show();
-            } else {
-                Snackbar.make(contentLayout, R.string.notify_text_add_patient_survey_fail
-                        , Snackbar.LENGTH_LONG).show();
-            }
-        }
     }
 }

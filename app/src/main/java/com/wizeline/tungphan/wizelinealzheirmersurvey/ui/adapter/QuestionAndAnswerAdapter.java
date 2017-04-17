@@ -64,7 +64,7 @@ public class QuestionAndAnswerAdapter
                     int[] answerId = new int[1];
                     answerId[0] = options.get(0).getId();//init default answer check is the first option
                     answers.add(i, new Answer(questionAndAnswer.getQuestionId()
-                            , answerId));
+                            , answerId, new ArrayList<String>()));
                 }
 
             }
@@ -119,13 +119,11 @@ public class QuestionAndAnswerAdapter
                 } else {
                     //checked answer in case this adapter un-editable
                     Answer answer = answers.get(position);
-                    Log.e(TAG, "questionAndAnswer.getQuestionId(): " + questionAndAnswer.getQuestionId()
-                            + "answer.getQuestionId(): " + answer.getQuestionId());
                     if (questionAndAnswer.getQuestionId().equalsIgnoreCase(answer.getQuestionId())
                             && answer.getChoseAnswer().length > 0) {
                         RadioButton radioButton = (RadioButton) viewHolder.radioGroup
                                 .getChildAt(answer.getChoseAnswer()[0]);
-                        if(radioButton!=null) {
+                        if (radioButton != null) {
                             radioButton.setChecked(true);
                         }
                     }
@@ -174,12 +172,7 @@ public class QuestionAndAnswerAdapter
 
     public float getDiseaseCausePercentage() {
         diseaseCausePercentage = 0.0f;
-        for (int i = 0; i < answers.size(); i++) {
-            if (Arrays.equals(answers.get(i).getChoseAnswer()
-                    , questionAndAnswers.get(i).getCorrectAnswer())) {
-                diseaseCausePercentage += questionAndAnswers.get(i).getOutputResult();
-            }
-        }
+        //TODO: get disease Cause percentage
         return diseaseCausePercentage;
     }
 }

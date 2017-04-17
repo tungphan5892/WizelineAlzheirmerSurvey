@@ -1,6 +1,5 @@
 package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.record;
 
-import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Report;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuView;
 
 /**
@@ -9,10 +8,12 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuView
 
 public interface ReportView extends SlideMenuView {
 
-    void onLoadReportFromDatabaseSuccess(Report report);
+    void onCreateSqliteDatabaseSuccess();
 
     void onSaveAssetFileComplete();
 
     void onSaveAssetFileFailed();
+
+
 
 }

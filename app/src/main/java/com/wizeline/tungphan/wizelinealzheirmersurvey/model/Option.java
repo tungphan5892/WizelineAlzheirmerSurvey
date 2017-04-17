@@ -10,17 +10,39 @@ import com.google.gson.annotations.SerializedName;
 public class Option {
     @SerializedName("id")
     @Expose
-    private int id;
+    private Integer id;
+    @SerializedName("option_type")
+    @Expose
+    private String optionType;
+    @SerializedName("output_result")
+    @Expose
+    private Float outputResult;
     @SerializedName("option")
     @Expose
     private String option;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getOptionType() {
+        return optionType;
+    }
+
+    public void setOptionType(String optionType) {
+        this.optionType = optionType;
+    }
+
+    public Float getOutputResult() {
+        return outputResult;
+    }
+
+    public void setOutputResult(Float outputResult) {
+        this.outputResult = outputResult;
     }
 
     public String getOption() {
@@ -30,4 +52,5 @@ public class Option {
     public void setOption(String option) {
         this.option = option;
     }
+
 }
