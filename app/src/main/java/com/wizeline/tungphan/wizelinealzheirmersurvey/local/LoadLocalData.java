@@ -91,7 +91,6 @@ public class LoadLocalData {
             //if database exist. skip it
             File databaseFile = new File(WizeApp.getInstance().getDatabasePath(DATABASE_NAME), "");
             if (!databaseFile.exists()) {
-                Log.e(TAG, "create database");
                 databaseHelper.insertReport(report);
                 List<PatientSurvey> patientSurveys = report.getPatientSurveys();
                 for (int i = 0; i < patientSurveys.size(); i++) {

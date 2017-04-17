@@ -5,85 +5,108 @@
     {
       "question_id": "0",
       "question_type": "single_choice",
-      "output_result": 0.25,
       "question_content": "Do you have head injury?",
       "options": [
         {
           "id": 0,
+          "option_type": "radio_button",
+          "output_result": 0.25,
           "option": "yes"
         },
         {
           "id": 1,
+          "option_type": "radio_button",
+          "output_result": 0.00,
           "option": "no"
         }
-      ],
-      "correct_answer": [
-        0
       ]
     },
     {
       "question_id": "1",
-      "question_type": "single_choice",
-      "output_result": 0.25,
-      "question_content": "Are you older than 65?",
+      "question_type": "multi_choices",
+      "question_content": "Check the box if you have these factors",
       "options": [
         {
           "id": 0,
-          "option": "yes"
+          "option_type": "checkbox",
+          "output_result": 0.10,
+          "option": "Sneeze"
         },
         {
           "id": 1,
-          "option": "no"
+          "option_type": "checkbox",
+          "output_result": 0.15,
+          "option": "Stomach ache"
+        },
+        {
+          "id": 2,
+          "option_type": "checkbox",
+          "output_result": 0.00,
+          "option": "Sweat"
+        },
+        {
+          "id": 3,
+          "option_type": "checkbox",
+          "output_result": 0.00,
+          "option": "Lazy to take a shower"
         }
-      ],
-      "correct_answer": [
-        0
       ]
     },
     {
       "question_id": "2",
-      "question_type": "single_choice",
-      "output_result": 0.25,
+      "question_type": "input_answer",
       "question_content": "What is your gender?",
       "options": [
         {
           "id": 0,
-          "option": "Male"
-        },
-        {
-          "id": 1,
-          "option": "Female"
-        },
-        {
-          "id": 2,
-          "option": "Gay"
-        },
-        {
-          "id": 2,
-          "option": "Less"
+          "option_type": "edittext",
+          "output_result": 0.25,
+          "option": ""
         }
-      ],
-      "correct_answer": [
-        1
       ]
     },
     {
       "question_id": "3",
-      "question_type": "single_choice",
-      "output_result": 0.25,
-      "question_content": "Is there Any member in your family have this disease?",
+      "question_type": "datetime",
+      "question_content": "When you took your first sneeze?",
       "options": [
         {
           "id": 0,
-          "option": "yes"
+          "option_type": "datetime",
+          "output_result": 0.10,
+          "option": "Due date"
+        }
+      ]
+    },
+    {
+      "question_id": "4",
+      "question_type": "mix_type",
+      "question_content": "Rock & roll time!",
+      "options": [
+        {
+          "id": 0,
+          "option_type": "radio_button",
+          "output_result": 0.10,
+          "option": "I'm noob."
         },
         {
           "id": 1,
-          "option": "no"
+          "option_type": "checkbox",
+          "output_result": 0.10,
+          "option": "But I'm always work hard."
+        },
+        {
+          "id": 2,
+          "option_type": "input_answer",
+          "output_result": 0.10,
+          "option": ""
+        },
+        {
+          "id": 3,
+          "option_type": "datetime",
+          "output_result": 0.10,
+          "option": "Until?"
         }
-      ],
-      "correct_answer": [
-        0
       ]
     }
   ]

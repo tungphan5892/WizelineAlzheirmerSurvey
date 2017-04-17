@@ -1,6 +1,5 @@
 package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.survey;
 
-import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuView;
 
 /**
@@ -8,10 +7,4 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuView
  */
 
 public interface SurveyView extends SlideMenuView {
-
-    void onLoadLocalSurveySuccess(Survey survey);
-
-    void onSavePatientSurveySuccess();
-
-    void onSavePatientSurveyFail();
 }

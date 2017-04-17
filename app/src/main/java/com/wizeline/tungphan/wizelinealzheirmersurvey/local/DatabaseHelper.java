@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.common.Utils;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Answer;
@@ -38,13 +37,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String PATIENT_SURVEY_TABLE_NAME = "patient_survey";
     private static final String PATIENT_SURVEY_ID = "patient_survey_id";
     private static final String PATIENT_NAME = "patient_name";
-    private static final String DISEASE_CAUSE_PERCENTAGE = "disease_cause_percentage";
     private static final String CREATE_PATIENT_SURVEY_TABLE = "CREATE TABLE " + PATIENT_SURVEY_TABLE_NAME
             + "("
             + PATIENT_SURVEY_ID + " TEXT PRIMARY KEY,"
             + SURVEY_ID + " TEXT,"
             + PATIENT_NAME + " TEXT,"
-            + DISEASE_CAUSE_PERCENTAGE + " REAL"
             + ")";
     private static final String ANSWER_TABLE_NAME = "answer";
     private static final String ANSWER_ID = "answer_id";
@@ -126,7 +123,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(PATIENT_SURVEY_ID, patientSurvey.getPatientSurveyId());
         contentValues.put(SURVEY_ID, surveyId);
         contentValues.put(PATIENT_NAME, patientSurvey.getPatientName());
-        contentValues.put(DISEASE_CAUSE_PERCENTAGE, patientSurvey.getDiseaseCausePercentage());
         writableSqliteDatabase.insert(PATIENT_SURVEY_TABLE_NAME, null, contentValues);
         return true;
     }
@@ -164,8 +160,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String patientSurveyId = res.getString(res.getColumnIndex(PATIENT_SURVEY_ID));
                 PatientSurvey patientSurvey = new PatientSurvey(patientSurveyId
                         , res.getString(res.getColumnIndex(PATIENT_NAME))
-                        , getAnswers(patientSurveyId)
-                        , res.getFloat(res.getColumnIndex(DISEASE_CAUSE_PERCENTAGE)));
+                        , getAnswers(patientSurveyId));
                 patientSurveys.add(patientSurvey);
             } while (res.moveToNext());
         }
@@ -184,7 +179,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String choseAnswer = res.getString(res.getColumnIndex(CHOSE_ANSWER));
                 Answer answer = new Answer(
                         res.getString(res.getColumnIndex(QUESTION_ID))
-                        , Utils.parseIntArrayFromString(choseAnswer));
+                        , Utils.parseIntArrayFromString(choseAnswer), new ArrayList<>());
                 answers.add(answer);
             } while (res.moveToNext());
         }

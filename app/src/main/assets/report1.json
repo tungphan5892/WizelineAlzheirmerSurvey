@@ -10,28 +10,41 @@
           "question_id": "0",
           "chose_answer": [
             1
-          ]
+          ],
+          "input_answer": []
         },
         {
           "question_id": "1",
           "chose_answer": [
-            1
-          ]
+            2,
+            3
+          ],
+          "input_answer": []
         },
         {
           "question_id": "2",
           "chose_answer": [
-            0
+          ],
+          "input_answer": [
+            "superman's gender"
           ]
         },
         {
           "question_id": "3",
-          "chose_answer": [
-            1
+          "chose_answer": [],
+          "input_answer": [
+            "05-08-1992"
+          ]
+        },
+        {
+          "question_id": "4",
+          "chose_answer": [],
+          "input_answer": [
+            "05-08-1992",
+            "Tung the funky"
           ]
         }
-      ],
-      "disease_cause_percentage": 0.00
+      ]
     },
     {
       "patient_survey_id": "1",
@@ -41,28 +54,43 @@
           "question_id": "0",
           "chose_answer": [
             0
-          ]
+          ],
+          "input_answer": []
         },
         {
           "question_id": "1",
           "chose_answer": [
             0
-          ]
+          ],
+          "input_answer": []
         },
         {
           "question_id": "2",
           "chose_answer": [
-            1
+          ],
+          "input_answer": [
+            "male"
           ]
         },
         {
           "question_id": "3",
+          "chose_answer": [],
+          "input_answer": [
+            "01-03-1989"
+          ]
+        },
+        {
+          "question_id": "4",
           "chose_answer": [
-            0
+            0,
+            1
+          ],
+          "input_answer": [
+            "01-03-1989",
+            "Xuan the life lover"
           ]
         }
-      ],
-      "disease_cause_percentage": 1.00
+      ]
     },
     {
       "patient_survey_id": "2",
@@ -72,28 +100,42 @@
           "question_id": "0",
           "chose_answer": [
             1
-          ]
+          ],
+          "input_answer": []
         },
         {
           "question_id": "1",
           "chose_answer": [
-            1
-          ]
+            3
+          ],
+          "input_answer": []
         },
         {
           "question_id": "2",
           "chose_answer": [
-            3
+          ],
+          "input_answer": [
+            "male"
           ]
         },
         {
           "question_id": "3",
+          "chose_answer": [],
+          "input_answer": [
+            "06-12-1990"
+          ]
+        },
+        {
+          "question_id": "4",
           "chose_answer": [
-            1
+            0
+          ],
+          "input_answer": [
+            "06-12-1990",
+            "Hien The Angry"
           ]
         }
-      ],
-      "disease_cause_percentage": 0.00
+      ]
     },
     {
       "patient_survey_id": "3",
@@ -103,28 +145,43 @@
           "question_id": "0",
           "chose_answer": [
             0
-          ]
+          ],
+          "input_answer": []
         },
         {
           "question_id": "1",
           "chose_answer": [
-            0
-          ]
+            1,
+            2
+          ],
+          "input_answer": []
         },
         {
           "question_id": "2",
           "chose_answer": [
-            3
+          ],
+          "input_answer": [
+            "male"
           ]
         },
         {
           "question_id": "3",
+          "chose_answer": [],
+          "input_answer": [
+            "30-08-1992"
+          ]
+        },
+        {
+          "question_id": "4",
           "chose_answer": [
-            0
+            1
+          ],
+          "input_answer": [
+            "30-08-1992",
+            "Luis the general manager"
           ]
         }
-      ],
-      "disease_cause_percentage": 0.75
+      ]
     },
     {
       "patient_survey_id": "4",
@@ -134,28 +191,43 @@
           "question_id": "0",
           "chose_answer": [
             1
-          ]
+          ],
+          "input_answer": []
         },
         {
           "question_id": "1",
           "chose_answer": [
-            0
-          ]
+            1
+          ],
+          "input_answer": []
         },
         {
           "question_id": "2",
           "chose_answer": [
-            0
+          ],
+          "input_answer": [
+            "Male"
           ]
         },
         {
           "question_id": "3",
+          "chose_answer": [],
+          "input_answer": [
+            "05-08-1992"
+          ]
+        },
+        {
+          "question_id": "4",
           "chose_answer": [
+            0,
             1
+          ],
+          "input_answer": [
+            "05-08-1985",
+            "Matt the complex"
           ]
         }
-      ],
-      "disease_cause_percentage": 0.25
+      ]
     },
     {
       "patient_survey_id": "5",
@@ -164,29 +236,41 @@
         {
           "question_id": "0",
           "chose_answer": [
-            1
-          ]
+            0
+          ],
+          "input_answer": []
         },
         {
           "question_id": "1",
           "chose_answer": [
-            0
-          ]
+            2
+          ],
+          "input_answer": []
         },
         {
           "question_id": "2",
           "chose_answer": [
-            0
+          ],
+          "input_answer": [
+            "Gay"
           ]
         },
         {
           "question_id": "3",
-          "chose_answer": [
-            0
+          "chose_answer": [],
+          "input_answer": [
+            "03-07-1990"
+          ]
+        },
+        {
+          "question_id": "4",
+          "chose_answer": [],
+          "input_answer": [
+            "05-08-1992",
+            "Cong the gay"
           ]
         }
-      ],
-      "disease_cause_percentage": 0.5
+      ]
     },
     {
       "patient_survey_id": "6",
@@ -196,28 +280,42 @@
           "question_id": "0",
           "chose_answer": [
             1
-          ]
+          ],
+          "input_answer": []
         },
         {
           "question_id": "1",
           "chose_answer": [
-            0
-          ]
+            3
+          ],
+          "input_answer": []
         },
         {
           "question_id": "2",
           "chose_answer": [
-            0
+          ],
+          "input_answer": [
+            "male"
           ]
         },
         {
           "question_id": "3",
+          "chose_answer": [],
+          "input_answer": [
+            "06-12-1989"
+          ]
+        },
+        {
+          "question_id": "4",
           "chose_answer": [
             0
+          ],
+          "input_answer": [
+            "05-08-1992",
+            "Thien the smiler"
           ]
         }
-      ],
-      "disease_cause_percentage": 0.5
+      ]
     },
     {
       "patient_survey_id": "7",
@@ -226,29 +324,44 @@
         {
           "question_id": "0",
           "chose_answer": [
-            1
-          ]
+            0
+          ],
+          "input_answer": []
         },
         {
           "question_id": "1",
           "chose_answer": [
-            0
-          ]
+            0,
+            3
+          ],
+          "input_answer": []
         },
         {
           "question_id": "2",
           "chose_answer": [
-            0
+          ],
+          "input_answer": [
+            "male"
           ]
         },
         {
           "question_id": "3",
+          "chose_answer": [],
+          "input_answer": [
+            "09-11-2011"
+          ]
+        },
+        {
+          "question_id": "4",
           "chose_answer": [
-            0
+            1
+          ],
+          "input_answer": [
+            "05-08-1992",
+            "Tam the big"
           ]
         }
-      ],
-      "disease_cause_percentage": 0.75
+      ]
     },
     {
       "patient_survey_id": "8",
@@ -258,28 +371,44 @@
           "question_id": "0",
           "chose_answer": [
             1
-          ]
+          ],
+          "input_answer": []
         },
         {
           "question_id": "1",
           "chose_answer": [
-            1
-          ]
+            0,
+            2
+          ],
+          "input_answer": []
         },
         {
           "question_id": "2",
           "chose_answer": [
-            1
+          ],
+          "input_answer": [
+            "female"
           ]
         },
         {
           "question_id": "3",
+          "chose_answer": [],
+          "input_answer": [
+            "10-05-1988"
+          ]
+        },
+        {
+          "question_id": "4",
           "chose_answer": [
+            0,
             1
+          ],
+          "input_answer": [
+            "05-08-1992",
+            "Tara the beauty"
           ]
         }
-      ],
-      "disease_cause_percentage": 0.25
+      ]
     }
   ]
 }

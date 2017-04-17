@@ -17,18 +17,12 @@ public class QuestionAndAnswer {
     @SerializedName("question_type")
     @Expose
     private String questionType;
-    @SerializedName("output_result")
-    @Expose
-    private Float outputResult;
     @SerializedName("question_content")
     @Expose
     private String questionContent;
     @SerializedName("options")
     @Expose
     private List<Option> options = null;
-    @SerializedName("correct_answer")
-    @Expose
-    private int[] correctAnswer;
 
     public String getQuestionId() {
         return questionId;
@@ -44,14 +38,6 @@ public class QuestionAndAnswer {
 
     public void setQuestionType(String questionType) {
         this.questionType = questionType;
-    }
-
-    public Float getOutputResult() {
-        return outputResult;
-    }
-
-    public void setOutputResult(Float outputResult) {
-        this.outputResult = outputResult;
     }
 
     public String getQuestionContent() {
@@ -70,11 +56,4 @@ public class QuestionAndAnswer {
         this.options = options;
     }
 
-    public int[] getCorrectAnswer() {
-        return correctAnswer;
-    }
-
-    public void setCorrectAnswer(int[] correctAnswer) {
-        this.correctAnswer = correctAnswer;
-    }
 }

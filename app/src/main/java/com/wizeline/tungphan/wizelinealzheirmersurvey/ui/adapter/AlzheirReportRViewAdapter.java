@@ -49,8 +49,9 @@ public class AlzheirReportRViewAdapter
     public void onBindViewHolder(AlzheirReportRViewAdapter.AlzheirRecordRViewViewHolder holder, int position) {
         PatientSurvey patientSurvey = patientSurveys.get(position);
         holder.patientName.setText(patientSurvey.getPatientName());
-        float percent = 100 * patientSurvey.getDiseaseCausePercentage();
-        holder.diseaseCausePercent.setText(String.format("%.0f%%", percent));
+        //TODO: display desease cause percent
+//        float percent = 100 * patientSurvey.getDiseaseCausePercentage();
+//        holder.diseaseCausePercent.setText(String.format("%.0f%%", percent));
         holder.recordItemLayout.setOnClickListener(v -> {
             Intent intent = new Intent(context, SurveyActivity.class);
             intent.putExtra(SURVEY_VIEW_ONLY, true);

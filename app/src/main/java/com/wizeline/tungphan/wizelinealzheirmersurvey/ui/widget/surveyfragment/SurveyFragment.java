@@ -1,13 +1,11 @@
-package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget;
+package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.surveyfragment;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +15,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.WizeApp;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.di.component.AppComponent;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.RxEventBus;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.eventtype.IllegalInputEvent;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.eventtype.SubmitSurveyEvent;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Answer;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.PatientSurvey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.adapter.QuestionAndAnswerAdapter;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.basefragment.BaseFragment;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,11 +33,9 @@ import butterknife.ButterKnife;
  * Created by tungphan on 4/8/17.
  */
 
-public class AlzheirmerSurveyFragment extends Fragment {
+public class SurveyFragment extends BaseFragment<SurveyFragmentPresenter> implements SurveyFragmentView {
 
-    public static final String TAG = AlzheirmerSurveyFragment.class.getSimpleName();
-    @Inject
-    RxEventBus rxEventBus;
+    public static final String TAG = SurveyFragment.class.getSimpleName();
     private View view;
     @BindView(R.id.question_answer_rview)
     RecyclerView questionAnswerRView;
@@ -77,14 +71,9 @@ public class AlzheirmerSurveyFragment extends Fragment {
         this.editable = editable;
     }
 
-    public void initInjector(Context context) {
-        WizeApp.getAppComponent(context).inject(this);
-    }
-
     private View.OnClickListener submitBtnClickListener = v -> {
         if (getIllegalInputType() == IllegalInputEvent.InputType.LEGAL) {
-            Log.e(TAG,"submitBtnClickListener");
-            sendSubmitSurveyEvent();
+            getPresenter().savePatientSurveyToDatabase(getPatientSurveyFromInput(), surveyId);
         } else {
             if (getIllegalInputType() == IllegalInputEvent.InputType.NAME_EDITTEXT) {
                 Snackbar.make(parentLayout, R.string.text_require_name_entered
@@ -95,11 +84,21 @@ public class AlzheirmerSurveyFragment extends Fragment {
         }
     };
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getPresenter().loadSurveyFromLocal();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
     private void showNotInteractedSnackbar() {
         Snackbar.make(parentLayout, R.string.warning_no_field_changed, Snackbar.LENGTH_LONG)
                 .setAction(R.string.text_submit_button, view -> {
-                    Log.e(TAG,"showNotInteractedSnackbar");
-                    sendSubmitSurveyEvent();
+                    getPresenter().savePatientSurveyToDatabase(getPatientSurveyFromInput(), surveyId);
                 })
                 .addCallback(new Snackbar.Callback() {
                     @Override
@@ -119,16 +118,7 @@ public class AlzheirmerSurveyFragment extends Fragment {
         float deseaseCausePercent = questionAndAnswerAdapter.getDiseaseCausePercentage();
         return new PatientSurvey(patientSurveyId
                 , patientNameEditText.getText().toString()
-                , answers, deseaseCausePercent);
-    }
-
-    private void sendSubmitSurveyEvent() {
-        Log.e(TAG,"sendSubmitSurveyEvent");
-        rxEventBus.post(createSubmitSurveyEvent());
-    }
-
-    private SubmitSurveyEvent createSubmitSurveyEvent() {
-        return new SubmitSurveyEvent(getPatientSurveyFromInput(), surveyId);
+                , answers);
     }
 
     @Nullable
@@ -145,6 +135,11 @@ public class AlzheirmerSurveyFragment extends Fragment {
             setupViewOnly();
         }
         return view;
+    }
+
+    @Override
+    protected void initInjector(AppComponent appComponent) {
+        appComponent.inject(this);
     }
 
     @Override
@@ -190,4 +185,23 @@ public class AlzheirmerSurveyFragment extends Fragment {
         }
         return IllegalInputEvent.InputType.LEGAL;
     }
+
+    @Override
+    public void onLoadLocalSurveySuccess(Survey survey) {
+        setQuestionAnswerRViewData(survey);
+    }
+
+
+    @Override
+    public void onSavePatientSurveySuccess() {
+        ((Activity) getContext()).setResult(Activity.RESULT_OK);
+        ((Activity) getContext()).finish();
+    }
+
+    @Override
+    public void onSavePatientSurveyFail() {
+        ((Activity) getContext()).setResult(Activity.RESULT_CANCELED);
+        ((Activity) getContext()).finish();
+    }
+
 }
