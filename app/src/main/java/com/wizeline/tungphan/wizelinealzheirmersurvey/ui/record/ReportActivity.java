@@ -30,9 +30,9 @@ public class ReportActivity extends SlideMenuActivity implements ReportView {
         getPresenter().onTakeView(this);
         floatingActionButton.setVisibility(View.VISIBLE);
         floatingActionButton.setOnClickListener(v -> startNewSurveyActivity(reportFragment
-                .getAlzheirRecordAdapterSize()));
+                .getRecordAdapterSize()));
         ((ReportPresenter) getPresenter()).saveAssetFiles();
-        addAlzheirmerRecordFragment();
+        addReportFragment();
         enableShowNavDrawer();
     }
 
@@ -44,7 +44,7 @@ public class ReportActivity extends SlideMenuActivity implements ReportView {
         startActivityForResult(intent, START_SURVEY_ACTIVITY);
     }
 
-    private void addAlzheirmerRecordFragment() {
+    private void addReportFragment() {
         if (getSupportFragmentManager().findFragmentByTag(ReportFragment.TAG) == null) {
             if (reportFragment == null) {
                 reportFragment = new ReportFragment();

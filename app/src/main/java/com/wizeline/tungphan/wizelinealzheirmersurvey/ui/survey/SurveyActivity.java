@@ -1,13 +1,11 @@
 package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.survey;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuActivity;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.surveyfragment.SurveyFragment;
 
@@ -29,7 +27,7 @@ public class SurveyActivity extends SlideMenuActivity implements SurveyView {
         super.onCreate(savedInstanceState);
         getPresenter().onTakeView(this);
         floatingActionButton.setVisibility(View.GONE);
-        addAlzheirmerSurveyFragment();
+        addSurveyFragment();
         processExtraBundle();
         disableShowNavDrawer();
         enableShowHomeAsUp();
@@ -60,7 +58,7 @@ public class SurveyActivity extends SlideMenuActivity implements SurveyView {
         super.onStart();
     }
 
-    private void addAlzheirmerSurveyFragment() {
+    private void addSurveyFragment() {
         if (getSupportFragmentManager().findFragmentByTag(SurveyFragment.TAG) != null) {
             if (surveyFragment == null) {
                 surveyFragment = new SurveyFragment();

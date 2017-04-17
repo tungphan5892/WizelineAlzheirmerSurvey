@@ -2,6 +2,9 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.common;
 
 import android.os.Build;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by tungphan on 3/23/17.
  */
@@ -12,12 +15,12 @@ public class Utils {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
 
-    public static int[] parseIntArrayFromString(String string) {
+    public static List<Integer> parseListIntFromString(String string) {
         string = string.replaceAll("[\\p{Z}\\s]+", "");
         String[] array = string.substring(1, string.length() - 1).split(",");
-        int[] result = new int[array.length];
+        List<Integer> result = new ArrayList<>();
         for (int i = 0; i < array.length; i++) {
-            result[i] = Integer.parseInt(array[i]);
+            result.add(Integer.parseInt(array[i]));
         }
         return result;
     }

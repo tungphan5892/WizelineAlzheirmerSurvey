@@ -108,7 +108,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void insertAnswer(Answer answer, String patientSurveyId) {
-//        Log.e(TAG, "insert answer " + patientSurveyId);
         initWritableSqlitedatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(PATIENT_SURVEY_ID, patientSurveyId);
@@ -179,7 +178,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String choseAnswer = res.getString(res.getColumnIndex(CHOSE_ANSWER));
                 Answer answer = new Answer(
                         res.getString(res.getColumnIndex(QUESTION_ID))
-                        , Utils.parseIntArrayFromString(choseAnswer), new ArrayList<>());
+                        , Utils.parseListIntFromString(choseAnswer), new ArrayList<>());
                 answers.add(answer);
             } while (res.moveToNext());
         }
