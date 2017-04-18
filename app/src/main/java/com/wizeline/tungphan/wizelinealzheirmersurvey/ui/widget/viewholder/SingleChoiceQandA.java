@@ -3,11 +3,8 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Answer;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Option;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.QuestionAndAnswer;
@@ -45,7 +42,7 @@ public class SingleChoiceQandA extends LinearQandA
         questionId = questionAndAnswer.getQuestionId();
         question.setText(questionAndAnswer.getQuestionContent());
         for (int i = 0; i < options.size(); i++) {
-            radioGroup.addView(initView(options.get(i)), i);
+            radioGroup.addView(initView(options.get(i)));
         }
     }
 

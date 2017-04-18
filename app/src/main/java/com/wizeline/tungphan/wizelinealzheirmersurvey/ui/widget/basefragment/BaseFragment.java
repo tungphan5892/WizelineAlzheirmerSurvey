@@ -1,10 +1,8 @@
 package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.basefragment;
 
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,6 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.di.component.AppComponent;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import rx.subscriptions.CompositeSubscription;
 

@@ -31,7 +31,6 @@ public class ReportActivity extends SlideMenuActivity implements ReportView {
         floatingActionButton.setVisibility(View.VISIBLE);
         floatingActionButton.setOnClickListener(v -> startNewSurveyActivity(reportFragment
                 .getRecordAdapterSize()));
-        ((ReportPresenter) getPresenter()).saveAssetFiles();
         addReportFragment();
         enableShowNavDrawer();
     }
@@ -58,6 +57,7 @@ public class ReportActivity extends SlideMenuActivity implements ReportView {
     @Override
     protected void onStart() {
         super.onStart();
+        ((ReportPresenter) getPresenter()).saveAssetFiles();
     }
 
     @Override

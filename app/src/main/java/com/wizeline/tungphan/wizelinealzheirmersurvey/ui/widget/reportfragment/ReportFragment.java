@@ -15,7 +15,7 @@ import android.widget.FrameLayout;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.di.component.AppComponent;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Report;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.adapter.ReportRViewAdapter;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.adapter.ReportRViewAdapter;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.DividerItemDecoration;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.basefragment.BaseFragment;
 

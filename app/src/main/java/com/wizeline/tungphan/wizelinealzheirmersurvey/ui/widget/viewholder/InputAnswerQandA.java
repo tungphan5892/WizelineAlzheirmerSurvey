@@ -35,14 +35,15 @@ public class InputAnswerQandA extends LinearQandA
         List<Option> options = questionAndAnswer.getOptions();
         question.setText(questionAndAnswer.getQuestionContent());
         for (int i = 0; i < options.size(); i++) {
-            parentLayout.addView(initView(options.get(i)),i);
+            parentLayout.addView(initView(options.get(i)));
         }
     }
 
     @Override
     public Answer getAnswer() {
+        //there's a textview at position 0, get the other from i+1
         for (int i = 0; i < options.size(); i++) {
-            processOutputFromView(options.get(i), i);
+            processOutputFromView(options.get(i), i + 1);
         }
         return new Answer(questionId, choseAnswer, inputAnswer);
     }

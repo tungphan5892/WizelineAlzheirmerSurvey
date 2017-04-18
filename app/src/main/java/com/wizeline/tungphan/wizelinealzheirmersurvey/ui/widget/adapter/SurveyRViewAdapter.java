@@ -1,4 +1,4 @@
-package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.adapter;
+package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.constant.ViewConstant;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Answer;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.QuestionAndAnswer;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.DateTimeQandA;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.InputAnswerQandA;
@@ -18,7 +17,6 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.QandA
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.QandAviewholderFactory;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.SingleChoiceQandA;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -69,18 +67,22 @@ public class SurveyRViewAdapter
                 SingleChoiceQandA singleChoiceQandA
                         = (SingleChoiceQandA) holder;
                 singleChoiceQandA.bindViewHolder(questionAndAnswer);
+                break;
             case ViewConstant.MULTI_CHOICES:
                 MultiChoicesQandA multiChoicesQandA
                         = (MultiChoicesQandA) holder;
                 multiChoicesQandA.bindViewHolder(questionAndAnswer);
+                break;
             case ViewConstant.INPUT_ANSWER:
                 InputAnswerQandA inputAnswerQandA
                         = (InputAnswerQandA) holder;
                 inputAnswerQandA.bindViewHolder(questionAndAnswer);
+                break;
             case ViewConstant.DATETIME:
                 DateTimeQandA dateTimeQandA
                         = (DateTimeQandA) holder;
                 dateTimeQandA.bindViewHolder(questionAndAnswer);
+                break;
             case ViewConstant.MIX_TYPE:
                 MixTypeQandA mixTypeQandA
                         = (MixTypeQandA) holder;

@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;

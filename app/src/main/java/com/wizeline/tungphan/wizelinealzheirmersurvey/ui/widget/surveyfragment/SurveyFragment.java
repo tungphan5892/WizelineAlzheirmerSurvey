@@ -22,11 +22,10 @@ import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Answer;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.PatientSurvey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.QuestionAndAnswer;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.adapter.SurveyRViewAdapter;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.adapter.SurveyRViewAdapter;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.basefragment.BaseFragment;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.DateTimeQandA;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.InputAnswerQandA;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.LinearQandA;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.MixTypeQandA;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.MultiChoicesQandA;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.SingleChoiceQandA;
@@ -91,12 +90,12 @@ public class SurveyFragment extends BaseFragment<SurveyFragmentPresenter> implem
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getPresenter().loadSurveyFromLocal();
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        getPresenter().loadSurveyFromLocal();
     }
 
     private PatientSurvey getPatientSurveyFromInput() {
@@ -110,18 +109,22 @@ public class SurveyFragment extends BaseFragment<SurveyFragmentPresenter> implem
                     SingleChoiceQandA singleChoiceQandA
                             = (SingleChoiceQandA) viewHolder;
                     answers.add(singleChoiceQandA.getAnswer());
+                    break;
                 case ViewConstant.MULTI_CHOICES:
                     MultiChoicesQandA multiChoicesQandA
                             = (MultiChoicesQandA) viewHolder;
                     answers.add(multiChoicesQandA.getAnswer());
+                    break;
                 case ViewConstant.INPUT_ANSWER:
                     InputAnswerQandA inputAnswerQandA
                             = (InputAnswerQandA) viewHolder;
                     answers.add(inputAnswerQandA.getAnswer());
+                    break;
                 case ViewConstant.DATETIME:
                     DateTimeQandA dateTimeQandA
                             = (DateTimeQandA) viewHolder;
                     answers.add(dateTimeQandA.getAnswer());
+                    break;
                 case ViewConstant.MIX_TYPE:
                     MixTypeQandA mixTypeQandA
                             = (MixTypeQandA) viewHolder;
@@ -137,7 +140,7 @@ public class SurveyFragment extends BaseFragment<SurveyFragmentPresenter> implem
                 , answers);
     }
 
-    private void addAnswer(){
+    private void addAnswer() {
 
     }
 

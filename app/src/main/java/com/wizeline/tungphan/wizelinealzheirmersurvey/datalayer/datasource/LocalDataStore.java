@@ -1,16 +1,14 @@
-package com.wizeline.tungphan.wizelinealzheirmersurvey.local;
+package com.wizeline.tungphan.wizelinealzheirmersurvey.datalayer.datasource;
 
-
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.WizeApp;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.datalayer.sqlitedatabase.DatabaseHelper;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Answer;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.PatientSurvey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Report;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
-
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,17 +22,17 @@ import rx.functions.Func1;
 
 import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.FileConstant.REPORT_FILE_NAME;
 import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.FileConstant.SURVEY_FILE_NAME;
-import static com.wizeline.tungphan.wizelinealzheirmersurvey.local.DatabaseHelper.DATABASE_NAME;
+import static com.wizeline.tungphan.wizelinealzheirmersurvey.datalayer.sqlitedatabase.DatabaseHelper.DATABASE_NAME;
 
 /**
  * Created by tungphan on 4/10/17.
  */
 
-public class LoadLocalData {
-    private static final String TAG = LoadLocalData.class.getSimpleName();
+public class LocalDataStore implements DataStore {
+    private static final String TAG = LocalDataStore.class.getSimpleName();
     private DatabaseHelper databaseHelper;
 
-    public LoadLocalData(DatabaseHelper databaseHelper) {
+    public LocalDataStore(DatabaseHelper databaseHelper) {
         this.databaseHelper = databaseHelper;
     }
 
@@ -56,8 +54,8 @@ public class LoadLocalData {
     }
 
     //get the report from database by loading the first survey.
-    public Observable<Report> loadReportFromDatabase() {
-        return Observable.fromCallable(() -> databaseHelper.getFirstSurvey());
+    public Observable<Report> getReportFromDatabase() {
+        return Observable.fromCallable(() -> databaseHelper.getReport());
     }
 
     public Observable<Report> loadLocalReport() {
@@ -118,5 +116,25 @@ public class LoadLocalData {
                     return true;
                 }
         );
+    }
+
+    @Override
+    public Observable<Report> getReport() {
+        return getReportFromDatabase();
+    }
+
+    @Override
+    public Observable<Survey> getSurvey() {
+        return loadLocalSurvey();
+    }
+
+    @Override
+    public Observable<Boolean> addSurvey(PatientSurvey patientSurvey, String surveyId) {
+        return savePatientSurveyToDatabase(patientSurvey, surveyId);
+    }
+
+    @Override
+    public Observable<Boolean> createDatabase() {
+        return createSqliteFromLocalReport();
     }
 }

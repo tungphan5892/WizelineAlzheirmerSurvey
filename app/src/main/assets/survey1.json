@@ -97,7 +97,7 @@
         },
         {
           "id": 2,
-          "option_type": "input_answer",
+          "option_type": "edittext",
           "output_result": 0.10,
           "option": ""
         },

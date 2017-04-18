@@ -3,6 +3,8 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.di.component.AppComponent;
@@ -108,5 +110,11 @@ public class WizeApp extends Application {
         while ((read = in.read(buffer)) != -1) {
             out.write(buffer, 0, read);
         }
+    }
+
+    public boolean isConnectToNetwork() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
     }
 }

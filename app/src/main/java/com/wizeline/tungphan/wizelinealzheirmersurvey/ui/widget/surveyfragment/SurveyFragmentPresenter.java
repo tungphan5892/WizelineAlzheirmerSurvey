@@ -2,7 +2,7 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.surveyfragment;
 
 import android.util.Log;
 
-import com.wizeline.tungphan.wizelinealzheirmersurvey.local.LoadLocalData;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.domain.Repository;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.PatientSurvey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.basefragment.BaseFragmentPresenter;
@@ -20,15 +20,15 @@ import rx.schedulers.Schedulers;
 public class SurveyFragmentPresenter extends BaseFragmentPresenter<SurveyFragmentView> {
 
     private static final String TAG = SurveyFragmentPresenter.class.getSimpleName();
-    private LoadLocalData loadLocalData;
+    private Repository repository;
 
     @Inject
-    public SurveyFragmentPresenter(LoadLocalData loadLocalData) {
-        this.loadLocalData = loadLocalData;
+    public SurveyFragmentPresenter(Repository repository) {
+        this.repository = repository;
     }
 
     public void loadSurveyFromLocal() {
-        subscriptions.add(loadLocalData.loadLocalSurvey()
+        subscriptions.add(repository.getSurvey()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Survey>() {
@@ -50,8 +50,7 @@ public class SurveyFragmentPresenter extends BaseFragmentPresenter<SurveyFragmen
     }
 
     public void savePatientSurveyToDatabase(PatientSurvey patientSurvey, String surveyId) {
-        subscriptions.add(loadLocalData.savePatientSurveyToDatabase(patientSurvey
-                , surveyId)
+        subscriptions.add(repository.addSurvey(patientSurvey, surveyId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Boolean>() {

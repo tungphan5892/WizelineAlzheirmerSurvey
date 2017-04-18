@@ -3,8 +3,6 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Answer;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Option;
@@ -43,8 +41,9 @@ public class MultiChoicesQandA extends LinearQandA
 
     @Override
     public Answer getAnswer() {
+        //there's a textview at position 0, get the other from i+1
         for (int i = 0; i < options.size(); i++) {
-            processOutputFromView(options.get(i), i);
+            processOutputFromView(options.get(i), i + 1);
         }
         return new Answer(questionId, choseAnswer, inputAnswer);
     }

@@ -59,7 +59,7 @@ public class SurveyActivity extends SlideMenuActivity implements SurveyView {
     }
 
     private void addSurveyFragment() {
-        if (getSupportFragmentManager().findFragmentByTag(SurveyFragment.TAG) != null) {
+        if (getSupportFragmentManager().findFragmentByTag(SurveyFragment.TAG) == null) {
             if (surveyFragment == null) {
                 surveyFragment = new SurveyFragment();
             }
