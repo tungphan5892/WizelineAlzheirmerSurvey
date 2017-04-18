@@ -1,4 +1,4 @@
-package com.wizeline.tungphan.wizelinealzheirmersurvey.local;
+package com.wizeline.tungphan.wizelinealzheirmersurvey.datalayer.sqlitedatabase;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -41,23 +41,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "("
             + PATIENT_SURVEY_ID + " TEXT PRIMARY KEY,"
             + SURVEY_ID + " TEXT,"
-            + PATIENT_NAME + " TEXT,"
+            + PATIENT_NAME + " TEXT"
             + ")";
     private static final String ANSWER_TABLE_NAME = "answer";
     private static final String ANSWER_ID = "answer_id";
     private static final String QUESTION_ID = "question_id";
     private static final String CHOSE_ANSWER = "chose_answer";
+    private static final String INPUT_ANSWER = "input_answer";
     private static final String CREATE_ANSWER_TABLE = "CREATE TABLE " + ANSWER_TABLE_NAME
             + "("
             + ANSWER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + PATIENT_SURVEY_ID + " TEXT,"
             + QUESTION_ID + " TEXT,"
-            + CHOSE_ANSWER + " TEXT"
+            + CHOSE_ANSWER + " TEXT,"
+            + INPUT_ANSWER + " TEXT"
             + ")";
     private static final String DROP_REPORT_TABLE = "DROP TABLE IF EXISTS " + REPORT_TABLE_NAME;
     private static final String DROP_PATIENT_SURVEY_TABLE = "DROP TABLE IF EXISTS " + PATIENT_SURVEY_TABLE_NAME;
     private static final String DROP_ANSWER_TABLE = "DROP TABLE IF EXISTS " + ANSWER_TABLE_NAME;
-    private static final String SELECT_FIRST_SURVEY_QUERY = "SELECT * FROM "
+    private static final String SELECT_FIRST_REPORT_QUERY = "SELECT * FROM "
             + REPORT_TABLE_NAME
             + " where "
             + SURVEY_ID
@@ -108,12 +110,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void insertAnswer(Answer answer, String patientSurveyId) {
-//        Log.e(TAG, "insert answer " + patientSurveyId);
         initWritableSqlitedatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(PATIENT_SURVEY_ID, patientSurveyId);
         contentValues.put(QUESTION_ID, answer.getQuestionId());
-        contentValues.put(CHOSE_ANSWER, Arrays.toString(answer.getChoseAnswer()));
+        contentValues.put(CHOSE_ANSWER, answer.getChoseAnswer().toString());
+        contentValues.put(INPUT_ANSWER, answer.getInputAnswer().toString());
         writableSqliteDatabase.insert(ANSWER_TABLE_NAME, null, contentValues);
     }
 
@@ -135,10 +137,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         writableSqliteDatabase.insert(REPORT_TABLE_NAME, null, contentValues);
     }
 
-    public Report getFirstSurvey() {
+    //temporary hash local data have only one report, get the first one.
+    public Report getReport() {
         initReadableSqliteDatabase();
         Report report = new Report();
-        Cursor res = readableSqliteDatabase.rawQuery(SELECT_FIRST_SURVEY_QUERY + String.valueOf(0), null);
+        Cursor res = readableSqliteDatabase.rawQuery(SELECT_FIRST_REPORT_QUERY + String.valueOf(0), null);
         if (res.moveToFirst()) {
             String surveyId = res.getString(res.getColumnIndex(SURVEY_ID));
             report.setSurveyId(surveyId);
@@ -176,10 +179,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor res = readableSqliteDatabase.rawQuery(SELECT_ANSWERS + patientSurveyId, null);
         if (res.moveToFirst()) {
             do {
-                String choseAnswer = res.getString(res.getColumnIndex(CHOSE_ANSWER));
+                final String choseAnswer = res.getString(res.getColumnIndex(CHOSE_ANSWER));
+                final String inputAnswer = res.getString(res.getColumnIndex(INPUT_ANSWER));
+                final List<Integer> choseAnswerList = Utils.parseListIntFromString(choseAnswer);
+                final List<String> inputAnswerList = Utils.parseListStringFromString(inputAnswer);
                 Answer answer = new Answer(
                         res.getString(res.getColumnIndex(QUESTION_ID))
-                        , Utils.parseIntArrayFromString(choseAnswer), new ArrayList<>());
+                        , choseAnswerList, inputAnswerList);
                 answers.add(answer);
             } while (res.moveToNext());
         }

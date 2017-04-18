@@ -1,13 +1,11 @@
 package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.survey;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentConstant;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuActivity;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.surveyfragment.SurveyFragment;
 
@@ -29,7 +27,7 @@ public class SurveyActivity extends SlideMenuActivity implements SurveyView {
         super.onCreate(savedInstanceState);
         getPresenter().onTakeView(this);
         floatingActionButton.setVisibility(View.GONE);
-        addAlzheirmerSurveyFragment();
+        addSurveyFragment();
         processExtraBundle();
         disableShowNavDrawer();
         enableShowHomeAsUp();
@@ -40,7 +38,6 @@ public class SurveyActivity extends SlideMenuActivity implements SurveyView {
         Intent intent = getIntent();
         if (intent != null) {
             if (intent.getBooleanExtra(IntentConstant.SURVEY_VIEW_ONLY, false)) {
-                surveyFragment.setEditable(false);
                 if (intent.getParcelableExtra(IntentConstant.PATIENT_SURVEY_OBJECT) != null) {
                     surveyFragment.setPatientSurvey(intent
                             .getParcelableExtra(IntentConstant.PATIENT_SURVEY_OBJECT));
@@ -48,7 +45,6 @@ public class SurveyActivity extends SlideMenuActivity implements SurveyView {
                 surveyFragment.setPatientName(intent
                         .getStringExtra(IntentConstant.PATIENT_NAME));
             } else {
-                surveyFragment.setEditable(true);
                 surveyFragment.setPatientSurveyId(String.valueOf(
                         intent.getIntExtra(IntentConstant.PATIENT_SURVEY_ID, -1)));
             }
@@ -60,8 +56,8 @@ public class SurveyActivity extends SlideMenuActivity implements SurveyView {
         super.onStart();
     }
 
-    private void addAlzheirmerSurveyFragment() {
-        if (getSupportFragmentManager().findFragmentByTag(SurveyFragment.TAG) != null) {
+    private void addSurveyFragment() {
+        if (getSupportFragmentManager().findFragmentByTag(SurveyFragment.TAG) == null) {
             if (surveyFragment == null) {
                 surveyFragment = new SurveyFragment();
             }

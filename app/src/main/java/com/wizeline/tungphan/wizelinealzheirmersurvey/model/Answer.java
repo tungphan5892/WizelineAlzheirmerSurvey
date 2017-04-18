@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class Answer implements Parcelable {
     private String questionId;
     @SerializedName("chose_answer")
     @Expose
-    private int[] choseAnswer = null;
+    private List<Integer> choseAnswer = null;
     @SerializedName("input_answer")
     @Expose
     private List<String> inputAnswer = null;
@@ -32,11 +33,11 @@ public class Answer implements Parcelable {
         this.questionId = questionId;
     }
 
-    public int[] getChoseAnswer() {
+    public List<Integer> getChoseAnswer() {
         return choseAnswer;
     }
 
-    public void setChoseAnswer(int[] choseAnswer) {
+    public void setChoseAnswer(List<Integer> choseAnswer) {
         this.choseAnswer = choseAnswer;
     }
 
@@ -48,7 +49,7 @@ public class Answer implements Parcelable {
         this.inputAnswer = inputAnswer;
     }
 
-    public Answer(String questionId, int[] choseAnswer, List<String> inputAnswer) {
+    public Answer(String questionId, List<Integer> choseAnswer, List<String> inputAnswer) {
         this.questionId = questionId;
         this.choseAnswer = choseAnswer;
         this.inputAnswer = inputAnswer;
@@ -62,13 +63,14 @@ public class Answer implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.questionId);
-        dest.writeIntArray(this.choseAnswer);
+        dest.writeList(this.choseAnswer);
         dest.writeStringList(this.inputAnswer);
     }
 
     protected Answer(Parcel in) {
         this.questionId = in.readString();
-        this.choseAnswer = in.createIntArray();
+        this.choseAnswer = new ArrayList<Integer>();
+        in.readList(this.choseAnswer, Integer.class.getClassLoader());
         this.inputAnswer = in.createStringArrayList();
     }
 

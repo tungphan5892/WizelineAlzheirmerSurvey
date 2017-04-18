@@ -1,4 +1,4 @@
-package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.adapter;
+package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -26,27 +26,27 @@ import static com.wizeline.tungphan.wizelinealzheirmersurvey.constant.IntentCons
  * Created by tungphan on 4/12/17.
  */
 
-public class AlzheirReportRViewAdapter
-        extends RecyclerView.Adapter<AlzheirReportRViewAdapter.AlzheirRecordRViewViewHolder> {
+public class ReportRViewAdapter
+        extends RecyclerView.Adapter<ReportRViewAdapter.RecordRViewViewHolder> {
 
     private List<PatientSurvey> patientSurveys;
     private Context context;
 
-    public AlzheirReportRViewAdapter(Context context, List<PatientSurvey> patientSurveys) {
+    public ReportRViewAdapter(Context context, List<PatientSurvey> patientSurveys) {
         this.context = context;
         this.patientSurveys = patientSurveys;
     }
 
     @Override
-    public AlzheirReportRViewAdapter.AlzheirRecordRViewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecordRViewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.report_item, parent, false);
-        return new AlzheirRecordRViewViewHolder(itemView);
+        return new RecordRViewViewHolder(itemView);
     }
 
     @SuppressLint("DefaultLocale")
     @Override
-    public void onBindViewHolder(AlzheirReportRViewAdapter.AlzheirRecordRViewViewHolder holder, int position) {
+    public void onBindViewHolder(RecordRViewViewHolder holder, int position) {
         PatientSurvey patientSurvey = patientSurveys.get(position);
         holder.patientName.setText(patientSurvey.getPatientName());
         //TODO: display desease cause percent
@@ -66,13 +66,13 @@ public class AlzheirReportRViewAdapter
         return patientSurveys.size();
     }
 
-    public static class AlzheirRecordRViewViewHolder extends RecyclerView.ViewHolder {
+    public static class RecordRViewViewHolder extends RecyclerView.ViewHolder {
 
         private TextView patientName;
         private TextView diseaseCausePercent;
         private RelativeLayout recordItemLayout;
 
-        public AlzheirRecordRViewViewHolder(View itemView) {
+        public RecordRViewViewHolder(View itemView) {
             super(itemView);
             patientName = ButterKnife.findById(itemView, R.id.patient_name);
             diseaseCausePercent = ButterKnife.findById(itemView, R.id.disease_cause_percentage);

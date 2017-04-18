@@ -4,7 +4,6 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.record;
 import android.util.Log;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.WizeApp;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Report;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.slidemenu.SlideMenuPresenter;
 
 import rx.Observable;
@@ -24,7 +23,7 @@ public class ReportPresenter extends SlideMenuPresenter {
     }
 
     public void createSqliteFromLocalReport() {
-        subscriptions.add(loadLocalData.createSqliteFromLocalReport()
+        subscriptions.add(repository.createDatabase()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Boolean>() {

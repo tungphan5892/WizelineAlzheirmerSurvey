@@ -2,9 +2,8 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.reportfragment;
 
 import android.util.Log;
 
-import com.wizeline.tungphan.wizelinealzheirmersurvey.local.LoadLocalData;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.domain.Repository;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Report;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.record.ReportView;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.basefragment.BaseFragmentPresenter;
 
 import javax.inject.Inject;
@@ -20,15 +19,15 @@ import rx.schedulers.Schedulers;
 public class ReportFragmentPresenter extends BaseFragmentPresenter<ReportFragmentView> {
 
     private static final String TAG = ReportFragmentPresenter.class.getSimpleName();
-    private LoadLocalData loadLocalData;
+    private Repository repository;
 
     @Inject
-    public ReportFragmentPresenter(LoadLocalData loadLocalData) {
-        this.loadLocalData = loadLocalData;
+    public ReportFragmentPresenter(Repository repository) {
+        this.repository = repository;
     }
 
     public void getFirstReportData() {
-        subscriptions.add(loadLocalData.loadReportFromDatabase()
+        subscriptions.add(repository.getReport()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Report>() {

@@ -3,8 +3,8 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.di.module;
 import android.app.Application;
 import android.content.Context;
 
-import com.wizeline.tungphan.wizelinealzheirmersurvey.local.DatabaseHelper;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.local.LoadLocalData;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.datalayer.repository.DataRepository;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.domain.Repository;
 
 import javax.inject.Singleton;
 
@@ -30,8 +30,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    LoadLocalData provideLoadLocalData() {
-        DatabaseHelper databaseHelper = new DatabaseHelper(application);
-        return new LoadLocalData(databaseHelper);
+    Repository provideDataRepository(DataRepository dataRepository) {
+        return dataRepository;
     }
 }

@@ -15,15 +15,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.constant.ViewConstant;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.di.component.AppComponent;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.RxEventBus;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.eventbus.eventtype.IllegalInputEvent;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Answer;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.PatientSurvey;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.model.QuestionAndAnswer;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Survey;
-import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.adapter.QuestionAndAnswerAdapter;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.adapter.SurveyRViewAdapter;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.basefragment.BaseFragment;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.DateTimeQandA;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.InputAnswerQandA;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.MixTypeQandA;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.MultiChoicesQandA;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.SingleChoiceQandA;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -38,7 +45,7 @@ public class SurveyFragment extends BaseFragment<SurveyFragmentPresenter> implem
     public static final String TAG = SurveyFragment.class.getSimpleName();
     private View view;
     @BindView(R.id.question_answer_rview)
-    RecyclerView questionAnswerRView;
+    RecyclerView surveyRView;
     @BindView(R.id.submit_button)
     Button submitButon;
     @BindView(R.id.guide_textview)
@@ -47,10 +54,9 @@ public class SurveyFragment extends BaseFragment<SurveyFragmentPresenter> implem
     EditText patientNameEditText;
     @BindView(R.id.parent_layout)
     RelativeLayout parentLayout;
-    private QuestionAndAnswerAdapter questionAndAnswerAdapter;
+    private SurveyRViewAdapter surveyRViewAdapter;
     //this field is using for switch this fragment to editable or un-editable
-    private boolean editable;
-    private PatientSurvey patientSurvey;
+    private PatientSurvey patientSurvey = null;
     private String surveyId;
     private String patientSurveyId;
     private String patientName;
@@ -67,55 +73,63 @@ public class SurveyFragment extends BaseFragment<SurveyFragmentPresenter> implem
         this.patientSurveyId = patientSurveyId;
     }
 
-    public void setEditable(boolean editable) {
-        this.editable = editable;
-    }
-
     private View.OnClickListener submitBtnClickListener = v -> {
         if (getIllegalInputType() == IllegalInputEvent.InputType.LEGAL) {
             getPresenter().savePatientSurveyToDatabase(getPatientSurveyFromInput(), surveyId);
-        } else {
-            if (getIllegalInputType() == IllegalInputEvent.InputType.NAME_EDITTEXT) {
-                Snackbar.make(parentLayout, R.string.text_require_name_entered
-                        , Snackbar.LENGTH_LONG).show();
-            } else if (getIllegalInputType() == IllegalInputEvent.InputType.NOT_INTERACTED) {
-                showNotInteractedSnackbar();
-            }
+        } else if (getIllegalInputType() == IllegalInputEvent.InputType.NAME_EDITTEXT) {
+            Snackbar.make(parentLayout, R.string.text_require_name_entered
+                    , Snackbar.LENGTH_LONG).show();
         }
     };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getPresenter().loadSurveyFromLocal();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-    }
-
-    private void showNotInteractedSnackbar() {
-        Snackbar.make(parentLayout, R.string.warning_no_field_changed, Snackbar.LENGTH_LONG)
-                .setAction(R.string.text_submit_button, view -> {
-                    getPresenter().savePatientSurveyToDatabase(getPatientSurveyFromInput(), surveyId);
-                })
-                .addCallback(new Snackbar.Callback() {
-                    @Override
-                    public void onDismissed(Snackbar snackbar, int event) {
-                        submitButon.setClickable(true);
-                    }
-
-                    @Override
-                    public void onShown(Snackbar snackbar) {
-                        submitButon.setClickable(false);
-                    }
-                }).show();
+        getPresenter().loadSurveyFromLocal();
     }
 
     private PatientSurvey getPatientSurveyFromInput() {
-        List<Answer> answers = questionAndAnswerAdapter.getAnswers();
-        float deseaseCausePercent = questionAndAnswerAdapter.getDiseaseCausePercentage();
+        List<Answer> answers = new ArrayList<>();
+        List<QuestionAndAnswer> questionAndAnswers = surveyRViewAdapter.getQuestionAndAnswers();
+        for (int i = 0; i < surveyRViewAdapter.getItemCount(); i++) {
+            RecyclerView.ViewHolder viewHolder
+                    = surveyRView.getChildViewHolder(surveyRView.getChildAt(i));
+            switch (questionAndAnswers.get(i).getQuestionType()) {
+                case ViewConstant.SINGLE_CHOICE:
+                    SingleChoiceQandA singleChoiceQandA
+                            = (SingleChoiceQandA) viewHolder;
+                    answers.add(singleChoiceQandA.getAnswer());
+                    break;
+                case ViewConstant.MULTI_CHOICES:
+                    MultiChoicesQandA multiChoicesQandA
+                            = (MultiChoicesQandA) viewHolder;
+                    answers.add(multiChoicesQandA.getAnswer());
+                    break;
+                case ViewConstant.INPUT_ANSWER:
+                    InputAnswerQandA inputAnswerQandA
+                            = (InputAnswerQandA) viewHolder;
+                    answers.add(inputAnswerQandA.getAnswer());
+                    break;
+                case ViewConstant.DATETIME:
+                    DateTimeQandA dateTimeQandA
+                            = (DateTimeQandA) viewHolder;
+                    answers.add(dateTimeQandA.getAnswer());
+                    break;
+                case ViewConstant.MIX_TYPE:
+                    MixTypeQandA mixTypeQandA
+                            = (MixTypeQandA) viewHolder;
+                    answers.add(mixTypeQandA.getAnswer());
+                    break;
+                default:
+                    singleChoiceQandA = (SingleChoiceQandA) viewHolder;
+                    answers.add(singleChoiceQandA.getAnswer());
+            }
+        }
         return new PatientSurvey(patientSurveyId
                 , patientNameEditText.getText().toString()
                 , answers);
@@ -124,12 +138,12 @@ public class SurveyFragment extends BaseFragment<SurveyFragmentPresenter> implem
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.alzheirmer_survey_fragment, container, false);
-        ButterKnife.bind(this, view);
+        view = inflater.inflate(R.layout.survey_fragment, container, false);
+        unbinder = ButterKnife.bind(this, view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        questionAnswerRView.setLayoutManager(linearLayoutManager);
+        surveyRView.setLayoutManager(linearLayoutManager);
         submitButon.setOnClickListener(submitBtnClickListener);
-        if (editable) {
+        if (patientSurvey == null) {
             setupEditEnable();
         } else {
             setupViewOnly();
@@ -147,14 +161,19 @@ public class SurveyFragment extends BaseFragment<SurveyFragmentPresenter> implem
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public void setQuestionAnswerRViewData(Survey survey) {
+    private void setSurveyRViewDataEditable(Survey survey) {
         surveyId = survey.getSurveyId();
-        questionAndAnswerAdapter = new QuestionAndAnswerAdapter(getContext()
-                , survey.getQuestionAndAnswers(), editable);
-        if (!editable) {
-            questionAndAnswerAdapter.setAnswers(patientSurvey.getAnswers());
-        }
-        questionAnswerRView.setAdapter(questionAndAnswerAdapter);
+        surveyRViewAdapter = new SurveyRViewAdapter(getContext()
+                , survey.getQuestionAndAnswers(), patientSurvey);
+        surveyRView.setAdapter(surveyRViewAdapter);
+    }
+
+    private void setSurveyRViewDataUnEditable(Survey survey) {
+        patientNameEditText.setText(patientSurvey.getPatientName());
+        surveyId = survey.getSurveyId();
+        surveyRViewAdapter = new SurveyRViewAdapter(getContext()
+                , survey.getQuestionAndAnswers(), patientSurvey);
+        surveyRView.setAdapter(surveyRViewAdapter);
     }
 
     private void setupViewOnly() {
@@ -180,15 +199,16 @@ public class SurveyFragment extends BaseFragment<SurveyFragmentPresenter> implem
         if (patientNameEditText.getText().toString().equalsIgnoreCase("")) {
             return IllegalInputEvent.InputType.NAME_EDITTEXT;
         }
-        if (!questionAndAnswerAdapter.isEdited()) {
-            return IllegalInputEvent.InputType.NOT_INTERACTED;
-        }
         return IllegalInputEvent.InputType.LEGAL;
     }
 
     @Override
     public void onLoadLocalSurveySuccess(Survey survey) {
-        setQuestionAnswerRViewData(survey);
+        if (patientSurvey == null) {
+            setSurveyRViewDataEditable(survey);
+        } else {
+            setSurveyRViewDataUnEditable(survey);
+        }
     }
 
 
