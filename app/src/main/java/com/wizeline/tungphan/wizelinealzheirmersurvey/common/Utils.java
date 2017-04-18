@@ -22,12 +22,26 @@ public class Utils {
         String[] array = string.substring(1, string.length() - 1).split(",");
         List<Integer> result = new ArrayList<>();
         for (int i = 0; i < array.length; i++) {
-            result.add(Integer.parseInt(array[i]));
+            if (!array[i].equalsIgnoreCase("")) {
+                result.add(Integer.parseInt(array[i]));
+            }
         }
         return result;
     }
 
-    public static String getDateTime(){
+    public static List<String> parseListStringFromString(String string) {
+        string = string.replaceAll("[\\p{Z}\\s]+", "");
+        String[] array = string.substring(1, string.length() - 1).split(",");
+        List<String> result = new ArrayList<>();
+        for (int i = 0; i < array.length; i++) {
+            if (!array[i].equalsIgnoreCase("")) {
+                result.add(array[i]);
+            }
+        }
+        return result;
+    }
+
+    public static String getDateTime() {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 1);
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");

@@ -3,6 +3,7 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Answer;
@@ -25,6 +26,15 @@ public class SingleChoiceQandA extends LinearQandA
         //manage radio buttons inside radio group for single_choice viewholder
         radioGroup = new RadioGroup(context);
         parentLayout.addView(radioGroup);
+    }
+
+    @Override
+    public void setViewData(Answer answer) {
+        if (answer.getChoseAnswer().size() > 0) {
+            final RadioButton radioButton = (RadioButton) radioGroup
+                    .getChildAt(answer.getChoseAnswer().get(0));
+            radioButton.setChecked(true);
+        }
     }
 
     @Override

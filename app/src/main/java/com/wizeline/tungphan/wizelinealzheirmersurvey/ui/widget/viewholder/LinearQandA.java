@@ -14,7 +14,9 @@ import android.widget.TextView;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.common.Utils;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.constant.ViewConstant;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Answer;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Option;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.model.QuestionAndAnswer;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,7 +26,7 @@ import java.util.List;
  * Created by tungphan on 4/17/17.
  */
 
-public class LinearQandA extends RecyclerView.ViewHolder {
+public abstract class LinearQandA extends RecyclerView.ViewHolder {
 
     protected Context context;
     protected TextView question;
@@ -100,9 +102,9 @@ public class LinearQandA extends RecyclerView.ViewHolder {
     private EditText createDateTime(String text) {
         EditText editText = new EditText(context);
         setEnableEdittext(editText, false);
-        if(editable) {
+        if (editable) {
             editText.setText(Utils.getDateTime());
-        }else{
+        } else {
             editText.setHint(text);
         }
         editText.setInputType(InputType.TYPE_DATETIME_VARIATION_DATE);
@@ -112,7 +114,7 @@ public class LinearQandA extends RecyclerView.ViewHolder {
 
     private void showDatePickerDialog(View dateView) {
         int day, month, year;
-        // Get Current Date
+// Get Current Date
         final Calendar c = Calendar.getInstance();
         day = c.get(Calendar.DAY_OF_MONTH);
         month = c.get(Calendar.MONTH);
@@ -121,7 +123,7 @@ public class LinearQandA extends RecyclerView.ViewHolder {
                 , (view, year1, monthOfYear, dayOfMonth)
                 -> ((EditText) dateView).setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year1)
                 , year, month, day);
-        datePickerDialog.updateDate(year,month,day);
+        datePickerDialog.updateDate(year, month, day);
         datePickerDialog.show();
     }
 
@@ -155,4 +157,8 @@ public class LinearQandA extends RecyclerView.ViewHolder {
                 break;
         }
     }
+
+    public abstract void setViewData(Answer answer);
+
+    public abstract void bindViewHolder(QuestionAndAnswer questionAndAnswer);
 }

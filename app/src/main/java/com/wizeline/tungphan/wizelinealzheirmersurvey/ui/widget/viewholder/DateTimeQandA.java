@@ -3,6 +3,7 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.EditText;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Answer;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.QuestionAndAnswer;
@@ -17,6 +18,18 @@ public class DateTimeQandA extends LinearQandA
 
     public DateTimeQandA(Context context, View itemView) {
         super(context, itemView);
+    }
+
+    @Override
+    public void setViewData(Answer answer) {
+        //For datetime Q&A, there's one edittext to display datetime and added in parentLayout
+        //after questions textview (index: 0).
+        //From that, we can easy get the edittext by index: 1.
+        //Then set text for it.
+        if (answer.getQuestionId().equalsIgnoreCase(questionId)
+                && answer.getInputAnswer().size() > 0) {
+            ((EditText) parentLayout.getChildAt(1)).setText(answer.getInputAnswer().get(0));
+        }
     }
 
     @Override

@@ -56,8 +56,7 @@ public class SurveyFragment extends BaseFragment<SurveyFragmentPresenter> implem
     RelativeLayout parentLayout;
     private SurveyRViewAdapter surveyRViewAdapter;
     //this field is using for switch this fragment to editable or un-editable
-    private boolean editable;
-    private PatientSurvey patientSurvey;
+    private PatientSurvey patientSurvey = null;
     private String surveyId;
     private String patientSurveyId;
     private String patientName;
@@ -72,10 +71,6 @@ public class SurveyFragment extends BaseFragment<SurveyFragmentPresenter> implem
 
     public void setPatientSurveyId(String patientSurveyId) {
         this.patientSurveyId = patientSurveyId;
-    }
-
-    public void setEditable(boolean editable) {
-        this.editable = editable;
     }
 
     private View.OnClickListener submitBtnClickListener = v -> {
@@ -148,7 +143,7 @@ public class SurveyFragment extends BaseFragment<SurveyFragmentPresenter> implem
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         surveyRView.setLayoutManager(linearLayoutManager);
         submitButon.setOnClickListener(submitBtnClickListener);
-        if (editable) {
+        if (patientSurvey == null) {
             setupEditEnable();
         } else {
             setupViewOnly();
@@ -166,10 +161,18 @@ public class SurveyFragment extends BaseFragment<SurveyFragmentPresenter> implem
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void setSurveyRViewData(Survey survey) {
+    private void setSurveyRViewDataEditable(Survey survey) {
         surveyId = survey.getSurveyId();
         surveyRViewAdapter = new SurveyRViewAdapter(getContext()
-                , survey.getQuestionAndAnswers(), editable);
+                , survey.getQuestionAndAnswers(), patientSurvey);
+        surveyRView.setAdapter(surveyRViewAdapter);
+    }
+
+    private void setSurveyRViewDataUnEditable(Survey survey) {
+        patientNameEditText.setText(patientSurvey.getPatientName());
+        surveyId = survey.getSurveyId();
+        surveyRViewAdapter = new SurveyRViewAdapter(getContext()
+                , survey.getQuestionAndAnswers(), patientSurvey);
         surveyRView.setAdapter(surveyRViewAdapter);
     }
 
@@ -201,7 +204,11 @@ public class SurveyFragment extends BaseFragment<SurveyFragmentPresenter> implem
 
     @Override
     public void onLoadLocalSurveySuccess(Survey survey) {
-        setSurveyRViewData(survey);
+        if (patientSurvey == null) {
+            setSurveyRViewDataEditable(survey);
+        } else {
+            setSurveyRViewDataUnEditable(survey);
+        }
     }
 
 

@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.constant.ViewConstant;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Answer;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.model.PatientSurvey;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.QuestionAndAnswer;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.DateTimeQandA;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.InputAnswerQandA;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.LinearQandA;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.MixTypeQandA;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.MultiChoicesQandA;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder.QandAviewHolder;
@@ -28,7 +31,7 @@ public class SurveyRViewAdapter
     private static final String TAG = SurveyRViewAdapter.class.getSimpleName();
     private Context context;
     private List<QuestionAndAnswer> questionAndAnswers;
-    private boolean editable;
+    private PatientSurvey patientSurvey;
     private float diseaseCausePercentage = 0.0f;
 
     public List<QuestionAndAnswer> getQuestionAndAnswers() {
@@ -36,10 +39,10 @@ public class SurveyRViewAdapter
     }
 
     public SurveyRViewAdapter(Context context, List<QuestionAndAnswer> questionAndAnswers,
-                              boolean editable) {
+                              PatientSurvey patientSurvey) {
         this.context = context;
         this.questionAndAnswers = questionAndAnswers;
-        this.editable = editable;
+        this.patientSurvey = patientSurvey;
     }
 
     @Override
@@ -55,42 +58,48 @@ public class SurveyRViewAdapter
         QandAviewholderFactory qandAviewholderFactory = new QandAviewholderFactory();
         QandAviewHolder qandAviewHolder = qandAviewholderFactory
                 .getQandAviewHolder(context, questionAndAnswer.getQuestionType(), itemView);
-        qandAviewHolder.setEditable(editable);
+        if (patientSurvey != null) {
+            qandAviewHolder.setEditable(false);
+        } else {
+            qandAviewHolder.setEditable(true);
+        }
         return qandAviewHolder.makeViewHolder();
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        QuestionAndAnswer questionAndAnswer = questionAndAnswers.get(position);
+        final QuestionAndAnswer questionAndAnswer = questionAndAnswers.get(position);
+        Answer answer = null;
+        LinearQandA viewHolder = null;
         switch (questionAndAnswer.getQuestionType()) {
             case ViewConstant.SINGLE_CHOICE:
-                SingleChoiceQandA singleChoiceQandA
-                        = (SingleChoiceQandA) holder;
-                singleChoiceQandA.bindViewHolder(questionAndAnswer);
+                viewHolder = (SingleChoiceQandA) holder;
+                viewHolder.bindViewHolder(questionAndAnswer);
                 break;
             case ViewConstant.MULTI_CHOICES:
-                MultiChoicesQandA multiChoicesQandA
-                        = (MultiChoicesQandA) holder;
-                multiChoicesQandA.bindViewHolder(questionAndAnswer);
+                viewHolder = (MultiChoicesQandA) holder;
+                viewHolder.bindViewHolder(questionAndAnswer);
                 break;
             case ViewConstant.INPUT_ANSWER:
-                InputAnswerQandA inputAnswerQandA
-                        = (InputAnswerQandA) holder;
-                inputAnswerQandA.bindViewHolder(questionAndAnswer);
+                viewHolder = (InputAnswerQandA) holder;
+                viewHolder.bindViewHolder(questionAndAnswer);
                 break;
             case ViewConstant.DATETIME:
-                DateTimeQandA dateTimeQandA
-                        = (DateTimeQandA) holder;
-                dateTimeQandA.bindViewHolder(questionAndAnswer);
+                viewHolder = (DateTimeQandA) holder;
+                viewHolder.bindViewHolder(questionAndAnswer);
                 break;
             case ViewConstant.MIX_TYPE:
-                MixTypeQandA mixTypeQandA
-                        = (MixTypeQandA) holder;
-                mixTypeQandA.bindViewHolder(questionAndAnswer);
+                viewHolder = (MixTypeQandA) holder;
+                viewHolder.bindViewHolder(questionAndAnswer);
                 break;
             default:
-                singleChoiceQandA = (SingleChoiceQandA) holder;
-                singleChoiceQandA.bindViewHolder(questionAndAnswer);
+                viewHolder = (SingleChoiceQandA) holder;
+                viewHolder.bindViewHolder(questionAndAnswer);
+        }
+        if (patientSurvey != null && patientSurvey.getAnswers() != null
+                && patientSurvey.getAnswers().size() > 0) {
+            answer = patientSurvey.getAnswers().get(position);
+            viewHolder.setViewData(answer);
         }
     }
 

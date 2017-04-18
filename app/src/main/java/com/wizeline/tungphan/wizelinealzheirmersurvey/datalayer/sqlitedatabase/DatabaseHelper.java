@@ -115,8 +115,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(PATIENT_SURVEY_ID, patientSurveyId);
         contentValues.put(QUESTION_ID, answer.getQuestionId());
         contentValues.put(CHOSE_ANSWER, answer.getChoseAnswer().toString());
-        contentValues.put(CHOSE_ANSWER, answer.getInputAnswer().toString());
-        writableSqliteDatabase.insert(INPUT_ANSWER, null, contentValues);
+        contentValues.put(INPUT_ANSWER, answer.getInputAnswer().toString());
+        writableSqliteDatabase.insert(ANSWER_TABLE_NAME, null, contentValues);
     }
 
     public boolean insertPatientSurvey(PatientSurvey patientSurvey, String surveyId) {
@@ -179,10 +179,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor res = readableSqliteDatabase.rawQuery(SELECT_ANSWERS + patientSurveyId, null);
         if (res.moveToFirst()) {
             do {
-                String choseAnswer = res.getString(res.getColumnIndex(CHOSE_ANSWER));
+                final String choseAnswer = res.getString(res.getColumnIndex(CHOSE_ANSWER));
+                final String inputAnswer = res.getString(res.getColumnIndex(INPUT_ANSWER));
+                final List<Integer> choseAnswerList = Utils.parseListIntFromString(choseAnswer);
+                final List<String> inputAnswerList = Utils.parseListStringFromString(inputAnswer);
                 Answer answer = new Answer(
                         res.getString(res.getColumnIndex(QUESTION_ID))
-                        , Utils.parseListIntFromString(choseAnswer), new ArrayList<>());
+                        , choseAnswerList, inputAnswerList);
                 answers.add(answer);
             } while (res.moveToNext());
         }

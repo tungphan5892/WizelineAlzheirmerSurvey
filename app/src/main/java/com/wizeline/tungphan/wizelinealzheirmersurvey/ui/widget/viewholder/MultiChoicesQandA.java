@@ -3,6 +3,7 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.ui.widget.viewholder;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.CheckBox;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Answer;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.QuestionAndAnswer;
@@ -17,6 +18,15 @@ public class MultiChoicesQandA extends LinearQandA
 
     public MultiChoicesQandA(Context context, View itemView) {
         super(context, itemView);
+    }
+
+    @Override
+    public void setViewData(Answer answer) {
+        for (int i = 0; i < answer.getChoseAnswer().size(); i++) {
+            //get number of the checked box from chosed answer list
+            final int checkedAnswer = answer.getChoseAnswer().get(i) + 1;
+            ((CheckBox) parentLayout.getChildAt(checkedAnswer)).setChecked(true);
+        }
     }
 
     @Override
