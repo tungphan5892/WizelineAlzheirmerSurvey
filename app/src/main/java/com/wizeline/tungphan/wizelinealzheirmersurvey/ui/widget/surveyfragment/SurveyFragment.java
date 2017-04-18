@@ -140,10 +140,6 @@ public class SurveyFragment extends BaseFragment<SurveyFragmentPresenter> implem
                 , answers);
     }
 
-    private void addAnswer() {
-
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -38,7 +38,7 @@ public class SingleChoiceQandA extends LinearQandA
     }
 
     public void bindViewHolder(QuestionAndAnswer questionAndAnswer) {
-        List<Option> options = questionAndAnswer.getOptions();
+        options = questionAndAnswer.getOptions();
         questionId = questionAndAnswer.getQuestionId();
         question.setText(questionAndAnswer.getQuestionContent());
         for (int i = 0; i < options.size(); i++) {

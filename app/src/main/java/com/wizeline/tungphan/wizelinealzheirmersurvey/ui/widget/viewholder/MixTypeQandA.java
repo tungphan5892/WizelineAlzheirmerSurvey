@@ -32,8 +32,9 @@ public class MixTypeQandA extends LinearQandA
     }
 
     public void bindViewHolder(QuestionAndAnswer questionAndAnswer) {
-        List<Option> options = questionAndAnswer.getOptions();
+        options = questionAndAnswer.getOptions();
         question.setText(questionAndAnswer.getQuestionContent());
+        questionId = questionAndAnswer.getQuestionId();
         for (int i = 0; i < options.size(); i++) {
             parentLayout.addView(initView(options.get(i)));
         }

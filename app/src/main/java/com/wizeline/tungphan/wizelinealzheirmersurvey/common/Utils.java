@@ -2,7 +2,9 @@ package com.wizeline.tungphan.wizelinealzheirmersurvey.common;
 
 import android.os.Build;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -23,5 +25,12 @@ public class Utils {
             result.add(Integer.parseInt(array[i]));
         }
         return result;
+    }
+
+    public static String getDateTime(){
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 1);
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        return format.format(cal.getTime());
     }
 }

@@ -32,6 +32,7 @@ public class DateTimeQandA extends LinearQandA
     public void bindViewHolder(QuestionAndAnswer questionAndAnswer) {
         question.setText(questionAndAnswer.getQuestionContent());
         options = questionAndAnswer.getOptions();
+        questionId = questionAndAnswer.getQuestionId();
         for (int i = 0; i < options.size(); i++) {
             parentLayout.addView(initView(options.get(i)));
         }

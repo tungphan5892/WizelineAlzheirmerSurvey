@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.wizeline.tungphan.wizelinealzheirmersurvey.R;
+import com.wizeline.tungphan.wizelinealzheirmersurvey.common.Utils;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.constant.ViewConstant;
 import com.wizeline.tungphan.wizelinealzheirmersurvey.model.Option;
 
@@ -97,7 +98,13 @@ public class LinearQandA extends RecyclerView.ViewHolder {
     }
 
     private EditText createDateTime(String text) {
-        EditText editText = createEdittext(text);
+        EditText editText = new EditText(context);
+        setEnableEdittext(editText, false);
+        if(editable) {
+            editText.setText(Utils.getDateTime());
+        }else{
+            editText.setHint(text);
+        }
         editText.setInputType(InputType.TYPE_DATETIME_VARIATION_DATE);
         editText.setOnClickListener(this::showDatePickerDialog);
         return editText;
@@ -107,13 +114,14 @@ public class LinearQandA extends RecyclerView.ViewHolder {
         int day, month, year;
         // Get Current Date
         final Calendar c = Calendar.getInstance();
-        day = c.get(Calendar.YEAR);
+        day = c.get(Calendar.DAY_OF_MONTH);
         month = c.get(Calendar.MONTH);
-        year = c.get(Calendar.DAY_OF_MONTH);
+        year = c.get(Calendar.YEAR);
         DatePickerDialog datePickerDialog = new DatePickerDialog(context
                 , (view, year1, monthOfYear, dayOfMonth)
                 -> ((EditText) dateView).setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year1)
                 , year, month, day);
+        datePickerDialog.updateDate(year,month,day);
         datePickerDialog.show();
     }
 
